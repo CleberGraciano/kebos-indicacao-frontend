@@ -1,0 +1,5 @@
+<div class="col-md">
+    <textarea nz-input placeholder="Informe o motivo" [(ngModel)]="text"
+        [nzAutosize]="{ minRows: 5, maxRows: 12 }"></textarea>
+    <control-error [text]="'Campo Obrigatório'" *ngIf="showError"></control-error>
+</div>

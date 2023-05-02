@@ -1,0 +1,40 @@
+<div class="row">
+  <h4 class="col-12 mb-4">
+    <span class="text-capitalize">
+      {{ action == routeAction.Insert ? 'Cadastrar' : action }}
+      Vendedor
+    </span>
+  </h4>
+</div>
+<div class="row">
+  <form id="formSeller" name="formSeller" [formGroup]="formSeller" #formElement (ngSubmit)="saveSeller()">
+    <div class="row row-cols-1">
+
+      <div class="col mb-3">
+        <label for="nome" class="form-label required">Nome</label>
+        <div class="d-flex flex-column">
+          <input nz-input formControlName="nome" type="text" />
+        </div>
+      </div>
+
+      <div class="col mb-3">
+        <label for="email" class="form-label required">E-mail</label>
+        <div class="d-flex flex-column">
+          <input nz-input formControlName="email" type="text" />
+        </div>
+      </div>
+
+      <div class="col mb-3">
+        <label for="telefone" class="form-label required">Telefone</label>
+        <div class="d-flex flex-column">
+          <input nz-input formControlName="telefone" type="text" [textMask]="maskTEL" />
+        </div>
+      </div>
+    </div>
+    <div class="col-12 d-flex justify-content-end mt-3">
+      <button class="capitalize me-2 btn-kebos-line rounded-pill" nz-button nzType="default" type="button" nzSize="default" *ngIf="action != routeAction.View" (click)="cancel()">Cancelar</button>
+      <button class="capitalize me-2 btn-kebos-line rounded-pill" nz-button nzType="default" type="button" nzSize="default" *ngIf="action == routeAction.View">Voltar</button>
+      <button class="capitalize btn-kebos rounded-pill" nz-button nzType="primary" type="submit" nzSize="default" *ngIf="action != routeAction.View">Confirmar</button>
+    </div>
+  </form>
+</div>

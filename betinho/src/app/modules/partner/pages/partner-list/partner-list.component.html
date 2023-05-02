@@ -1,0 +1,77 @@
+<div *ngIf="route.children.length === 0"></div>
+
+<div [class.d-none]="route.children?.length !== 0">
+  <div class="row">
+    <div class="col-12 d-flex justify-content-between mb-3">
+      <h4 class="mb-3">Lista de Parceiros</h4>
+
+      <button class="ms-2 rounded-pill" nz-button nzType="primary" type="submit" form="formFiltro" nzSize="default" [routerLink]="['/partner/insert']">
+        <span nz-icon nzType="plus-circle"></span>
+        Cadastrar
+      </button>
+    </div>
+
+    <form id="formFiltro" [formGroup]="formFiltro" (ngSubmit)="search(); activeTable = true">
+      <div class="col">
+       <div class="mb-3">
+        <label for="name" class="form-label">Nome</label>
+        <input nz-input formControlName="name" type="text" />
+       </div>
+      </div>
+
+      <div class="d-flex justify-content-end mb-3">
+        <button class="me-2 rounded-pill" nz-button nzType="default" nzSize="default" type="button" (click)="clear()">Limpar</button>
+        <button class="ms-2 rounded-pill" nz-button nzType="primary" type="submit" form="formFiltro" nzSize="default">Pesquisar</button>
+      </div>
+    </form>
+
+    <div class="col-12">
+      <h5 class="my-3">Resultado da Consulta</h5>
+      <div id="id-table-sistema" class="col-md-12">
+        <nz-table #tabela class="padrao" [nzData]="dataSet" [nzNoResult]="empty" [nzShowPagination]="false"
+          [nzVirtualItemSize]="54" [nzVirtualForTrackBy]="trackByIndex" [nzFrontPagination]="false"
+          [nzShowPagination]="false" [nzScroll]="{y: '500px',x: 'max-content'}" [nzLoading]="loadingTabela"
+          [nzFooter]="footerTabela">
+          <thead>
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">Empresa</th>
+              <th scope="col">URL</th>
+              <th scope="col" nzWidth="100px" class="text-center">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-template nz-virtual-scroll let-data let-index="index">
+              <tr>
+                <td>{{data.name}}</td>
+                <td>{{data.vendor}}</td>
+                <td>{{data.url}}</td>
+                <td class="text-center">
+                  <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Editar" (click)="edit(data)">
+                    <span nz-icon nzType="edit" nzTheme="outline"></span>
+                  </a>
+                  <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Excluir" (click)="remove(data)">
+                    <span nz-icon nzType="delete" nzTheme="outline"></span>
+                  </a>
+                </td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </nz-table>
+        <ng-template #empty>
+          <nz-empty [nzNotFoundContent]="'Nenhum registro encontrado'"></nz-empty>
+        </ng-template>
+        <ng-template #footerTabela>
+          <div class="d-flex justify-content-end align-items-center">
+            <div class="me-4" *ngIf="dataSet.length">
+              <span class="azul-primario"><strong>{{total}}</strong></span>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <router-outlet></router-outlet>
+</div>

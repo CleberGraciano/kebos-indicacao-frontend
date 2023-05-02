@@ -1,0 +1,44 @@
+<ng-container *ngIf="(isLoggedIn$ | async)">
+  <nz-layout class="app-header">
+    <nz-header>
+      <div class="container d-flex justify-content-between">
+        <div class="logo d-flex align-items-center justify-content-center">
+          <a href="/home" target="_blank">
+            <img src="/assets/images/logo.png" alt="logo">
+          </a>
+        </div>
+        <!-- <ul nz-menu nzMode="horizontal">
+          <li nz-submenu nzPlacement="bottomLeft" nzTitle="Vendedores">
+            <ul>
+              <li nz-menu-item>Cadastrar</li>
+            </ul>
+          </li>
+        </ul> -->
+        <ul nz-menu nzMode="horizontal">
+          <li nz-menu-item [routerLink]="['/home']" [nzMatchRouter]="true">Home</li>
+          <li nz-menu-item [routerLink]="['/partner']" [nzMatchRouter]="true">Parceiros</li>
+          <li nz-menu-item [routerLink]="['/seller' ]" [nzMatchRouter]="true">Vendedores</li>
+          <li nz-menu-item [routerLink]="['/item' ]" [nzMatchRouter]="true">Itens</li>
+          <li nz-menu-item [routerLink]="['/recommendation' ]" [nzMatchRouter]="true">Indicações</li>
+          <li nz-menu-item (click)="logout()">Sair</li>
+        </ul>
+      </div>
+    </nz-header>
+    <nz-content class="container pb-5 mb-5">
+      <nz-breadcrumb [nzAutoGenerate]="true" class="py-2"></nz-breadcrumb>
+      <div class="inner-content p-5">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+    <nz-footer>Kebos ©2023</nz-footer>
+  </nz-layout>
+</ng-container>
+
+
+<ng-container *ngIf="!(isLoggedIn$ | async)">
+  <div class="container">
+    <router-outlet name="login"></router-outlet>
+  </div>
+</ng-container>
+
+<app-loader></app-loader>

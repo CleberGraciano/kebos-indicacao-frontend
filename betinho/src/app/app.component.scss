@@ -1,0 +1,85 @@
+:host {
+  display: flex;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.logo {
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  float: left;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+nz-header.ant-layout-header {
+  background-color: #477a5e;
+}
+
+li.ant-menu-item {
+  font-size: 16px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.70);
+
+  &::after, &::before {
+    display: none;
+  }
+
+  &.ant-menu-item-selected {
+    color: #ffffff;
+
+    &::after, &::before {
+
+    }
+  }
+
+  &:hover {
+    color: #ffffff !important;
+  }
+}
+
+[nz-menu] {
+  line-height: 64px;
+  background-color: transparent;
+}
+
+nz-breadcrumb {
+  margin: 16px 0;
+}
+
+nz-content {
+  padding: 0 50px;
+}
+
+nz-footer {
+  text-align: center;
+  background-color: #477a5e;
+}
+
+.inner-content {
+  background: #ffffff;
+  padding: 24px;
+  min-height: 350px;
+}
+
+.login-user-data {
+  span,
+  strong {
+    line-height: 15px;
+  }
+  span {
+    font-size: 11px;
+  }
+}
+
+.login-icon-menu {
+  left: 2px;
+  font-size: 13px;
+  top: 13px;
+  position: relative;
+}

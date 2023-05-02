@@ -1,0 +1,131 @@
+<div class="row">
+  <h4 class="col-12 mb-4">
+    <span class="text-capitalize">
+      {{ action == routeAction.Insert ? 'Cadastrar' : action }}
+      Indicações
+    </span>
+  </h4>
+</div>
+<div class="row">
+
+  <div class="col-12 mb-3">
+    <form id="formRecommendation" name="formRecommendation" [formGroup]="formRecommendation" #formElement>
+      <div class="row row-cols-sm-2">
+        <div class="col mb-3">
+          <label for="nomePessoaEmpresa" class="form-label">Nome</label>
+          <input nz-input formControlName="nomePessoaEmpresa" type="text" />
+        </div>
+        <div class="col mb-3">
+          <label for="cpfCnpj" class="form-label">CPF / CNPJ</label>
+          <input nz-input formControlName="cpfCnpj" type="text" [textMask]="maskCpfCnpj" />
+        </div>
+        <div class="col mb-3">
+         <label for="emailprivate" class="form-label">E-mail</label>
+         <input nz-input formControlName="emailprivate" type="text" />
+        </div>
+        <div class="col mb-3">
+         <label for="nomeContato" class="form-label">Nome do Contato</label>
+         <input nz-input formControlName="nomeContato" type="text" />
+        </div>
+        <div class="col mb-3">
+         <label for="telefone" class="form-label">Telefone</label>
+         <input nz-input formControlName="telefone" type="text" [textMask]="maskTEL" />
+        </div>
+        <div class="col mb-3">
+         <label for="telefone" class="form-label col-12">Status</label>
+         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o status" class="nz-select-custom">
+          <nz-option [nzLabel]="item.name" [nzValue]="item" *ngFor="let item of status">
+          </nz-option>
+        </nz-select>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-12 mb-3">
+    <div class="col-12 d-flex align-items-end justify-content-between mb-2">
+      <h6>Itens</h6>
+      <button class="capitalize btn-kebos rounded-pill" nz-button nzType="primary" type="button" nzSize="default" (click)="addRow()">Adicionar Items</button>
+    </div>
+
+    <nz-table #editRowTable nzBordered [nzData]="listOfData" [nzFooter]="footerTabela" [nzNoResult]="empty" nzFrontPagination="false">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th width="20%">Tipo</th>
+          <th width="35%">Nome</th>
+          <th width="11%">Quantidade</th>
+          <th width="12%">Valor Bônus</th>
+          <th width="12%">Total Bônus</th>
+          <th width="10%" class="text-center">Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of editRowTable.data" class="editable-row">
+          <td>{{ data.id }}</td>
+          <td>
+            <div class="editable-cell " [hidden]="editId === data.id" (click)="startEdit(data.id)">
+              {{ data?.tipo?.name ? data?.tipo?.name?.name : data?.tipo?.tipo?.name }}
+            </div>
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o tipo" [(ngModel)]="data.tipo.name" [hidden]="editId !== data.id" (blur)="stopEdit(data.id)" (click)="resetItensData(data)">
+              <nz-option [nzLabel]="item.name" [nzValue]="item" *ngFor="let item of tipos">
+              </nz-option>
+            </nz-select>
+          </td>
+          <td>
+            <div class="editable-cell" [hidden]="editId === data.id || !data?.tipo" (click)="startEdit(data.id)">
+              {{ data?.nome?.nome }}
+            </div>
+            <nz-select nzShowSearch nzServerSearch nzPlaceHolder="Pesquise aqui" [nzShowArrow]="false" [nzFilterOption]="nzFilterOption" (nzOnSearch)="searchValue($event)" [hidden]="editId !== data.id" [(ngModel)]="data.nome" (blur)="stopEdit(data.id)" (click)="typeSelectData(data)">
+              <nz-option *ngFor="let item of listItems" [nzLabel]="item.nome" [nzValue]="item"></nz-option>
+            </nz-select>
+          </td>
+          <td>
+            <div class="editable-cell" [hidden]="editId === data.id" (click)="startEdit(data.id)">
+              {{ data.quantidade }}
+            </div>
+            <input [hidden]="editId !== data.id" type="number" nz-input [(ngModel)]="data.quantidade" (blur)="stopEdit(data.id)" min="0" />
+          </td>
+          <td>{{ data?.nome?.bonus | currency:'BRL' }}</td>
+          <td>{{ data?.totalBonus | currency:'BRL' }}</td>
+          <td class="text-center">
+            <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Remover" nz-popconfirm nzPopconfirmTitle="Deseja Remover?" (nzOnConfirm)="deleteRow(data.id)">
+              <span nz-icon nzType="delete" nzTheme="outline"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #empty>
+      <nz-empty [nzNotFoundContent]="'Nenhum item cadastrado'"></nz-empty>
+    </ng-template>
+    <ng-template #footerTabela>
+      <div class="d-flex justify-content-end align-items-center">
+        <div class="me-4 d-flex" *ngIf="listOfData.length">
+          <span class="azul-primario">Total do Pedido</span>
+          <span style="font-size: 16px; margin-top: -3px; padding-left: 8px;"><strong>R$ {{ total | currency:'BRL' }}</strong></span>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="col-12 mb-3">
+    <form id="formObservacoes" name="formObservacoes" [formGroup]="formObservacoes" #formElement>
+      <div class="row row-cols-1">
+        <div class="col mb-3">
+         <label for="observacao" class="form-label">Observações</label>
+         <textarea rows="4" nz-input formControlName="observacao"></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-12 d-flex justify-content-end mt-3">
+    <button class="capitalize me-2 btn-kebos-line rounded-pill" nz-button nzType="default" type="button" nzSize="default" *ngIf="action != routeAction.View" (click)="cancel()">Cancelar</button>
+    <button class="capitalize me-2 btn-kebos-line rounded-pill" nz-button nzType="default" type="button" nzSize="default" *ngIf="action == routeAction.View">Voltar</button>
+    <button class="capitalize btn-kebos rounded-pill" nz-button nzType="primary" type="button" nzSize="default" *ngIf="action != routeAction.View" (click)="saveRecommendation()">Confirmar</button>
+  </div>
+
+
+
+</div>
