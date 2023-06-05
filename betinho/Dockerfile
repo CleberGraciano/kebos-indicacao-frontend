@@ -2,13 +2,13 @@ FROM node:12.14-alpine as node
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+# COPY package*.json ./
 
-RUN npm install
+# RUN npm install
 
 COPY . .
 
-RUN npm run build
+# RUN npm run build
 
 # Stage 2
 FROM nginx:1.13.12-alpine
