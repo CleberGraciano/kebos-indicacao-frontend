@@ -78,6 +78,7 @@ export class ItemListComponent implements OnInit {
   }
 
   edit(model: any): void {
+    console.log(model)
     this.router.navigate([`/${this.routePrevious}/edit/${model.id}`]);
   }
 

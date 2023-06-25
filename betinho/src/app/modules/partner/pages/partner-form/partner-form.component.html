@@ -7,11 +7,11 @@
   <form id="formPartner" name="formPartner" [formGroup]="formPartner" #formElement (ngSubmit)="savePartner()">
     <div class="row">
 
-      <div class="col-2">
+      <div class="col-12 col-xl-2">
         <div class="col-12">
           <nz-avatar [nzShape]="'square'" [nzSize]="125" [nzIcon]="'user'" [nzSrc]="this.fileList[0]?.originFileObj?.name"></nz-avatar>
         </div>
-        <div class="col-12 mt-3">
+        <div class="col-12 mt-3 mb-xl-0 mb-5">
           <nz-upload [nzFileList]="fileList" (nzChange)="enviarArquivo($event)">
             <button nz-button nzType="default" class="rounded-pill">
               <span nz-icon nzType="upload"></span>
@@ -45,7 +45,7 @@
                   <div class="row">
                     <label for="cpf" class="col-sm-4 col-form-label required" style="padding-left: 32px !important">CPF</label>
                     <div class="ps-sm-4 col-sm-8 d-flex flex-column">
-                      <input nz-input formControlName="cpf" type="number" [textMask]="maskCPF" />
+                      <input nz-input formControlName="cpf" type="text" [textMask]="maskCPF" />
                     </div>
                   </div>
                 </div>

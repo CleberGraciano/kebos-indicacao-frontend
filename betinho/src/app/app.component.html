@@ -15,11 +15,11 @@
           </li>
         </ul> -->
         <ul nz-menu nzMode="horizontal">
-          <li nz-menu-item [routerLink]="['/home']" [nzMatchRouter]="true">Home</li>
-          <li nz-menu-item [routerLink]="['/partner']" [nzMatchRouter]="true">Parceiros</li>
-          <li nz-menu-item [routerLink]="['/seller' ]" [nzMatchRouter]="true">Vendedores</li>
-          <li nz-menu-item [routerLink]="['/item' ]" [nzMatchRouter]="true">Itens</li>
-          <li nz-menu-item [routerLink]="['/recommendation' ]" [nzMatchRouter]="true">Indicações</li>
+          <li nz-menu-item [routerLink]="['/home']" [nzMatchRouter]="true" *ngxPermissionsOnly="[permissaoAdm, permissaoModerador, permissaoUser]">Home</li>
+          <li nz-menu-item [routerLink]="['/partner']" [nzMatchRouter]="true" *ngxPermissionsOnly="[permissaoAdm, permissaoModerador]">Parceiros</li>
+          <li nz-menu-item [routerLink]="['/seller' ]" [nzMatchRouter]="true" *ngxPermissionsOnly="[permissaoAdm, permissaoModerador]">Vendedores</li>
+          <li nz-menu-item [routerLink]="['/item' ]" [nzMatchRouter]="true" *ngxPermissionsOnly="[permissaoAdm, permissaoModerador]">Itens</li>
+          <li nz-menu-item [routerLink]="['/recommendation' ]" [nzMatchRouter]="true" *ngxPermissionsOnly="[permissaoAdm, permissaoModerador, permissaoUser]">Indicações</li>
           <li nz-menu-item (click)="logout()">Sair</li>
         </ul>
       </div>

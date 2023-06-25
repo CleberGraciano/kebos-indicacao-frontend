@@ -39,7 +39,6 @@ export class RecommendationListComponent implements OnInit {
     this.formFiltroRecommendation = this.formBuilder.group({
       nomePessoaEmpresa: [''],
       emailprivate: [''],
-      nomeContato: [''],
       telefone: [''],
     });
 

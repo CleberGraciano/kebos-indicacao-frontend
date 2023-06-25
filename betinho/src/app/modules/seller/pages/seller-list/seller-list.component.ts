@@ -38,11 +38,10 @@ export class SellerListComponent implements OnInit {
 
   ngOnInit() {
     this.formFiltroSeller = this.formBuilder.group({
-      id: [''],
       nome: [''],
       email: [''],
       telefone: [''],
-      created: []
+      status: []
     });
 
     this.search();

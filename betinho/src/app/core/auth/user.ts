@@ -8,3 +8,10 @@ export interface UserAuth {
   statusCadastro?: boolean;
   roles?: string[];
 }
+
+
+export enum PermissoesEnum {
+  Adm = 'ROLE_ADMIN',
+  User = 'ROLE_USER',
+  Moderador = 'ROLE_MODERATOR'
+}

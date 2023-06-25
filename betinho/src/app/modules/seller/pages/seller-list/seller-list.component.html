@@ -14,15 +14,9 @@
 
     <form id="formFiltroSeller" [formGroup]="formFiltroSeller" (ngSubmit)="search(); activeTable = true">
       <div class="row">
-        <div class="col-12 mb-3">
+        <div class="col mb-3">
           <label for="nome" class="form-label">Nome</label>
           <input nz-input formControlName="nome" type="text" />
-        </div>
-      </div>
-      <div class="row row-cols-sm-4">
-        <div class="col mb-3">
-          <label for="id" class="form-label">Código</label>
-          <input nz-input formControlName="id" type="number" />
         </div>
         <div class="col mb-3">
          <label for="email" class="form-label">E-mail</label>
@@ -31,12 +25,6 @@
         <div class="col mb-3">
          <label for="telefone" class="form-label">Telefone</label>
          <input nz-input formControlName="telefone" type="text" [textMask]="maskTEL" />
-        </div>
-        <div class="col mb-3">
-          <label for="created" class="form-label">Data de Cadastro</label>
-          <div class="d-flex flex-column">
-            <nz-date-picker formControlName="created" [nzFormat]="dateFormat"></nz-date-picker>
-          </div>
         </div>
       </div>
       <div class="d-flex justify-content-end mt-2 mb-3">

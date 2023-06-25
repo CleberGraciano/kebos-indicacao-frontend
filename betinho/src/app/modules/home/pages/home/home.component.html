@@ -6,26 +6,34 @@
 </div>
 <br>
 <div class="row row-cols-2 row-cols-sm-3 g-3">
-    <div class="col">
-        <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/partner']">
-            Parceiros
+    <ng-template [ngxPermissionsOnly]="permissaoAdmEModerador">
+        <div class="col">
+            <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/partner']">
+                Parceiros
+            </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/seller']">
-            Vendedores
+    </ng-template>
+    <ng-template [ngxPermissionsOnly]="permissaoAdmEModerador">
+        <div class="col">
+            <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/seller']">
+                Vendedores
+            </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/item']">
-            Itens
+    </ng-template>
+    <ng-template [ngxPermissionsOnly]="permissaoAdmEModerador">
+        <div class="col">
+            <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/item']">
+                Itens
+            </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/recommendation']">
-            Indicações
+    </ng-template>
+    <ng-template [ngxPermissionsOnly]="permissaoTodos">
+        <div class="col">
+            <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/recommendation']">
+                Indicações
+            </div>
         </div>
-    </div>
+    </ng-template>
     <div class="col">
         <div class="col rounded shadow-sm text-center card-custom" (click)="logout()">
             Sair

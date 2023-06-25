@@ -42,6 +42,7 @@ export class RecommendationFormComponent implements OnInit {
   selectedValue = null;
   //listItems: Array<{ value: string; name: string }> = [];
   listItems: any[] = [];
+  listSellers: Array<{ value: string; name: string }> = [];
   typeSelect: number = 0;
   nzFilterOption = (): boolean => true;
   total: number = 0;
@@ -70,7 +71,8 @@ export class RecommendationFormComponent implements OnInit {
       cpfCnpj: ['', Validators.required],
       emailprivate: ['', Validators.required],
       nomeContato: ['', Validators.required],
-      telefone: ['', Validators.required]
+      telefone: ['', Validators.required],
+      seller: ['', Validators.required]
     })
 
     this.formObservacoes = this.formBuilder.group({
@@ -78,6 +80,9 @@ export class RecommendationFormComponent implements OnInit {
     })
 
     this.serviceItem.getTipos().subscribe((res: any) => this.tipos = res);
+    
+    // falta buscar nova api
+    this.serviceItem.getTipos().subscribe((res: any) => this.listSellers = res);
     
     if (this.edit)
       this.param ? this.service.getIdRecommendation(this.param).subscribe(res => this.formRecommendation.patchValue(res)) : this.returnPage();

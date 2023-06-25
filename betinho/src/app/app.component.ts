@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthenticationService } from '@core/auth/authentication.service';
-import { UserAuth } from '@core/auth/user';
+import { PermissoesEnum, UserAuth } from '@core/auth/user';
 import { HttpStatusEnum } from '@core/http-interceptors/http-status';
 import { DialogService } from '@core/services/dialog.service';
 import { environment } from '@env/environment';
@@ -17,6 +17,9 @@ export class AppComponent implements OnInit {
   isCollapsed = false;
   isLoggedIn$: Observable<boolean>;
   urlAtual: boolean = false;
+  permissaoAdm = PermissoesEnum.Adm;
+  permissaoModerador = PermissoesEnum.Moderador;
+  permissaoUser = PermissoesEnum.User;
 
   constructor(
     private authenticationService: AuthenticationService,
