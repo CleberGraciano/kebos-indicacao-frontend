@@ -1,3 +1,8 @@
+const BASE_URL = 'http://89.116.214.72:8081';
+const URL_ATUAL = 'http://localhost:4200';
+const REDIRECT_URL = `?redirect_uri=${URL_ATUAL}/login`;
+const OAUTH2_URL = `oauth2/authorization`;
+
 export const environment = {
   production: false,
   version:'1.0',
@@ -6,14 +11,10 @@ export const environment = {
   auth:'http://89.116.214.72:8081/api/auth/',
   api:'http://89.116.214.72:8081/api/',
   refreshToken: '',
-  redirect: '?redirect_uri=',
-  OAUTH2_URL: 'oauth2/authorization/',
-
-    //public static GOOGLE_AUTH_URL = AppConstants.OAUTH2_URL + "google" + AppConstants.REDIRECT_URL;
-    //public static FACEBOOK_AUTH_URL = AppConstants.OAUTH2_URL + "facebook" + AppConstants.REDIRECT_URL;
-    //public static GITHUB_AUTH_URL = AppConstants.OAUTH2_URL + "github" + AppConstants.REDIRECT_URL;
-    //public static LINKEDIN_AUTH_URL = AppConstants.OAUTH2_URL + "linkedin" + AppConstants.REDIRECT_URL;
+  GOOGLE_AUTH_URL: `${BASE_URL}/${OAUTH2_URL}/google/${REDIRECT_URL}`,
+  FACEBOOK_AUTH_URL: `${BASE_URL}/${OAUTH2_URL}/facebook/${REDIRECT_URL}`,
+  GITHUB_AUTH_URL: `${BASE_URL}/${OAUTH2_URL}/github/${REDIRECT_URL}`,
+  LINKEDIN_AUTH_URL: `${BASE_URL}/${OAUTH2_URL}/linkedin/${REDIRECT_URL}`
 };
-
 
 // admin@kebos.com.br  kebos@Admin

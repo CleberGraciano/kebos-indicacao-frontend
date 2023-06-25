@@ -13,12 +13,31 @@
                 <input nz-input formControlName="password" type="password" autocomplete="current-password" />
             </div>
         </div>
-        <div class="row mt-5 px-3">
+        <div class="row mt-4 px-3">
             <div class="d-flex flex-column">
                 <button nz-button nzType="primary" type="submit" form="loginForm" nzSize="default"
                     class="mb-3">Entrar</button>
-                <button nz-button nzType="link" type="button" nzSize="default">Esqueci minha senha</button>
             </div>
+        </div>
+        <div class="row mt-2">
+            <p class="social-login text-center">
+                Acessar com:
+                <a href="{{ googleURL }}" class="ms-2">
+                    <img alt="Login with Google" src="/assets/images/redes-sociais/google.png" class="btn-img">
+                </a>
+                <a href="{{ facebookURL }}">
+                    <img alt="Login with Facebook" src="/assets/images/redes-sociais/facebook.png" class="btn-img">
+                </a>
+                <a href="{{ githubURL }}">
+                    <img alt="Login with Github" src="/assets/images/redes-sociais/github.png" class="btn-img">
+                </a>
+                <a href="{{ linkedinURL }}">
+                    <img alt="Login with Linkedin" src="/assets/images/redes-sociais/linkedin.png" class="btn-img-linkedin">
+                </a>
+            </p>
+        </div>
+        <div class="row link">
+            <button nz-button nzType="link" type="button" nzSize="default">Esqueci minha senha</button>
         </div>
     </form>
 </div>
