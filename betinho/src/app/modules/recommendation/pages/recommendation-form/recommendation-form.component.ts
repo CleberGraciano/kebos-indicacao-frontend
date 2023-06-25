@@ -38,7 +38,6 @@ export class RecommendationFormComponent implements OnInit {
   listOfData: any[] = [];
   tipos: any[] = [];
   items: any[] = [];
-  status: any[] = [];
 
   selectedValue = null;
   //listItems: Array<{ value: string; name: string }> = [];
@@ -71,8 +70,7 @@ export class RecommendationFormComponent implements OnInit {
       cpfCnpj: ['', Validators.required],
       emailprivate: ['', Validators.required],
       nomeContato: ['', Validators.required],
-      telefone: ['', Validators.required],
-      status: ['', Validators.required],
+      telefone: ['', Validators.required]
     })
 
     this.formObservacoes = this.formBuilder.group({
@@ -80,8 +78,7 @@ export class RecommendationFormComponent implements OnInit {
     })
 
     this.serviceItem.getTipos().subscribe((res: any) => this.tipos = res);
-    this.serviceItem.getStatus().subscribe((res: any) => this.status = res);
-
+    
     if (this.edit)
       this.param ? this.service.getIdRecommendation(this.param).subscribe(res => this.formRecommendation.patchValue(res)) : this.returnPage();
   }

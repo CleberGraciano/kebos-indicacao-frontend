@@ -35,12 +35,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 console.log(err)
                 if (request.url.indexOf(environment.auth) == -1)
                     if (err instanceof HttpErrorResponse) {
+
                         if (err.status === 401) {
                             this.authenticationService.logout(true);
                         }
                         else {
                             if (request.params && request.params.has('ignoreError')) {
-
+                                
                             }
                             else if (err.status == 0) {
                                 this.notificationService.error('Ops...', 'Verifique a sua conexão com a internet ou aguarde um momento e tente novamente');

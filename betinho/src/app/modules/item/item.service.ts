@@ -53,11 +53,4 @@ export class ItemService {
       { id: 2, name: "Serviço", value: "Servico"}
     ]);
   }
-
-  getStatus() {
-    return of([
-      { id: 1, name: "Ativo", value: "true"},
-      { id: 2, name: "Inativo", value: "false"}
-    ]);
-  }
 }

@@ -3,7 +3,7 @@
     <nz-header>
       <div class="container d-flex justify-content-between">
         <div class="logo d-flex align-items-center justify-content-center">
-          <a href="/home" target="_blank">
+          <a href="/home">
             <img src="/assets/images/logo.png" alt="logo">
           </a>
         </div>
@@ -26,7 +26,7 @@
     </nz-header>
     <nz-content class="container pb-5 mb-5">
       <nz-breadcrumb [nzAutoGenerate]="true" class="py-2"></nz-breadcrumb>
-      <div class="inner-content p-5">
+      <div class="inner-content p-5" [class.home]="urlAtual">
         <router-outlet></router-outlet>
       </div>
     </nz-content>

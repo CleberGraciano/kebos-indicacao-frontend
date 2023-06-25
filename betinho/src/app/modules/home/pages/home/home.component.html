@@ -1,1 +1,34 @@
-<p>home works!</p>
+<div class="row">
+    <div class="col">
+        <h5>Seja Bem Vindo(a):</h5>
+        <h5 class="name-user">{{ nameUser }}</h5>
+    </div>
+</div>
+<br>
+<div class="row row-cols-2 row-cols-sm-3 g-3">
+    <div class="col">
+        <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/partner']">
+            Parceiros
+        </div>
+    </div>
+    <div class="col">
+        <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/seller']">
+            Vendedores
+        </div>
+    </div>
+    <div class="col">
+        <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/item']">
+            Itens
+        </div>
+    </div>
+    <div class="col">
+        <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/recommendation']">
+            Indicações
+        </div>
+    </div>
+    <div class="col">
+        <div class="col rounded shadow-sm text-center card-custom" (click)="logout()">
+            Sair
+        </div>
+    </div>
+</div>

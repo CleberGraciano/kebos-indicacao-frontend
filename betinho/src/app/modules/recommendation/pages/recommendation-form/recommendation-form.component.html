@@ -31,13 +31,6 @@
          <label for="telefone" class="form-label">Telefone</label>
          <input nz-input formControlName="telefone" type="text" [textMask]="maskTEL" />
         </div>
-        <div class="col mb-3">
-         <label for="telefone" class="form-label col-12">Status</label>
-         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o status" class="nz-select-custom">
-          <nz-option [nzLabel]="item.name" [nzValue]="item" *ngFor="let item of status">
-          </nz-option>
-        </nz-select>
-        </div>
       </div>
     </form>
   </div>

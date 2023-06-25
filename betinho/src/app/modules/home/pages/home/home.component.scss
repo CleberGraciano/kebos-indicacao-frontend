@@ -1,0 +1,24 @@
+.inner-content {
+    background-color: transparent !important;
+}
+
+.card-custom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 140px;
+    cursor: pointer;
+    background-color: rgba(71, 122, 94, 0.3);
+
+    font-size: 18px;
+    font-weight: 500;
+
+    &:hover {
+        color: #ffffff;
+        background-color: #477a5e;
+    }
+}
+
+.name-user {
+    color: #477a5e;
+}

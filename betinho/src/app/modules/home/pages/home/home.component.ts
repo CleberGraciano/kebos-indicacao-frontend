@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '@core/auth/authentication.service';
+import { DialogService } from '@core/services/dialog.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  nameUser: string | undefined;
+
+  constructor(
+    private authenticationService: AuthenticationService,
+    private dialogService: DialogService
+  ) { }
 
   ngOnInit(): void {
+    this.nameUser = this.authenticationService?.currentUserValue?.displayName;
+  }
+
+  logout(): void {
+    this.dialogService.confirm('Deseja realmente sair do sistema?', () => {
+      this.authenticationService.logout();
+    })
   }
 
 }

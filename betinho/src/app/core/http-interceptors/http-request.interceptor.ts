@@ -27,7 +27,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
             }
 
             tempReq = request.clone({
-                headers: request.headers.set('Authorization', `Bearer ${token}`) //`Bearer ${token}`
+                headers: request.headers.set('Authorization', `Bearer ${token}`)
             })
 
         } else {
