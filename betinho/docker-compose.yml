@@ -1,4 +1,4 @@
-version: '2.3'
+version: '2.0'
 
 services:
   angular:
@@ -6,4 +6,4 @@ services:
     container_name: kebos-app-frontend
     build: .
     ports:
-      - 80:80
+      - 8085:80
