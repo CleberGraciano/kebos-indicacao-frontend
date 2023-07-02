@@ -18,6 +18,9 @@ export class LoginComponent implements OnInit {
   githubURL = environment.GITHUB_AUTH_URL;
   linkedinURL = environment.LINKEDIN_AUTH_URL;
 
+  passwordVisible: boolean = false;
+  password?: string;
+
   constructor(
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,

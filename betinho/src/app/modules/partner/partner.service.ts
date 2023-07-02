@@ -2,12 +2,15 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DadosPaginados } from '@core/common/common';
 import { ApiService } from '@core/services/api.service';
+import { of } from 'rxjs';
 
 const routes = {
   filter: `partners`,
   insert: `partners`,
   edit: (id: number) => `partners/${id}`,
-  getId: (id: number)=> `partners/${id}`
+  getId: (id: number)=> `partners/${id}`,
+  estados: 'https://servicodados.ibge.gov.br/api/v1/localidades/estados',
+  municipios: (UF: string)=> `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${UF}/municipios`
 }
 
 @Injectable({
@@ -40,5 +43,20 @@ export class PartnerService {
 
   getIdPartner(id: number) {
     return this.apiService.get<any>(routes.getId(id));
+  }
+
+  getEstados() {
+    return this.apiService.get<any>(routes.estados);
+  }
+
+  getMunicipios(uf: string) {
+    return this.apiService.get<any>(routes.municipios(uf));
+  }
+
+  getTiposConta() {
+    return of([
+      { id: 1, name: "Conta Corrente", value: "0"},
+      { id: 2, name: "Conta Poupanca", value: "1"}
+    ]);
   }
 }

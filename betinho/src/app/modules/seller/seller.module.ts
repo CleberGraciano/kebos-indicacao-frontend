@@ -3,6 +3,7 @@ import { SharedModule } from '@shared/shared.module';
 import { SellerFormComponent } from './pages/seller-form/seller-form.component';
 import { SellerListComponent } from './pages/seller-list/seller-list.component';
 import { SellerRoutingModule } from './seller-routing.module';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { SellerRoutingModule } from './seller-routing.module';
   ],
   imports: [
     SharedModule,
-    SellerRoutingModule
+    SellerRoutingModule,
+    NgxPermissionsModule.forChild()
   ]
 })
 export class SellerModule { }

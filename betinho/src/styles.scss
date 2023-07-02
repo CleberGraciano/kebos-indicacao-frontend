@@ -139,6 +139,24 @@ label {
   text-decoration: underline !important;
 }
 
+input.ant-input:focus {
+  border: 0px solid transparent;
+}
+
+.link {
+  color: #477A5E;
+}
+
+.termsOfUseModal .ant-modal-body {
+  overflow-y: auto;
+  max-height: 70vh;
+  padding: 3rem;
+}
+
+.ant-input-affix-wrapper > input.ant-input:focus {
+  box-shadow: none !important;
+  border: 0px transparent !important;
+}
 
 // #477A5E
 // hover - #181818

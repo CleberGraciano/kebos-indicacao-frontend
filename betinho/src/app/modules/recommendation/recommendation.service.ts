@@ -9,7 +9,8 @@ const routes = {
   filter: `recommendations`,
   insert: `recommendations`,
   edit: (id: number) => `recommendations/${id}`,
-  getId: (id: number)=> `recommendations/${id}`
+  getId: (id: number) => `recommendations/${id}`,
+  getListRecommendation: (status: string)=> `recommendations/${status}`,
 }
 
 @Injectable({
@@ -42,5 +43,19 @@ export class RecommendationService {
 
   getIdRecommendation(id: number) {
     return this.apiService.get<RecommendationElement>(routes.getId(id));
+  }
+
+  getListRecommendation(status: string) {
+    return this.apiService.get<any>(routes.getListRecommendation(status));
+  }
+
+  getStatusRecommendation() {
+    return of([
+      { id: 0, name: "CANCELADO", value: "CANCELADO"},
+      { id: 1, name: "ENCERRADO", value: "ENCERRADO"},
+      { id: 2, name: "ENVIADO", value: "ENVIADO"},
+      { id: 3, name: "NEGOCIADO", value: "NEGOCIADO"},
+      { id: 4, name: "VENDIDO", value: "VENDIDO"}
+    ]);
   }
 }

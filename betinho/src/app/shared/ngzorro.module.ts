@@ -35,6 +35,7 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzListModule } from 'ng-zorro-antd/list';
 
 @NgModule({
   declarations: [],
@@ -74,7 +75,8 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     NzCalendarModule,
     NzBadgeModule,
     NzTableModule,
-    NzPopconfirmModule
+    NzPopconfirmModule,
+    NzListModule
   ],
   exports:[
     NzButtonModule,
@@ -112,7 +114,8 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     NzCalendarModule,
     NzBadgeModule,
     NzTableModule,
-    NzPopconfirmModule
+    NzPopconfirmModule,
+    NzListModule
   ]
 })
 export class NgZorroModule { }

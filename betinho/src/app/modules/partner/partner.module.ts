@@ -3,6 +3,7 @@ import { PartnerRoutingModule } from './partner-routing.module';
 import { SharedModule } from '@shared/shared.module';
 import { PartnerListComponent } from './pages/partner-list/partner-list.component';
 import { PartnerFormComponent } from './pages/partner-form/partner-form.component';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { PartnerFormComponent } from './pages/partner-form/partner-form.componen
   ],
   imports: [
     SharedModule,
-    PartnerRoutingModule
+    PartnerRoutingModule,
+    NgxPermissionsModule.forChild()
   ]
 })
 export class PartnerModule { }

@@ -4,18 +4,17 @@
   </h4>
 </div>
 <div class="row">
-  <form id="formPartner" name="formPartner" [formGroup]="formPartner" #formElement (ngSubmit)="savePartner()">
+  <div class="col-12">
     <div class="row">
-
       <div class="col-12 col-xl-2">
         <div class="col-12">
-          <nz-avatar [nzShape]="'square'" [nzSize]="125" [nzIcon]="'user'" [nzSrc]="this.fileList[0]?.originFileObj?.name"></nz-avatar>
+          <nz-avatar [nzShape]="'square'" [nzSize]="125" [nzIcon]="'user'" [nzSrc]="this.imageUser"></nz-avatar>
         </div>
         <div class="col-12 mt-3 mb-xl-0 mb-5">
-          <nz-upload [nzFileList]="fileList" (nzChange)="enviarArquivo($event)">
+          <nz-upload [nzBeforeUpload]="beforeUpload">
             <button nz-button nzType="default" class="rounded-pill">
               <span nz-icon nzType="upload"></span>
-              {{ fileList[0] ? "Alterar Foto" : "Adicionar Foto" }}
+              {{ this.imageUser ? "Alterar Foto" : "Adicionar Foto" }}
             </button>
           </nz-upload>
         </div>
@@ -23,204 +22,236 @@
 
       <div class="col">
         <div class="row">
+          <div class="col">
+            <form id="formPartner" name="formPartner" [formGroup]="formPartner" #formElementPartner>
+              <fieldset class="fieldset-border mb-3">
+                <legend class="fieldset-border mb-3">Documentos</legend>
+                <div class="row mb-3">
+                  <label for="displayName" class="col-sm-2 col-form-label required">Nome Completo</label>
+                  <div class="col-sm-10 d-flex flex-column">
+                    <input nz-input formControlName="displayName" autocomplete="false" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="email" class="col-sm-2 col-form-label required">E-mail</label>
+                  <div class="col-sm-10 d-flex flex-column">
+                    <input nz-input formControlName="email" autocomplete="false" />
+                  </div>
+                </div>
+                <div class="row row-cols-2 mb-3">
+                  <div class="col">
+                    <div class="row">
+                      <label for="dataNascimento" class="col-sm-4 col-form-label required">Data Nascimento</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <nz-date-picker formControlName="dataNascimento" [nzFormat]="dateFormat" class="w-100"></nz-date-picker>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="row">
+                      <label for="cpf" class="col-sm-4 col-form-label required"
+                        style="padding-left: 32px !important">CPF</label>
+                      <div class="ps-sm-4 col-sm-8 d-flex flex-column">
+                        <input nz-input formControlName="cpf" [textMask]="maskCPF" autocomplete="false" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row row-cols-2 mb-3">
+                  <div class="col">
+                    <div class="row">
+                      <label for="password" class="col-sm-4 col-form-label required">Senha</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <nz-input-group [nzSuffix]="suffixTemplate">
+                          <input [type]="passwordVisible ? 'text' : 'password'" nz-input placeholder="Digite sua senha" formControlName="password" />
+                        </nz-input-group>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="row">
+                      <label for="passwordConfirm" class="col-sm-4 col-form-label required" style="padding-left: 32px !important">Confirmar Senha</label>
+                      <div class="ps-sm-4 col-sm-8 d-flex flex-column">
+                        <nz-input-group [nzSuffix]="suffixTemplate">
+                          <input [type]="passwordVisible ? 'text' : 'password'" nz-input placeholder="Confirme a senha" formControlName="passwordConfirm" (change)="validatePassword()" />
+                        </nz-input-group>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ng-template #suffixTemplate>
+                  <span nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" (click)="passwordVisible = !passwordVisible"></span>
+                </ng-template>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+
+        <div class="row">
           <section class="col-12">
-            <fieldset class="fieldset-border mb-3">
-              <legend class="fieldset-border mb-3">Documentos</legend>
-              <div class="row mb-3">
-                <label for="name" class="col-sm-2 col-form-label required">Nome Completo:</label>
-                <div class="col-sm-10 d-flex flex-column">
-                  <input nz-input formControlName="name" type="text" />
-                </div>
-              </div>
-              <div class="row mb-3">
-                <div class="col">
-                  <div class="row">
-                    <label for="birthday" class="col-sm-4 col-form-label required">Data de Nascimento</label>
-                    <div class="col-sm-8 d-flex flex-column">
-                      <nz-date-picker formControlName="birthday" [nzFormat]="dateFormat" class="w-100"></nz-date-picker>
+            <div class="row  row-cols-1 row-cols-sm-2 gx-5 mt-2">
+              <section class="col">
+                <form id="formAddress" name="formAddress" [formGroup]="formAddress" #formElementAddress>
+                  <fieldset class="fieldset-border mb-3">
+                    <legend class="fieldset-border mb-3">Dados Endereço</legend>
+                    <div class="row mb-3">
+                      <label for="cep" class="col-sm-4 col-form-label required">CEP</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <input nz-input formControlName="cep" type="text" [textMask]="maskCEP" />
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="row">
-                    <label for="cpf" class="col-sm-4 col-form-label required" style="padding-left: 32px !important">CPF</label>
-                    <div class="ps-sm-4 col-sm-8 d-flex flex-column">
-                      <input nz-input formControlName="cpf" type="text" [textMask]="maskCPF" />
+                    <div class="row mb-3">
+                      <label for="uf" class="col-sm-4 col-form-label required">UF</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o estado" formControlName="uf">
+                          <nz-option [nzLabel]="item.sigla" [nzValue]="item.id" *ngFor="let item of listaEstados">
+                          </nz-option>
+                        </nz-select>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                    <div class="row mb-3">
+                      <label for="cidade" class="col-sm-4 col-form-label required">Cidade</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione a cidade"
+                          formControlName="cidade">
+                          <nz-option [nzLabel]="item.nome" [nzValue]="item.id" *ngFor="let item of listaMunicipios">
+                          </nz-option>
+                        </nz-select>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="logradouro" class="col-sm-4 col-form-label required">Logradouro</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <input nz-input formControlName="logradouro" type="text" />
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="numero" class="col-sm-4 col-form-label required">Número</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <input nz-input formControlName="numero" type="number" min="0" />
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="bairro" class="col-sm-4 col-form-label required">Bairro</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <input nz-input formControlName="bairro" type="text" />
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+              </section>
+
+              <div class="col">
+                <form id="formBank" name="formBank" [formGroup]="formBank" #formElementBank>
+                  <fieldset class="fieldset-border mb-3">
+                    <legend class="fieldset-border mb-3">Dados Bancários</legend>
+                    <div class="row mb-3">
+                      <label for="pix" class="col-sm-4 col-form-label required">Chave PIX</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <input nz-input formControlName="pix" type="text" />
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="banco" class="col-sm-4 col-form-label required">Banco</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <input nz-input formControlName="banco" type="text" />
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="tipoContaEnum" class="col-sm-4 col-form-label required">Tipo Conta</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Tipo de Conta"
+                          formControlName="tipoContaEnum">
+                          <nz-option [nzLabel]="item.name" [nzValue]="item.value" *ngFor="let item of typesAcountBack">
+                          </nz-option>
+                        </nz-select>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="agencia" class="col-sm-4 col-form-label required">Agência</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <input nz-input formControlName="agencia" type="number" min="0" />
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="conta" class="col-sm-4 col-form-label required">Conta</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <input nz-input formControlName="conta" type="text" min="0" />
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="digito" class="col-sm-4 col-form-label required">Dígito</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <input nz-input formControlName="digito" type="number" min="0" />
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
               </div>
-            </fieldset>
+            </div>
           </section>
         </div>
-        <div class="row  row-cols-1 row-cols-sm-2 gx-5 mt-2">
-          <section class="col">
-            <fieldset class="fieldset-border mb-3">
-              <legend class="fieldset-border mb-3">Dados Endereço</legend>
-              <div class="row mb-3">
-                <label for="cep" class="col-sm-4 col-form-label required">CEP</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="cep" type="number" [textMask]="maskCEP" />
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="logradouro" class="col-sm-4 col-form-label required">Logradouro</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="logradouro" type="text" />
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="number" class="col-sm-4 col-form-label required">Número</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="number" type="number" />
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="bairro" class="col-sm-4 col-form-label required">Bairro</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="bairro" type="text" />
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="cidade" class="col-sm-4 col-form-label required">Cidade</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="cidade" type="text" />
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="uf" class="col-sm-4 col-form-label required">UF</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o estado" formControlName="uf">
-                    <nz-option [nzLabel]="item.name" [nzValue]="item.id" *ngFor="let item of ufs">
-                    </nz-option>
-                  </nz-select>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset class="fieldset-border mt-4 mb-3">
-              <legend class="fieldset-border mb-3">Dados Contato</legend>
-              <div class="row mb-3">
-                <label for="celular" class="col-sm-4 col-form-label required">Celular</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="celular" type="number" [textMask]="maskTEL" />
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="telefone" class="col-sm-4 col-form-label required">Telefone</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="telefone" type="number" [textMask]="maskTEL" />
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="comercial" class="col-sm-4 col-form-label required">Contato Comercial</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="comercial" type="text" />
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="email" class="col-sm-4 col-form-label required">E-mail</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="email" type="text" />
-                </div>
-              </div>
-            </fieldset>
-          </section>
 
-          <section class="col">
-            <fieldset class="fieldset-border mb-3">
-              <legend class="fieldset-border mb-3">Redes Sociais</legend>
-              <div class="row mb-3">
-                <label for="linkedin" class="col-sm-4 col-form-label required">Linkedin</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="linkedin" type="text" />
-                </div>
-              </div>
+        <div class="row">
+          <div class="col">
+            <form id="formContact" name="formContact" [formGroup]="formContact" #formElementContact>
+              <fieldset class="fieldset-border mb-3">
+                <legend class="fieldset-border mb-3">Contato</legend>
 
-              <div class="row mb-3">
-                <label for="instagram" class="col-sm-4 col-form-label required">Instagram</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="instagram" type="text" />
+                <div class="row row-cols-2">
+                  <div class="col">
+                    <div class="row mb-3">
+                      <label for="celular" class="col-sm-4 col-form-label required">Celular</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <input nz-input formControlName="celular" autocomplete="false" [textMask]="maskTEL" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="row mb-3">
+                      <label for="foneFixo" class="col-sm-4 col-form-label required" style="padding-left: 32px !important">Telefone Fixo</label>
+                      <div class="ps-sm-4 col-sm-8 d-flex flex-column">
+                        <input nz-input formControlName="foneFixo" autocomplete="false" [textMask]="maskTEL" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="row mb-3">
+                      <label for="foneComercial" class="col-sm-4 col-form-label required">Telefone Celular</label>
+                      <div class="col-sm-8 d-flex flex-column">
+                        <input nz-input formControlName="foneComercial" autocomplete="false" [textMask]="maskTEL" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-              <div class="row mb-3">
-                <label for="facebook" class="col-sm-4 col-form-label required">Facebook</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="facebook" type="text" />
-                </div>
-              </div>
-            </fieldset>
-            <fieldset class="fieldset-border mb-3">
-              <legend class="fieldset-border mb-3">Acesso</legend>
-              <div class="row mb-3">
-                <label for="password" class="col-sm-4 col-form-label required">Senha</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="password" type="password" />
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="confirmPassword" class="col-sm-4 col-form-label required">Confirmar</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="confirmPassword" type="password" />
-                </div>
-              </div>
-            </fieldset>
-            <fieldset class="fieldset-border mt-4 mb-3">
-              <legend class="fieldset-border mb-3">Dados Bancários</legend>
-              <div class="row mb-3">
-                <label for="pix" class="col-sm-4 col-form-label required">Chave PIX</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="pix" type="text" />
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="banco" class="col-sm-4 col-form-label required">Banco</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="banco" type="number" />
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="agencia" class="col-sm-4 col-form-label required">Agência</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="agencia" type="number" />
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="conta" class="col-sm-4 col-form-label required">Conta</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="conta" type="number" />
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="digito" class="col-sm-4 col-form-label required">Dígito</label>
-                <div class="col-sm-8 d-flex flex-column">
-                  <input nz-input formControlName="digito" type="number" />
-                </div>
-              </div>
-            </fieldset>
-          </section>
+              </fieldset>
+            </form>
+          </div>
         </div>
       </div>
 
-      <div class="col-12 d-flex justify-content-end">
+      <div class="col-12 d-flex justify-content-end mt-1">
         <div class="col-10">
           <fieldset class="fieldset-border">
             <legend class="fieldset-border mb-3">Termos de Uso</legend>
             <div class="row mb-3">
               <div class="d-flex">
-                <label nz-checkbox [nzValue]="true" class="me-2" formControlName="termosUso"></label>
-                <p>Li e concordo com todos os <a href="/">termos de uso</a> da aplicação.</p>
+                <label nz-checkbox [nzValue]="true" class="me-2" [(ngModel)]="termoUso"></label>
+                <p>Li e concordo com todos os <a (click)="openTermsOfUse()" class="link">termos de uso</a> da aplicação.</p>
               </div>
             </div>
           </fieldset>
         </div>
       </div>
-    </div>
 
-    <div class="col-12 d-flex justify-content-end">
-      <button class="capitalize me-2 btn-kebos-line rounded-pill" nz-button nzType="default" type="button" nzSize="default" *ngIf="action != routeAction.View" (click)="cancel()">Cancelar</button>
-      <button class="capitalize me-2 btn-kebos-line rounded-pill" nz-button nzType="default" type="button" nzSize="default" *ngIf="action == routeAction.View">Voltar</button>
-      <button class="capitalize btn-kebos rounded-pill" nz-button nzType="primary" type="submit" nzSize="default" *ngIf="action != routeAction.View">Confirmar</button>
+      <div class="col-12 d-flex justify-content-end">
+        <button class="capitalize me-2 btn-kebos-line rounded-pill" nz-button nzType="default" type="button"
+          nzSize="default" *ngIf="action != routeAction.View" (click)="cancel()">Cancelar</button>
+        <button class="capitalize me-2 btn-kebos-line rounded-pill" nz-button nzType="default" type="button"
+          nzSize="default" *ngIf="action == routeAction.View">Voltar</button>
+        <button class="capitalize btn-kebos rounded-pill" nz-button nzType="primary" type="button" nzSize="default"
+          *ngIf="action != routeAction.View" (click)="savePartner()">Confirmar</button>
+      </div>
     </div>
-  </form>
+  </div>
 </div>
