@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthenticationService } from '@core/auth/authentication.service';
 import { PermissoesEnum, UserAuth } from '@core/auth/user';
-import { HttpStatusEnum } from '@core/http-interceptors/http-status';
 import { DialogService } from '@core/services/dialog.service';
-import { environment } from '@env/environment';
 import * as dayjs from 'dayjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Observable, filter, map } from 'rxjs';
+import { ModalOptions } from 'ng-zorro-antd/modal';
+import { StatusSignupModalComponent } from '@modules/signup/components/status-signup-modal/status-signup-modal.component';
 
 @Component({
   selector: 'app-root',
@@ -40,18 +40,16 @@ export class AppComponent implements OnInit {
         return { event, route: this.rootRoute(this.activedRouted) };
       })
     ).subscribe((data: { event: NavigationEnd, route: ActivatedRoute }) => {
+      let statusCadastro  = this.usuarioLogado.statusCadastro;
+      let urlEditPartner = data.event.url.includes('partner/edit');
+      (!statusCadastro && !urlEditPartner) ? this.statusSignupModal() : null;
+
       if (data.route.snapshot.data?.['layout']?.padrao == undefined) {
         this.urlAtual = false
       } else {
         this.urlAtual = true
       }
     });
-
-    /* this.breakpointObserver.observe([
-      Breakpoints.Handset
-    ]).subscribe((data)=>{
-      this.isCollapsed = data.matches;
-    }); */
   }
 
   private rootRoute(route: ActivatedRoute): ActivatedRoute {
@@ -65,6 +63,20 @@ export class AppComponent implements OnInit {
     this.dialogService.confirm('Deseja realmente sair do sistema?', () => {
       this.authenticationService.logout();
     })
+  }
+
+
+  statusSignupModal(): void {
+    const modalStatusSignup = this.modalService.create({
+      nzContent: StatusSignupModalComponent,
+      //nzTitle: 'Atualizar Cadastro',
+      nzCentered: true,
+      nzFooter: null,
+      //nzMaskClosable: false,
+      nzClosable: true,
+      nzClassName: 'modal-status-signup'
+    });
+    modalStatusSignup.afterClose.subscribe((boolean) => boolean ? this.router.navigate([`/partner/edit/${this.usuarioLogado.id}`]) : this.authenticationService.logout() );
   }
 
   get usuarioLogado(): UserAuth {

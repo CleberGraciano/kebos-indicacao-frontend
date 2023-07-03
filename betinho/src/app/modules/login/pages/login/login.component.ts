@@ -1,11 +1,9 @@
-import { NgxPermissionsService } from 'ngx-permissions';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@core/auth/authentication.service';
 import { NotificationService } from '@core/services/notification.service';
 import { environment } from '@env/environment';
-import { UserAuth } from '@core/auth/user';
 
 @Component({
   selector: 'app-login',
@@ -30,9 +28,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     private router: Router,
-    private notificationService: NotificationService,
-    private route: ActivatedRoute,
-    private permissionService: NgxPermissionsService
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -72,11 +68,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     if (this.loginForm.valid) {
-      this.authenticationService.login(this.loginForm.value.login, this.loginForm.value.password).subscribe((res) => {
-        this.router.navigate(['/home']);
-      }, (error) => {
-        this.notificationService.error('Ops...', 'Usuário e/ou senha estão incorretos.');
-      })
+      this.authenticationService.login(this.loginForm.value.login, this.loginForm.value.password).subscribe((res) => this.router.navigate(['/home']), (error) => this.notificationService.error('Ops...', 'Usuário e/ou senha estão incorretos.'))
     }
   }
 
@@ -90,4 +82,5 @@ export class LoginComponent implements OnInit {
       this.notificationService.error('Atenção!', 'Insira um e-mail valido!');
     }
   }
+
 }
