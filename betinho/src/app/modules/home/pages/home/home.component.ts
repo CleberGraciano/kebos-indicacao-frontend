@@ -13,9 +13,10 @@ import { count } from 'rxjs';
 export class HomeComponent implements OnInit {
 
   nameUser: string | undefined;
-  permissaoAdmEModerador = [PermissoesEnum.Adm, PermissoesEnum.Moderador]
-  permissaoTodos = [PermissoesEnum.Adm, PermissoesEnum.Moderador, PermissoesEnum.User]
-  permissaoModeradorEUser = [PermissoesEnum.Moderador, PermissoesEnum.User]
+  permissaoAdm = [PermissoesEnum.Adm];
+  permissaoAdmEModerador = [PermissoesEnum.Adm, PermissoesEnum.Moderador];
+  permissaoTodos = [PermissoesEnum.Adm, PermissoesEnum.Moderador, PermissoesEnum.User];
+  permissaoModeradorEUser = [PermissoesEnum.Moderador, PermissoesEnum.User];
 
   listRecommendation: any[] = [];
   initLoading = true; // bug

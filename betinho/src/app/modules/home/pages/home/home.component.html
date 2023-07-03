@@ -53,6 +53,13 @@
               </div>
           </div>
        </ng-container>
+       <ng-container *ngxPermissionsOnly="permissaoTodos">
+        <div class="col">
+            <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/recommendation']">
+                Indicações
+            </div>
+        </div>
+     </ng-container>
        <ng-container *ngxPermissionsOnly="permissaoAdmEModerador">
           <div class="col">
               <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/item']">
@@ -60,10 +67,10 @@
               </div>
           </div>
        </ng-container>
-       <ng-container *ngxPermissionsOnly="permissaoTodos">
+       <ng-container *ngxPermissionsOnly="permissaoAdm">
           <div class="col">
-              <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/recommendation']">
-                  Indicações
+              <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/category']">
+                  Categorias
               </div>
           </div>
        </ng-container>

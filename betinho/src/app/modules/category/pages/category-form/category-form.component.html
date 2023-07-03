@@ -1,0 +1,31 @@
+<div class="row">
+  <h4 class="col-12 mb-4">
+    <span class="text-capitalize">
+      {{ action == routeAction.Insert ? 'Cadastrar' : action }}
+      Categoria
+    </span>
+  </h4>
+</div>
+<div class="row">
+  <form id="formCategory" name="formCategory" [formGroup]="formCategory" #formElement (ngSubmit)="saveItem()">
+    <div class="row row-cols-1">
+      <div class="col mb-3">
+        <label for="nome" class="form-label required">Nome</label>
+        <div class="d-flex flex-column">
+          <input nz-input formControlName="nome" type="text" />
+        </div>
+      </div>
+      <div class="col mb-3">
+        <label for="descricao" class="form-label required">Descrição</label>
+        <div class="d-flex flex-column">
+          <input nz-input formControlName="descricao" type="text" />
+        </div>
+      </div>
+    </div>
+    <div class="col-12 d-flex justify-content-end mt-3">
+      <button class="capitalize me-2 btn-kebos-line rounded-pill" nz-button nzType="default" type="button" nzSize="default" *ngIf="action != routeAction.View" (click)="cancel()">Cancelar</button>
+      <button class="capitalize me-2 btn-kebos-line rounded-pill" nz-button nzType="default" type="button" nzSize="default" *ngIf="action == routeAction.View">Voltar</button>
+      <button class="capitalize btn-kebos rounded-pill" nz-button nzType="primary" type="submit" nzSize="default" *ngIf="action != routeAction.View">Confirmar</button>
+    </div>
+  </form>
+</div>

@@ -5,6 +5,7 @@ import { PermissoesEnum, UserAuth } from '@core/auth/user';
 import { HttpStatusEnum } from '@core/http-interceptors/http-status';
 import { DialogService } from '@core/services/dialog.service';
 import { environment } from '@env/environment';
+import * as dayjs from 'dayjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Observable, filter, map } from 'rxjs';
 
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
   permissaoAdm = PermissoesEnum.Adm;
   permissaoModerador = PermissoesEnum.Moderador;
   permissaoUser = PermissoesEnum.User;
+  yearActual = dayjs().year();
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -27,8 +29,8 @@ export class AppComponent implements OnInit {
     private modalService: NzModalService,
     private dialogService: DialogService,
     private activedRouted: ActivatedRoute) {
-    console.info(`App Version: ${environment.version}`);
     this.isLoggedIn$ = this.authenticationService.isLoggedIn;
+    this.router.config.some(route => (route.path === '') ? this.router.navigate(['/login']) : null);
   }
 
   ngOnInit(): void {
@@ -44,7 +46,7 @@ export class AppComponent implements OnInit {
         this.urlAtual = true
       }
     });
-    
+
     /* this.breakpointObserver.observe([
       Breakpoints.Handset
     ]).subscribe((data)=>{

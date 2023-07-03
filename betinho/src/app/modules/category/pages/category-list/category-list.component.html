@@ -3,9 +3,9 @@
 <div [class.d-none]="route.children?.length !== 0">
   <div class="row">
     <div class="col-12 d-flex justify-content-between mb-3">
-      <h4 class="mb-3">Lista de Itens</h4>
+      <h4 class="mb-3">Lista de Categorias</h4>
 
-      <button class="ms-2 rounded-pill" nz-button nzType="primary" type="submit" form="formFiltro" nzSize="default" [routerLink]="['/item/insert']">
+      <button class="ms-2 rounded-pill" nz-button nzType="primary" type="submit" form="formFiltro" nzSize="default" [routerLink]="['/category/insert']">
         <span nz-icon nzType="plus-circle"></span>
         Cadastrar
       </button>
@@ -33,9 +33,7 @@
           <thead>
             <tr>
               <th scope="col">Nome</th>
-              <th scope="col">Tipo</th>
-              <th scope="col">Bônus</th>
-              <th scope="col">Data de Cadastro</th>
+              <th scope="col">Descricao</th>
               <th scope="col" nzWidth="100px" class="text-center">Ações</th>
             </tr>
           </thead>
@@ -43,9 +41,7 @@
             <ng-template nz-virtual-scroll let-data let-index="index">
               <tr>
                 <td>{{ data?.nome }}</td>
-                <td>{{ data?.tipo?.nome }}</td>
-                <td>{{ data?.bonus }}</td>
-                <td>{{ data?.created | brDate }}</td>
+                <td>{{ data?.descricao }}</td>
                 <td class="text-center">
                   <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Editar" (click)="edit(data)">
                     <span nz-icon nzType="edit" nzTheme="outline"></span>

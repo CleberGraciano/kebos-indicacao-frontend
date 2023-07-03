@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/' },
+  { path: '', pathMatch: 'full', redirectTo: '/home' },
   { path: 'login', loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule) },
   { path: 'cadastrar', loadChildren: () => import('./modules/signup/signup.module').then(m => m.SignupModule) },
   { path: 'home', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) },
@@ -25,6 +25,11 @@ const routes: Routes = [
     path: 'recommendation',
     loadChildren: () => import('./modules/recommendation/recommendation.module').then(m => m.RecommendationModule),
     data: { breadcrumb: 'Indicações' }
+  },
+  {
+    path: 'category',
+    loadChildren: () => import('./modules/category/category.module').then(m => m.CategoryModule),
+    data: { breadcrumb: 'Categorias' }
   },
 ];
 

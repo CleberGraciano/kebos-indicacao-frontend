@@ -2,15 +2,16 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '@core/services/notification.service';
+import { CategoryService } from '@modules/category/category.service';
 import { ItemService } from '@modules/item/item.service';
 import { NzTableComponent } from 'ng-zorro-antd/table';
 
 @Component({
-  selector: 'app-item-list',
-  templateUrl: './item-list.component.html',
-  styleUrls: ['./item-list.component.scss']
+  selector: 'app-category-list',
+  templateUrl: './category-list.component.html',
+  styleUrls: ['./category-list.component.scss']
 })
-export class ItemListComponent implements OnInit {
+export class CategoryListComponent implements OnInit {
 
   dataSet: any[] = []
   formFiltro!: FormGroup;
@@ -20,7 +21,7 @@ export class ItemListComponent implements OnInit {
   total: number = 0;
   actions: any[] = [];
   filtro!: any;
-  routePrevious = "item";
+  routePrevious = "categoria";
 
   dateFormat = "dd/MM/yyyy";
 
@@ -29,7 +30,7 @@ export class ItemListComponent implements OnInit {
     public route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService,
-    private service: ItemService
+    private service: CategoryService
   ) { }
 
   ngOnInit() {

@@ -7,18 +7,12 @@
             <img src="/assets/images/logo.png" alt="logo">
           </a>
         </div>
-        <!-- <ul nz-menu nzMode="horizontal">
-          <li nz-submenu nzPlacement="bottomLeft" nzTitle="Vendedores">
-            <ul>
-              <li nz-menu-item>Cadastrar</li>
-            </ul>
-          </li>
-        </ul> -->
         <ul nz-menu nzMode="horizontal">
           <li nz-menu-item [routerLink]="['/home']" [nzMatchRouter]="true" *ngxPermissionsOnly="[permissaoAdm, permissaoModerador, permissaoUser]">Home</li>
           <li nz-menu-item [routerLink]="['/partner']" [nzMatchRouter]="true" *ngxPermissionsOnly="[permissaoAdm, permissaoModerador]">Parceiros</li>
           <li nz-menu-item [routerLink]="['/seller' ]" [nzMatchRouter]="true" *ngxPermissionsOnly="[permissaoAdm, permissaoModerador]">Vendedores</li>
           <li nz-menu-item [routerLink]="['/item' ]" [nzMatchRouter]="true" *ngxPermissionsOnly="[permissaoAdm, permissaoModerador]">Itens</li>
+          <li nz-menu-item [routerLink]="['/category' ]" [nzMatchRouter]="true" *ngxPermissionsOnly="[permissaoAdm]">Categorias</li>
           <li nz-menu-item [routerLink]="['/recommendation' ]" [nzMatchRouter]="true" *ngxPermissionsOnly="[permissaoAdm, permissaoModerador, permissaoUser]">Indicações</li>
           <li nz-menu-item (click)="logout()">Sair</li>
         </ul>
@@ -30,10 +24,9 @@
         <router-outlet></router-outlet>
       </div>
     </nz-content>
-    <nz-footer>Kebos ©2023</nz-footer>
+    <nz-footer>Kebos ©{{ yearActual }}</nz-footer>
   </nz-layout>
 </ng-container>
-
 
 <ng-container *ngIf="!(isLoggedIn$ | async)">
   <div class="container">
