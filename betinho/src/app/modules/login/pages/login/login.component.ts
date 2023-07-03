@@ -1,9 +1,11 @@
+import { NgxPermissionsService } from 'ngx-permissions';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@core/auth/authentication.service';
 import { NotificationService } from '@core/services/notification.service';
 import { environment } from '@env/environment';
+import { UserAuth } from '@core/auth/user';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +15,7 @@ import { environment } from '@env/environment';
 export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
+  forgotPasswordForm!: FormGroup;
   googleURL = environment.GOOGLE_AUTH_URL;
   facebookURL = environment.FACEBOOK_AUTH_URL;
   githubURL = environment.GITHUB_AUTH_URL;
@@ -21,12 +24,15 @@ export class LoginComponent implements OnInit {
   passwordVisible: boolean = false;
   password?: string;
 
+  isLogin: boolean = true;
+
   constructor(
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     private router: Router,
     private notificationService: NotificationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private permissionService: NgxPermissionsService
   ) { }
 
   ngOnInit(): void {
@@ -35,8 +41,12 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     })
 
-    console.log(this.route.snapshot.queryParamMap.get('token'));
-    console.log(this.route.snapshot.queryParamMap.get('error'));
+    this.forgotPasswordForm = this.formBuilder.group({
+      email: ['', Validators.required]
+    })
+
+    // console.log(this.route.snapshot.queryParamMap.get('token'));
+    // console.log(this.route.snapshot.queryParamMap.get('error'));
 
       // if (this.tokenStorage.getToken()) {
       //   this.isLoggedIn = true;
@@ -62,12 +72,22 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value)
-      this.authenticationService.login(this.loginForm.value.login, this.loginForm.value.password).subscribe((data) => {
+      this.authenticationService.login(this.loginForm.value.login, this.loginForm.value.password).subscribe((res) => {
         this.router.navigate(['/home']);
-      }, (error)=>{
+      }, (error) => {
         this.notificationService.error('Ops...', 'Usuário e/ou senha estão incorretos.');
       })
+    }
+  }
+
+  forgotPassword() {
+    if (this.forgotPasswordForm.valid) {
+      this.authenticationService.forgotPassword(this.forgotPasswordForm.controls['email'].value).subscribe((res) => {
+        this.isLogin = true;
+        this.notificationService.success('Sucesso!', 'Acesse sua caixa de e-mail!');
+      })
+    } else {
+      this.notificationService.error('Atenção!', 'Insira um e-mail valido!');
     }
   }
 }

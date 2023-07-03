@@ -8,6 +8,7 @@ import { FormService } from '@core/services/form.service';
 import { NotificationService } from '@core/services/notification.service';
 import { PartnerService } from '@modules/partner/partner.service';
 import { TermsOfUse } from '@shared/termsOfUse/text';
+import { error } from 'console';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 
@@ -59,7 +60,8 @@ export class PartnerFormComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private service: PartnerService,
-    private modalService: NzModalService
+    private modalService: NzModalService,
+    private authenticationService: AuthenticationService
   ) { }
 
   ngOnInit() {
@@ -113,11 +115,13 @@ export class PartnerFormComponent implements OnInit {
 
     if (this.edit) {
       if (this.param) {
-        this.service.getIdPartner(this.param).subscribe(res => {
-          this.formPartner.patchValue(res)
-          this.formAddress.patchValue(res)
-          this.formBank.patchValue(res)
-          this.formContact.patchValue(res)
+        this.service.getIdPartner(this.param).subscribe((res: any) => {
+          this.formPartner.patchValue(res);
+          this.formAddress.patchValue(res.address);
+          this.formBank.patchValue(res.financeData);
+          this.formContact.patchValue(res.contact);
+          this.imageUser = res.imagem;
+          this.termoUso = res.termoUso;
         })
       }
       else {
@@ -127,7 +131,7 @@ export class PartnerFormComponent implements OnInit {
   }
 
   savePartner(): void {
-    let messages: any[]=[];
+    let messages: any[] = [];
     const messagesFormPartner = this.formService.getValidationsMessages(this.formPartner, this.formElementPartner);
     const messagesFormAddress = this.formService.getValidationsMessages(this.formAddress, this.formElementAddress);
     const messagesFormBank = this.formService.getValidationsMessages(this.formBank, this.formElementBank);
@@ -151,15 +155,23 @@ export class PartnerFormComponent implements OnInit {
       obj.imagem = this.imageUser;
       obj.termoUso = this.termoUso;
 
+      obj.cpf = this.removeCaracteres(obj.cpf)
+      obj.address.cep = this.removeCaracteres(obj.address.cep);
+      obj.contact.celular = this.removeCaracteres(obj.contact.celular);
+      obj.contact.foneFixo = this.removeCaracteres(obj.contact.foneFixo);
+      obj.contact.foneComercial = this.removeCaracteres(obj.contact.foneComercial);
+
+      obj.providerUserId = this.authenticationService.currentUserValue.id;
+
       console.log(obj)
 
       switch (this.action) {
         case RouteAction.Edit:
         case RouteAction.Insert:
-          // this.service.insertPartner(obj).subscribe((data) => {
-          //   this.notificationService.success('Cadastro realizado com sucesso!!!', '');
-          //   this.returnPage();
-          // })
+          this.service.insertPartner(obj).subscribe((res: any) => {
+            this.notificationService.success('Cadastro realizado com sucesso!!!', '');
+            this.returnPage();
+          })
           break;
         // case RouteAction.Edit:
         //   // this.service.editPartner(this.param, obj).subscribe((data) => {
@@ -207,10 +219,14 @@ export class PartnerFormComponent implements OnInit {
     return false;
   }
 
-  validatePassword () {
+  validatePassword() {
     let password = this.passwordForm.value;
     let passwordConfirm = this.passwordConfirmForm.value;
     (password !== passwordConfirm) && this.notificationService.error('Atenção:', 'As senhas estão diferentes!');
+  }
+
+  removeCaracteres(value: string) {
+    return value = value.replace(/[^\d]/g, "");
   }
 
   get ufForm() {

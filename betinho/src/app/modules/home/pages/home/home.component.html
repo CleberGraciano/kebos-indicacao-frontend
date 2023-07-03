@@ -7,7 +7,7 @@
 <br>
 <div class="row row-cols-2 gx-5">
 
-  <!-- <ng-container [ngxPermissionsOnly]="permissaoModeradorEUser"> -->
+  <ng-container *ngxPermissionsOnly="permissaoModeradorEUser">
     <div class="col">
       <div class="col-12">
         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o Status" class="col-12" [(ngModel)]="statusSelect">
@@ -23,8 +23,8 @@
               <nz-list-item-action>{{ item.id }}</nz-list-item-action>
               <nz-list-item-action>{{ item.status }}</nz-list-item-action>
               <nz-list-item-action>{{ item.nomePessoaEmpresa }}</nz-list-item-action>
-              <nz-list-item-action>{{ item.createdDate }}</nz-list-item-action>
-              <nz-list-item-action>{{ item.modifiedDate }}</nz-list-item-action>
+              <nz-list-item-action>{{ item.createdDate | brDate }}</nz-list-item-action>
+              <nz-list-item-action>{{ item.modifiedDate | brDate }}</nz-list-item-action>
             </ul>
           </ng-container>
         </nz-list-item>
@@ -35,38 +35,38 @@
         </ng-container>
       </nz-list>
     </div>
-  <!-- </ng-container> -->
+  </ng-container>
 
   <div class="col">
     <div class="row row-cols-2 row-cols-sm-3 g-3">
-      <!-- <ng-container [ngxPermissionsOnly]="permissaoAdmEModerador"> -->
+       <ng-container *ngxPermissionsOnly="permissaoAdmEModerador">
           <div class="col">
               <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/partner']">
                   Parceiros
               </div>
           </div>
-      <!-- </ng-container> -->
-      <!-- <ng-container [ngxPermissionsOnly]="permissaoAdmEModerador"> -->
+       </ng-container>
+       <ng-container *ngxPermissionsOnly="permissaoAdmEModerador">
           <div class="col">
               <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/seller']">
                   Vendedores
               </div>
           </div>
-      <!-- </ng-container> -->
-      <!-- <ng-container [ngxPermissionsOnly]="permissaoAdmEModerador"> -->
+       </ng-container>
+       <ng-container *ngxPermissionsOnly="permissaoAdmEModerador">
           <div class="col">
               <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/item']">
                   Itens
               </div>
           </div>
-      <!-- </ng-container> -->
-      <!-- <ng-container [ngxPermissionsOnly]="permissaoTodos"> -->
+       </ng-container>
+       <ng-container *ngxPermissionsOnly="permissaoTodos">
           <div class="col">
               <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/recommendation']">
                   Indicações
               </div>
           </div>
-      <!-- </ng-container> -->
+       </ng-container>
       <div class="col">
           <div class="col rounded shadow-sm text-center card-custom" (click)="logout()">
               Sair

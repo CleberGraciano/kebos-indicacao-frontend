@@ -114,7 +114,7 @@
                       <div class="col-sm-8 d-flex flex-column">
                         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione a cidade"
                           formControlName="cidade">
-                          <nz-option [nzLabel]="item.nome" [nzValue]="item.id" *ngFor="let item of listaMunicipios">
+                          <nz-option [nzLabel]="item.nome" [nzValue]="item.nome" *ngFor="let item of listaMunicipios">
                           </nz-option>
                         </nz-select>
                       </div>

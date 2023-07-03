@@ -9,10 +9,11 @@ import { Router } from '@angular/router';
 import { ApiService } from '@core/services/api.service';
 import { LoaderService } from '@shared/components/loader/loader.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 const routes = {
     login: `signin`,
-    forgotenPassword: (email: string) => `${email}/forgotpasswd`,
+    forgotPassword: `email/forgot-password`,
     changePassword: `user/changepasswd`
 }
 
@@ -25,7 +26,8 @@ export class AuthenticationService {
     constructor(private apiService: ApiService,
         private localStorageService: LocalStorageService,
         private router: Router,
-        private loaderService: LoaderService) {
+        private loaderService: LoaderService,
+        private permissionService: NgxPermissionsService) {
         this.currentUserSubject = new BehaviorSubject<UserAuth>(JSON.parse(localStorageService.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
         this.loggedIn = new BehaviorSubject<boolean>(localStorageService.getItem('token') != undefined);
@@ -54,10 +56,14 @@ export class AuthenticationService {
                       let helper = new JwtHelperService();
                       let dados = helper.decodeToken(res.accessToken)
                       let dadosUsuario = { ...<UserAuth>dados, ...res.user };
-                      console.log('Dados Usuario', dadosUsuario)
                       this.localStorageService.setItem('token', JSON.stringify(res.accessToken));
-                      //dadosUsuario.expires_in = new Date(new Date(dadosUsuario.created).getDate() + (dadosUsuario.exp * 1000))
                       this.setCurrentUser(dadosUsuario);
+
+                      const permissions = <any>[];
+                      dadosUsuario.roles.forEach((x: any) => permissions.push(x));
+                      this.permissionService.loadPermissions(permissions);
+                      console.log(dadosUsuario.roles)
+
                       this.loggedIn.next(true);
                     }
                     return of(res);
@@ -67,8 +73,8 @@ export class AuthenticationService {
                 }));
     }
 
-    forgotenPassword(username: string) {
-        return this.apiService.get<any>(environment.auth + routes.forgotenPassword(username));
+    forgotPassword(email: string) {
+        return this.apiService.post<string>(routes.forgotPassword, email);
     }
 
     logout(setReturnUrl?: boolean, message?: string) {

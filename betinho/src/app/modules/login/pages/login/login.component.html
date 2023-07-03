@@ -1,48 +1,74 @@
 <div class="d-flex container w-100 login-container align-items-center justify-content-center">
+  <ng-container *ngIf="isLogin">
     <form class="login-form py-5 px-3 shadow" id="loginForm" [formGroup]="loginForm" (ngSubmit)="login()">
-        <div class="row d-flex align-items-center justify-content-center">
-            <img src="/assets/images/logo.png" class="login-form-logo">
+      <div class="row d-flex align-items-center justify-content-center">
+        <img src="/assets/images/logo.png" class="login-form-logo">
+      </div>
+      <div class="row mt-3 px-3">
+        <div class="form-group mb-3">
+          <label for="login">Usuário</label>
+          <input nz-input formControlName="login" name="login" autocomplete="login" />
         </div>
-        <div class="row mt-3 px-3">
-            <div class="form-group mb-3">
-                <label for="login">Usuário</label>
-                <input nz-input formControlName="login" name="login" autocomplete="login" />
-            </div>
-            <div class="form-group">
-                <label for="password">Senha</label>
-                <nz-input-group [nzSuffix]="suffixTemplate">
-                  <input [type]="passwordVisible ? 'text' : 'password'" nz-input formControlName="password" autocomplete="current-password" />
-                </nz-input-group>
-            </div>
-            <ng-template #suffixTemplate>
-              <span nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" (click)="passwordVisible = !passwordVisible"></span>
-            </ng-template>
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <nz-input-group [nzSuffix]="suffixTemplate">
+            <input [type]="passwordVisible ? 'text' : 'password'" nz-input formControlName="password"
+              autocomplete="current-password" />
+          </nz-input-group>
         </div>
-        <div class="row mt-4 px-3">
-            <div class="d-flex flex-column">
-                <button nz-button nzType="primary" type="submit" form="loginForm" nzSize="default"
-                    class="mb-3">Entrar</button>
-            </div>
+        <ng-template #suffixTemplate>
+          <span nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+            (click)="passwordVisible = !passwordVisible"></span>
+        </ng-template>
+      </div>
+      <div class="row mt-4 px-3">
+        <div class="d-flex flex-column">
+          <button nz-button nzType="primary" type="submit" form="loginForm" nzSize="default"
+            class="mb-3">Entrar</button>
         </div>
-        <div class="row mt-2">
-            <p class="social-login text-center">
-                Acessar com:
-                <a href="{{ googleURL }}" class="ms-2">
-                    <img alt="Login with Google" src="/assets/images/redes-sociais/google.png" class="btn-img">
-                </a>
-                <a href="{{ facebookURL }}">
-                    <img alt="Login with Facebook" src="/assets/images/redes-sociais/facebook.png" class="btn-img">
-                </a>
-                <a href="{{ githubURL }}">
-                    <img alt="Login with Github" src="/assets/images/redes-sociais/github.png" class="btn-img">
-                </a>
-                <a href="{{ linkedinURL }}">
-                    <img alt="Login with Linkedin" src="/assets/images/redes-sociais/linkedin.png" class="btn-img-linkedin">
-                </a>
-            </p>
-        </div>
-        <div class="row link">
-            <button nz-button nzType="link" type="button" nzSize="default">Esqueci minha senha</button>
-        </div>
+      </div>
+      <div class="row mt-2">
+        <p class="social-login text-center">
+          Acessar com:
+          <a href="{{ googleURL }}" class="ms-2">
+            <img alt="Login with Google" src="/assets/images/redes-sociais/google.png" class="btn-img">
+          </a>
+          <a href="{{ facebookURL }}">
+            <img alt="Login with Facebook" src="/assets/images/redes-sociais/facebook.png" class="btn-img">
+          </a>
+          <a href="{{ githubURL }}">
+            <img alt="Login with Github" src="/assets/images/redes-sociais/github.png" class="btn-img">
+          </a>
+          <a href="{{ linkedinURL }}">
+            <img alt="Login with Linkedin" src="/assets/images/redes-sociais/linkedin.png" class="btn-img-linkedin">
+          </a>
+        </p>
+      </div>
+      <div class="row link">
+        <button nz-button nzType="link" type="button" nzSize="default" (click)="isLogin = false">Esqueci minha senha</button>
+      </div>
     </form>
+  </ng-container>
+
+  <ng-container *ngIf="!isLogin">
+    <form class="login-form py-5 px-3 shadow" id="forgotPasswordForm" [formGroup]="forgotPasswordForm"
+      (ngSubmit)="forgotPassword()">
+      <div class="row d-flex align-items-center justify-content-center">
+        <img src="/assets/images/logo.png" class="login-form-logo">
+      </div>
+      <div class="row mt-3 px-3">
+        <div class="form-group mb-3">
+          <label for="email">E-mail</label>
+          <input nz-input formControlName="email" name="email" />
+        </div>
+        <div class="col-12 mt-2">
+          <button nz-button nzType="primary" type="submit" form="forgotPasswordForm" nzSize="default"
+            class="mb-3" nzBlock>Recuperar Senha</button>
+        </div>
+      </div>
+      <div class="row link mt-3">
+        <button nz-button nzType="link" type="button" nzSize="default" (click)="isLogin = true">Acessar com Login</button>
+      </div>
+    </form>
+  </ng-container>
 </div>

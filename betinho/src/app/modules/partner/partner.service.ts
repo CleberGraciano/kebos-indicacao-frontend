@@ -1,14 +1,13 @@
-import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DadosPaginados } from '@core/common/common';
 import { ApiService } from '@core/services/api.service';
+import { environment } from '@env/environment';
 import { of } from 'rxjs';
 
 const routes = {
-  filter: `partners`,
-  insert: `partners`,
-  edit: (id: number) => `partners/${id}`,
-  getId: (id: number)=> `partners/${id}`,
+  filter: `partnes`,
+  insert: `partner`,
+  edit: (id: number) => `partner/${id}`,
+  getId: (id: number)=> `partner/${id}`,
   estados: 'https://servicodados.ibge.gov.br/api/v1/localidades/estados',
   municipios: (UF: string)=> `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${UF}/municipios`
 }
@@ -30,19 +29,19 @@ export class PartnerService {
   // }
 
   filter() {
-    return this.apiService.get<any>(routes.filter);
+    return this.apiService.get<any>(environment.auth + routes.filter);
   }
 
   insertPartner(obj: any) {
-    return this.apiService.post<any>(routes.insert, obj);
+    return this.apiService.post<any>(environment.auth + routes.insert, obj);
   }
 
   editPartner(id: number, obj: any) {
-    return this.apiService.put<any>(routes.edit(id), obj);
+    return this.apiService.put<any>(environment.auth + routes.edit(id), obj);
   }
 
   getIdPartner(id: number) {
-    return this.apiService.get<any>(routes.getId(id));
+    return this.apiService.get<any>(environment.auth + routes.getId(id));
   }
 
   getEstados() {

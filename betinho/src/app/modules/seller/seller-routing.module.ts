@@ -41,7 +41,10 @@ const routes: Routes = [
         data: {
           breadcrumb: "Editar",
           acao: RouteAction.Edit,
-          only: [PermissoesEnum.Adm, PermissoesEnum.Moderador],
+          permissions: {
+            only: [PermissoesEnum.Adm, PermissoesEnum.Moderador],
+            redirectTo: '/'
+          }
         },
       }
     ]

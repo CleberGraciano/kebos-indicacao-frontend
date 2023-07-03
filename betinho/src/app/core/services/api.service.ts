@@ -6,7 +6,6 @@ import { environment } from '@env/environment';
   providedIn: 'root'
 })
 export class ApiService {
-
   constructor(private http: HttpClient) { }
 
   public post<T>(url: string, data: any, ignoreLoading?: boolean, headers?: HttpHeaders, params?: HttpParams) {
@@ -14,14 +13,26 @@ export class ApiService {
     return this.http.post<T>(this.prepareURL(url), data, { headers, params });
   }
 
+  public postCustomApi<T>(url: string, data: any, headers?: HttpHeaders, params?: HttpParams) {
+    return this.http.post<T>(url, data, { headers, params })
+  }
+
   public get<T>(url: string, ignoreLoading?: boolean, params?: HttpParams, headers?: HttpHeaders) {
     params = this.setIgnoreLoading(ignoreLoading, params);
     return this.http.get<T>(this.prepareURL(url), { headers, params });
   }
 
+  public getCustomApi<T>(url: string, params?: HttpParams, headers?: HttpHeaders) {
+    return this.http.get<T>(url, { params, headers });
+  }
+
   public put<T>(url: string, data?: any, ignoreLoading?: boolean, params?: HttpParams, headers?: HttpHeaders) {
     params = this.setIgnoreLoading(ignoreLoading, params);
     return this.http.put<T>(this.prepareURL(url), data, { headers, params })
+  }
+
+  public putCustomApi<T>(url: string, data?: any, headers?: HttpHeaders, params?: HttpParams) {
+    return this.http.put<T>(url, data, { headers, params })
   }
 
   public delete<T>(url: string, data?: any, ignoreLoading?: boolean, params?: HttpParams) {

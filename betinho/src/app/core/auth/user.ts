@@ -6,7 +6,7 @@ export interface UserAuth {
   displayName?: string;
   email?: string;
   statusCadastro?: boolean;
-  roles?: string[];
+  roles?: any;
 }
 
 

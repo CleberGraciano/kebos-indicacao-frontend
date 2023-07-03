@@ -52,10 +52,13 @@ export class AppModule { }
 export function loadPermissions(permissionService: NgxPermissionsService, roleService: NgxRolesService, localStorageService: LocalStorageService) {
   return () => {
     const userData = <UserAuth>JSON.parse(localStorageService.getItem('currentUser'));
-    if (userData?.roles) {
-      let permissions = <any>[];
-      userData?.roles.forEach(x => permissions.push(x));
-      permissionService.loadPermissions(permissions);
+
+    if (userData) {
+      if (userData?.roles) {
+        const permissions = <any>[];
+        userData?.roles.forEach((x: any) => permissions.push(x));
+        permissionService.loadPermissions(permissions);
+      }
     }
   };
 }
