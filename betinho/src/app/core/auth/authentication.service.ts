@@ -14,7 +14,8 @@ import { NgxPermissionsService } from 'ngx-permissions';
 const routes = {
     login: `signin`,
     forgotPassword: `email/forgot-password`,
-    changePassword: `user/changepasswd`
+    changePassword: `user/changepasswd`,
+    signup: `signup`
 }
 
 @Injectable({ providedIn: 'root' })
@@ -105,5 +106,9 @@ export class AuthenticationService {
     setCurrentUser(dadosUsuario: any) {
         this.localStorageService.setItem('currentUser', JSON.stringify(dadosUsuario));
         this.currentUserSubject.next(dadosUsuario);
+    }
+
+    sigup(dadosUsuario: any) {
+      return this.apiService.post(environment.auth + routes.signup, dadosUsuario);
     }
 }
