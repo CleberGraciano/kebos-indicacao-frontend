@@ -7,6 +7,14 @@
   color: #03391c;
 }
 
+.app-layout {
+  height: 100vh;
+
+  nz-content {
+    overflow-y: auto;
+  }
+}
+
 .logo {
   width: 120px;
   height: 31px;

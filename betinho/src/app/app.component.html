@@ -1,6 +1,6 @@
 <ng-container *ngIf="(isLoggedIn$ | async)">
-  <nz-layout class="app-header">
-    <nz-header>
+  <nz-layout class="app-layout">
+    <nz-header class="app-header">
       <div class="container d-flex justify-content-between">
         <div class="logo d-flex align-items-center justify-content-center">
           <a href="/home">
@@ -18,10 +18,14 @@
         </ul>
       </div>
     </nz-header>
-    <nz-content class="container pb-5 mb-5">
-      <nz-breadcrumb [nzAutoGenerate]="true" class="py-2"></nz-breadcrumb>
-      <div class="inner-content p-5" [class.home]="urlAtual">
-        <router-outlet></router-outlet>
+    <nz-content>
+      <div class="container pb-5 mb-5">
+        <nz-breadcrumb [nzAutoGenerate]="true" class="py-2"></nz-breadcrumb>
+        <div class="inner-content p-5" [class.home]="urlAtual">
+          <div class="h-100">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
       </div>
     </nz-content>
     <nz-footer>Kebos ©{{ yearActual }}</nz-footer>
