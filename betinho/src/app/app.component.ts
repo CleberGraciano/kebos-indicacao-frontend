@@ -47,9 +47,7 @@ export class AppComponent implements OnInit {
         return { event, route: this.rootRoute(this.activedRouted) };
       })
     ).subscribe((data: { event: NavigationEnd, route: ActivatedRoute }) => {
-      //!data.event.url.includes('/cadastrar') ? this.router.navigate(['/login']) : null
-
-      //this.validarCadastro(data);
+      this.validarCadastro(data);
       if (data.route.snapshot.data?.['layout']?.padrao == undefined) {
         this.urlAtual = false
       } else {
