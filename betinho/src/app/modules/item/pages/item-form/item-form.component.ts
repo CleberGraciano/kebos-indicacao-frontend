@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RouteAction } from '@core/action/action';
 import { FormService } from '@core/services/form.service';
 import { NotificationService } from '@core/services/notification.service';
+import { CategoryService } from '@modules/category/category.service';
 import { ItemService } from '@modules/item/item.service';
 
 @Component({
@@ -31,7 +32,8 @@ export class ItemFormComponent implements OnInit {
     public route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService,
-    private service: ItemService
+    private service: ItemService,
+    private serviceCategories: CategoryService
   ) { }
 
   ngOnInit() {
@@ -49,7 +51,8 @@ export class ItemFormComponent implements OnInit {
       bonus: ['', Validators.required]
     })
 
-    this.service.getTipos().subscribe((res: any) => this.tipos = res);
+    // this.service.getTipos().subscribe((res: any) => this.tipos = res);
+    this.serviceCategories.filter().subscribe((res: any) => this.tipos = res);
 
     if (this.edit)
       this.param ? this.service.getIdItem(this.param).subscribe(res => this.formItem.patchValue(res)) : this.returnPage();

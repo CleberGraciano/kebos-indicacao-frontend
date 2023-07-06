@@ -70,10 +70,11 @@ export class CategoryFormComponent implements OnInit {
           })
           break;
         case RouteAction.Edit:
-          this.service.editCategory(this.param, obj).subscribe((data) => {
-            this.notificationService.success('Parceiro editado com sucesso!!!', '');
-            this.returnPage();
-          })
+          this.notificationService.error('Ação não realizada!', 'Entre em contato com o suporte.');
+        // this.service.editCategory(this.param, obj).subscribe((data) => {
+          //   this.notificationService.success('Parceiro editado com sucesso!!!', '');
+          //   this.returnPage();
+          // })
           break;
       }
     }

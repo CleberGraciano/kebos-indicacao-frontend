@@ -21,7 +21,7 @@
         <label for="tipo" class="form-label required">Tipo</label>
         <div class="d-flex flex-column">
           <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o tipo" formControlName="tipo">
-            <nz-option [nzLabel]="item.name" [nzValue]="item.id" *ngFor="let item of tipos">
+            <nz-option [nzLabel]="item.nome" [nzValue]="item.id" *ngFor="let item of tipos">
             </nz-option>
           </nz-select>
         </div>

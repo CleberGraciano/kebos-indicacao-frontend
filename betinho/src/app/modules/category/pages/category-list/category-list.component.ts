@@ -21,7 +21,7 @@ export class CategoryListComponent implements OnInit {
   total: number = 0;
   actions: any[] = [];
   filtro!: any;
-  routePrevious = "categoria";
+  routePrevious = "category";
 
   dateFormat = "dd/MM/yyyy";
 
