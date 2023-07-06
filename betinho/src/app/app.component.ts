@@ -40,12 +40,7 @@ export class AppComponent implements OnInit {
         return { event, route: this.rootRoute(this.activedRouted) };
       })
     ).subscribe((data: { event: NavigationEnd, route: ActivatedRoute }) => {
-
-      let statusCadastro  = this.usuarioLogado?.statusCadastro;
-      let urlEditPartner = data.event.url.includes('partner/edit');
-      let urlLogin = data.event.url.includes('/login');
-      (!statusCadastro && !urlEditPartner && !urlLogin) ? this.statusSignupModal() : null;
-
+      this.validarCadastro(data);
       if (data.route.snapshot.data?.['layout']?.padrao == undefined) {
         this.urlAtual = false
       } else {
@@ -67,6 +62,12 @@ export class AppComponent implements OnInit {
     })
   }
 
+  validarCadastro(data: any) {
+    let statusCadastro = this.usuarioLogado?.statusCadastro;
+    let urlEditPartner = data.event.url.includes('partner/edit');
+    let urlLogin = data.event.url.includes('/login');
+    (!statusCadastro && !urlEditPartner && !urlLogin) ? this.statusSignupModal() : null;
+  }
 
   statusSignupModal(): void {
     const modalStatusSignup = this.modalService.create({
@@ -78,7 +79,7 @@ export class AppComponent implements OnInit {
       nzClosable: true,
       nzClassName: 'modal-status-signup'
     });
-    modalStatusSignup.afterClose.subscribe((boolean) => boolean ? this.router.navigate([`/partner/edit/${this.usuarioLogado.id}`]) : this.authenticationService.logout() );
+    modalStatusSignup.afterClose.subscribe((boolean) => boolean ? this.router.navigate([`/partner/edit/${this.usuarioLogado.id}`]) : this.authenticationService.logout());
   }
 
   get usuarioLogado(): UserAuth {
