@@ -30,16 +30,25 @@ export class AppComponent implements OnInit {
     private dialogService: DialogService,
     private activedRouted: ActivatedRoute) {
     this.isLoggedIn$ = this.authenticationService.isLoggedIn;
-    this.router.config.some(route => (route.path === '') ? this.router.navigate(['/login']) : null);
+    this.verificarRota();
   }
 
   ngOnInit(): void {
+  }
+
+  verificarRota() {
+    let urlCadastrar = window.location.href.includes('cadastrar');
+    let urlLogin = window.location.href.includes('login');
+    (!urlCadastrar || !urlLogin) && this.router.navigate(['/']);
+
     this.router.events.pipe(
       filter((event: any) => event instanceof NavigationEnd),
       map((event: NavigationEnd) => {
         return { event, route: this.rootRoute(this.activedRouted) };
       })
     ).subscribe((data: { event: NavigationEnd, route: ActivatedRoute }) => {
+      //!data.event.url.includes('/cadastrar') ? this.router.navigate(['/login']) : null
+
       //this.validarCadastro(data);
       if (data.route.snapshot.data?.['layout']?.padrao == undefined) {
         this.urlAtual = false
