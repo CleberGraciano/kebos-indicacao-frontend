@@ -80,10 +80,10 @@ export class RecommendationFormComponent implements OnInit {
     })
 
     this.serviceItem.getTipos().subscribe((res: any) => this.tipos = res);
-    
+
     // falta buscar nova api
     this.serviceItem.getTipos().subscribe((res: any) => this.listSellers = res);
-    
+
     if (this.edit)
       this.param ? this.service.getIdRecommendation(this.param).subscribe(res => this.formRecommendation.patchValue(res)) : this.returnPage();
   }
@@ -129,7 +129,7 @@ export class RecommendationFormComponent implements OnInit {
   }
 
   returnPage(): void {
-    this.router.navigate([`/${this.routePrevious}`])
+    this.router.navigate([`/${this.routePrevious}`], { queryParams: { param: true }})
   }
 
   typeSelectData(data: any): void {
@@ -211,10 +211,3 @@ export class RecommendationFormComponent implements OnInit {
     return this.authenticationService.currentUserValue;
   }
 }
-
-
-    // "items": {
-    //   "additionalProp1": 0,
-    //   "additionalProp2": 0,
-    //   "additionalProp3": 0
-    // },

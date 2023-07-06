@@ -31,7 +31,9 @@ export class CategoryListComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private service: CategoryService
-  ) { }
+  ) {
+    this.route.queryParams.subscribe(atualizar => (atualizar) && this.buscarDados())
+  }
 
   ngOnInit() {
     this.formFiltro = this.formBuilder.group({

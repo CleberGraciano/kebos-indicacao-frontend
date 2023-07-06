@@ -206,7 +206,7 @@ export class PartnerFormComponent implements OnInit {
   }
 
   returnPage(): void {
-    this.router.navigate([`/${this.routePrevious}`])
+    this.router.navigate([`/${this.routePrevious}`], { queryParams: { param: true }})
   }
 
   beforeUpload = (file: NzUploadFile): boolean => {

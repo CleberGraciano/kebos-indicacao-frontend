@@ -34,7 +34,9 @@ export class SellerListComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private service: SellerService
-  ) { }
+  ) {
+    this.route.queryParams.subscribe(atualizar => (atualizar) && this.buscarDados())
+  }
 
   ngOnInit() {
     this.formFiltroSeller = this.formBuilder.group({

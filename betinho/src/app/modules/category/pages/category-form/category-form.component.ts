@@ -70,7 +70,7 @@ export class CategoryFormComponent implements OnInit {
           })
           break;
         case RouteAction.Edit:
-          this.notificationService.error('Ação não realizada!', 'Entre em contato com o suporte.');
+          // this.notificationService.error('Ação não realizada!', 'Entre em contato com o suporte.');
         // this.service.editCategory(this.param, obj).subscribe((data) => {
           //   this.notificationService.success('Parceiro editado com sucesso!!!', '');
           //   this.returnPage();
@@ -87,7 +87,7 @@ export class CategoryFormComponent implements OnInit {
   }
 
   returnPage(): void {
-    this.router.navigate([`/${this.routePrevious}`])
+    this.router.navigate([`/${this.routePrevious}`], { queryParams: { param: true }})
   }
 
 }

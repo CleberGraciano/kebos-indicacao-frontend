@@ -33,7 +33,9 @@ export class RecommendationListComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private service: RecommendationService
-  ) { }
+  ) {
+    this.route.queryParams.subscribe(atualizar => (atualizar) && this.buscarDados())
+  }
 
   ngOnInit() {
     this.formFiltroRecommendation = this.formBuilder.group({

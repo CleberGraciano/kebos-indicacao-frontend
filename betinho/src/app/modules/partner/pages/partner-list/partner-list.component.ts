@@ -28,7 +28,9 @@ export class PartnerListComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private service: PartnerService
-  ) { }
+  ) {
+    this.route.queryParams.subscribe(atualizar => (atualizar) && this.buscarDados())
+  }
 
   ngOnInit() {
     this.formFiltro = this.formBuilder.group({
