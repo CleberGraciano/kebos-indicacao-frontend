@@ -5,10 +5,10 @@ import { ApiService } from '@core/services/api.service';
 import { of } from 'rxjs';
 
 const routes = {
-  filter: `category`,
-  insert: `category`,
-  edit: (id: number) => `category/${id}`,
-  getId: (id: number)=> `category/${id}`
+  filter: `categories`,
+  insert: `categories`,
+  edit: (id: number) => `categories/${id}`,
+  getId: (id: number)=> `categories/${id}`
 }
 
 @Injectable({
