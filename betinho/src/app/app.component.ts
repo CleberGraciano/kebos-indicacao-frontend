@@ -40,9 +40,11 @@ export class AppComponent implements OnInit {
         return { event, route: this.rootRoute(this.activedRouted) };
       })
     ).subscribe((data: { event: NavigationEnd, route: ActivatedRoute }) => {
-      let statusCadastro  = this.usuarioLogado.statusCadastro;
+
+      let statusCadastro  = this.usuarioLogado?.statusCadastro;
       let urlEditPartner = data.event.url.includes('partner/edit');
-      (!statusCadastro && !urlEditPartner) ? this.statusSignupModal() : null;
+      let urlLogin = data.event.url.includes('/login');
+      (!statusCadastro && !urlEditPartner && !urlLogin) ? this.statusSignupModal() : null;
 
       if (data.route.snapshot.data?.['layout']?.padrao == undefined) {
         this.urlAtual = false
