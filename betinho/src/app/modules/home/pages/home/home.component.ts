@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   loadingMore = false;
   data: any[] = [];
   list: Array<{ loading: boolean; name: any }> = [];
-  statusSelect!: string;
+  statusSelect: string = 'ENVIADO';
   listStatusRecommendation: any[] = [];
 
   constructor(
@@ -35,10 +35,11 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.nameUser = this.authenticationService?.currentUserValue?.displayName;
     this.serviceRecommendation.getStatusRecommendation().subscribe((res) => this.listStatusRecommendation = res);
+    this.getListRecommendation()
   }
 
-  getListRecommendation(status: string) {
-    this.serviceRecommendation.getListRecommendation(status).subscribe((res: any) => {
+  getListRecommendation() {
+    this.serviceRecommendation.getListRecommendation(this.statusSelect).subscribe((res: any) => {
       this.data = res.results;
       this.list = res.results;
       this.initLoading = false;
@@ -48,7 +49,7 @@ export class HomeComponent implements OnInit {
   onLoadMore(): void {
     this.loadingMore = true;
     this.list = this.data.concat([...Array(count)].fill(<any>{}).map(() => ({ loading: true, name: {} })));
-    this.getListRecommendation(this.statusSelect);
+    this.getListRecommendation();
   }
 
   logout(): void {
@@ -56,5 +57,4 @@ export class HomeComponent implements OnInit {
       this.authenticationService.logout();
     })
   }
-
 }

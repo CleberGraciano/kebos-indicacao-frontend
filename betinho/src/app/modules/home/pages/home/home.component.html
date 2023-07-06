@@ -10,7 +10,7 @@
   <ng-container *ngxPermissionsOnly="permissaoModeradorEUser">
     <div class="col">
       <div class="col-12">
-        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o Status" class="col-12" [(ngModel)]="statusSelect">
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o Status" class="col-12" [(ngModel)]="statusSelect" (ngModelChange)="getListRecommendation()">
           <nz-option [nzLabel]="item.name" [nzValue]="item.value" *ngFor="let item of listStatusRecommendation">
           </nz-option>
         </nz-select>
