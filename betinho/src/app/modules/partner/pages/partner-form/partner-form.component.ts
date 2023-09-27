@@ -40,7 +40,7 @@ export class PartnerFormComponent implements OnInit {
   maskCPF = { mask: Masks.cpf, guide: false };
   maskRG = { mask: Masks.rg, guide: false };
   maskCEP = { mask: Masks.cep, guide: false };
-  dateFormat = "dd/MM/yyyy";
+  dateFormat = "dd-MM-yyyy";
 
   fileList: any[] = [];
   typesAcountBack: any[] = [];
@@ -78,7 +78,8 @@ export class PartnerFormComponent implements OnInit {
       dataNascimento: ['', Validators.required],
       cpf: ['', Validators.required],
       password: [],
-      passwordConfirm: []
+      passwordConfirm: [],
+      provider: ['local']
     })
 
     this.formAddress = this.formBuilder.group({
