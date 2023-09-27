@@ -185,7 +185,7 @@ export class PartnerFormComponent implements OnInit {
 
   openTermsOfUse(): void {
     this.modalService.create({
-      nzTitle: 'Termos de Uso',
+      nzTitle: 'Termos de Aceite de Uso de Software/Plataforma',
       nzContent: this.textTermsOfUse,
       nzOkText: 'Aceito',
       nzCancelText: 'Não Aceito',
