@@ -73,38 +73,57 @@ export class PartnerFormComponent implements OnInit {
     this.view = this.action == RouteAction.View;
 
     this.formPartner = this.formBuilder.group({
-      displayName: ['', Validators.required],
-      email: ['', Validators.required],
-      dataNascimento: ['', Validators.required],
-      cpf: ['', Validators.required],
-      password: [],
-      passwordConfirm: [],
+      email: [''],
+      enabled: [''],
+      displayName: [''],
+      password: [''],
+      passwordConfirm: [''],
+      statusCadastro: [''],
+      imagem: [''],
+      dataNascimento: [''],
+      cpf: [''],
+      cep: [''],
+      logradouro: [''],
+      numero: [''],
+      bairro: [''],
+      cidade: [''],
+      uf: [],
+      celular: [''],
+      foneFixo: [''],
+      foneComercial: [''],
+      pix: [''],
+      banco: [''],
+      tipoContaEnum: [''],
+      agencia: [''],
+      conta: [''],
+      digito: [''],
+      termoUso: [''],
       provider: ['local']
     })
 
-    this.formAddress = this.formBuilder.group({
-      cep: ['', Validators.required],
-      logradouro: ['', Validators.required],
-      numero: ['', Validators.required],
-      bairro: ['', Validators.required],
-      cidade: [undefined, Validators.required],
-      uf: [undefined, Validators.required],
-    })
+    // this.formAddress = this.formBuilder.group({
+    //   cep: ['', Validators.required],
+    //   logradouro: ['', Validators.required],
+    //   numero: ['', Validators.required],
+    //   bairro: ['', Validators.required],
+    //   cidade: [undefined, Validators.required],
+    //   uf: [undefined, Validators.required],
+    // })
 
-    this.formBank = this.formBuilder.group({
-      pix: ['', Validators.required],
-      banco: ['', Validators.required],
-      tipoContaEnum: [undefined, Validators.required],
-      agencia: ['', Validators.required],
-      conta: ['', Validators.required],
-      digito: ['', Validators.required],
-    })
+    // this.formBank = this.formBuilder.group({
+    //   pix: ['', Validators.required],
+    //   banco: ['', Validators.required],
+    //   tipoContaEnum: [undefined, Validators.required],
+    //   agencia: ['', Validators.required],
+    //   conta: ['', Validators.required],
+    //   digito: ['', Validators.required],
+    // })
 
-    this.formContact = this.formBuilder.group({
-      celular: ['', Validators.required],
-      foneFixo: ['', Validators.required],
-      foneComercial: ['', Validators.required]
-    })
+    // this.formContact = this.formBuilder.group({
+    //   celular: ['', Validators.required],
+    //   foneFixo: ['', Validators.required],
+    //   foneComercial: ['', Validators.required]
+    // })
 
     this.service.getTiposConta().subscribe(res => this.typesAcountBack = res);
     this.service.getEstados().subscribe(res => this.listaEstados = res);
@@ -117,12 +136,16 @@ export class PartnerFormComponent implements OnInit {
     if (this.edit) {
       if (this.param) {
         this.service.getIdPartner(this.param).subscribe((res: any) => {
+          console.log(res)
+          res.uf = Number(res.uf);
+          res.cidade = Number(res.cidade);
+
           this.formPartner.patchValue(res);
-          this.formAddress.patchValue(res.address);
-          this.formBank.patchValue(res.financeData);
-          this.formContact.patchValue(res.contact);
+          // this.formAddress.patchValue(res.address);
+          // this.formBank.patchValue(res.financeData);
+          // this.formContact.patchValue(res.contact);
           this.imageUser = res.imagem;
-          this.termoUso = res.termoUso;
+          // this.termoUso = res.termoUso;
         })
       }
       else {
@@ -134,12 +157,12 @@ export class PartnerFormComponent implements OnInit {
   savePartner(): void {
     let messages: any[] = [];
     const messagesFormPartner = this.formService.getValidationsMessages(this.formPartner, this.formElementPartner);
-    const messagesFormAddress = this.formService.getValidationsMessages(this.formAddress, this.formElementAddress);
-    const messagesFormBank = this.formService.getValidationsMessages(this.formBank, this.formElementBank);
-    const messagesFormContact = this.formService.getValidationsMessages(this.formContact, this.formElementContact);
-    messages = messages.concat(messagesFormPartner, messagesFormAddress, messagesFormBank, messagesFormContact);
+    // const messagesFormAddress = this.formService.getValidationsMessages(this.formAddress, this.formElementAddress);
+    // const messagesFormBank = this.formService.getValidationsMessages(this.formBank, this.formElementBank);
+    // const messagesFormContact = this.formService.getValidationsMessages(this.formContact, this.formElementContact);
+    // messages = messages.concat(messagesFormPartner, messagesFormAddress, messagesFormBank, messagesFormContact);
 
-    if (!this.termoUso) {
+    if (!this.termosUsoForm.value) {
       messages.push('Termos de Uso')
     }
 
@@ -148,38 +171,38 @@ export class PartnerFormComponent implements OnInit {
       return;
     }
 
-    if (this.formPartner.valid, this.formAddress.valid, this.formBank.valid, this.formContact.valid) {
+    // if (this.formPartner.valid, this.formAddress.valid, this.formBank.valid, this.formContact.valid) {
+    if (this.formPartner.valid) {
       const obj = { ...this.formPartner.getRawValue() };
-      obj.address = { ...this.formAddress.getRawValue() };
-      obj.financeData = { ...this.formBank.getRawValue() };
-      obj.contact = { ...this.formContact.getRawValue() };
+      // obj.address = { ...this.formAddress.getRawValue() };
+      // obj.financeData = { ...this.formBank.getRawValue() };
+      // obj.contact = { ...this.formContact.getRawValue() };
       obj.imagem = this.imageUser;
-      obj.termoUso = this.termoUso;
+      // obj.termoUso = this.termoUso;
 
       obj.cpf = this.removeCaracteres(obj.cpf)
-      obj.address.cep = this.removeCaracteres(obj.address.cep);
-      obj.contact.celular = this.removeCaracteres(obj.contact.celular);
-      obj.contact.foneFixo = this.removeCaracteres(obj.contact.foneFixo);
-      obj.contact.foneComercial = this.removeCaracteres(obj.contact.foneComercial);
+      obj.cep = this.removeCaracteres(obj.cep);
+      obj.celular = this.removeCaracteres(obj.celular);
+      obj.foneFixo = this.removeCaracteres(obj.foneFixo);
+      obj.foneComercial = this.removeCaracteres(obj.foneComercial);
 
+      obj.id = this.authenticationService.currentUserValue.id;
       obj.providerUserId = this.authenticationService.currentUserValue.id;
 
-      console.log(obj)
-
       switch (this.action) {
-        case RouteAction.Edit:
         case RouteAction.Insert:
-          this.service.insertPartner(obj).subscribe((res: any) => {
-            this.notificationService.success('Cadastro realizado com sucesso!!!', '');
+          // this.service.insertPartner(obj).subscribe((res: any) => {
+          //   this.notificationService.success('Cadastro realizado com sucesso!!!', '');
+          //   this.returnPage();
+          // })
+          break;
+        case RouteAction.Edit:
+          console.log(obj)
+          this.service.editPartner(this.param, obj).subscribe((data) => {
+            this.notificationService.success('Parceiro editado com sucesso!!!', '');
             this.returnPage();
           })
           break;
-        // case RouteAction.Edit:
-        //   // this.service.editPartner(this.param, obj).subscribe((data) => {
-        //   //   this.notificationService.success('Parceiro editado com sucesso!!!', '');
-        //   //   this.returnPage();
-        //   // })
-        //   break;
       }
     }
   }
@@ -227,11 +250,11 @@ export class PartnerFormComponent implements OnInit {
   }
 
   removeCaracteres(value: string) {
-    return value = value.replace(/[^\d]/g, "");
+    return (value) ? value.replace(/[^\d]/g, "") : value
   }
 
   get ufForm() {
-    return this.formAddress.controls['uf'];
+    return this.formPartner.controls['uf'];
   }
 
   get passwordForm() {
@@ -240,5 +263,9 @@ export class PartnerFormComponent implements OnInit {
 
   get passwordConfirmForm() {
     return this.formPartner.controls['passwordConfirm'];
+  }
+
+  get termosUsoForm() {
+    return this.formPartner.controls['termoUso'];
   }
 }
