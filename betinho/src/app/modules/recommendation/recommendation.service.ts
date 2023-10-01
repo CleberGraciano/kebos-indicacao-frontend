@@ -10,7 +10,7 @@ const routes = {
   insert: `recommendations`,
   edit: (id: number) => `recommendations/${id}`,
   getId: (id: number) => `recommendations/${id}`,
-  getListRecommendation: (status: string)=> `recommendations/${status}`,
+  getListRecommendation: (status: string)=> `recommendations/status/${status}`,
 }
 
 @Injectable({
