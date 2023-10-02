@@ -9,6 +9,7 @@ import { NotificationService } from '@core/services/notification.service';
 import { PartnerService } from '@modules/partner/partner.service';
 import { TermsOfUse } from '@shared/termsOfUse/text';
 import { error } from 'console';
+import * as dayjs from 'dayjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 
@@ -40,7 +41,7 @@ export class PartnerFormComponent implements OnInit {
   maskCPF = { mask: Masks.cpf, guide: false };
   maskRG = { mask: Masks.rg, guide: false };
   maskCEP = { mask: Masks.cep, guide: false };
-  dateFormat = "dd-MM-yyyy";
+  dateFormat = "dd-MM-YYYY";
 
   fileList: any[] = [];
   typesAcountBack: any[] = [];
@@ -139,6 +140,7 @@ export class PartnerFormComponent implements OnInit {
           console.log(res)
           res.uf = Number(res.uf);
           res.cidade = Number(res.cidade);
+          res.dataNascimento = dayjs(res.dataNascimento).format('DD-MM-YYYY');
 
           this.formPartner.patchValue(res);
           // this.formAddress.patchValue(res.address);
@@ -185,6 +187,7 @@ export class PartnerFormComponent implements OnInit {
       obj.celular = this.removeCaracteres(obj.celular);
       obj.foneFixo = this.removeCaracteres(obj.foneFixo);
       obj.foneComercial = this.removeCaracteres(obj.foneComercial);
+      obj.dataNascimento = dayjs(obj.dataNascimento).format('DD-MM-YYYY');
 
       obj.id = this.authenticationService.currentUserValue.id;
       obj.providerUserId = this.authenticationService.currentUserValue.id;
