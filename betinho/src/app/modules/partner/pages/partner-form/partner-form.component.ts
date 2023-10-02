@@ -140,7 +140,9 @@ export class PartnerFormComponent implements OnInit {
           console.log(res)
           res.uf = Number(res.uf);
           res.cidade = Number(res.cidade);
-          res.dataNascimento = dayjs(res.dataNascimento).format('DD-MM-YYYY');
+
+          if(res.dataNascimento)
+            res.dataNascimento = dayjs(res.dataNascimento).format('DD-MM-YYYY');
 
           this.formPartner.patchValue(res);
           // this.formAddress.patchValue(res.address);
@@ -187,7 +189,9 @@ export class PartnerFormComponent implements OnInit {
       obj.celular = this.removeCaracteres(obj.celular);
       obj.foneFixo = this.removeCaracteres(obj.foneFixo);
       obj.foneComercial = this.removeCaracteres(obj.foneComercial);
-      obj.dataNascimento = dayjs(obj.dataNascimento).format('DD-MM-YYYY');
+
+      if(obj.dataNascimento)
+        obj.dataNascimento = dayjs(obj.dataNascimento).format('DD-MM-YYYY');
 
       obj.id = this.authenticationService.currentUserValue.id;
       obj.providerUserId = this.authenticationService.currentUserValue.id;
