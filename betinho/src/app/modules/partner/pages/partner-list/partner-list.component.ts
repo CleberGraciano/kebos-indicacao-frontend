@@ -21,6 +21,7 @@ export class PartnerListComponent implements OnInit {
   actions: any[] = [];
   filtro!: any;
   routePrevious = "partner";
+  listaEstados: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,7 +30,8 @@ export class PartnerListComponent implements OnInit {
     private notificationService: NotificationService,
     private service: PartnerService
   ) {
-    this.route.queryParams.subscribe(atualizar => (atualizar) && this.buscarDados())
+    this.service.getEstados().subscribe(res => this.listaEstados = res);
+    this.route.queryParams.subscribe(atualizar => (atualizar) && this.buscarDados());
   }
 
   ngOnInit() {
@@ -46,9 +48,15 @@ export class PartnerListComponent implements OnInit {
     this.loadingTabela = true;
     this.service.filter().subscribe(
       {
-        next: (res) => {
+        next: async (res) => {
           if (res) {
             this.dataSet = res;
+
+            await this.dataSet.forEach((x) => {
+              let nomeEstado = this.listaEstados.find((e) => e.id == x.uf);
+              x.uf = nomeEstado ? nomeEstado?.nome : x.uf
+            })
+
             this.nzTableComponent?.cdkVirtualScrollViewport?.checkViewportSize();
             this.total = this.dataSet.length;
           }

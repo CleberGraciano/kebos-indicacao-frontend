@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RouteAction } from '@core/action/action';
 import { AuthenticationService } from '@core/auth/authentication.service';
 import { Masks } from '@core/custom-validators/masks';
+import { LocalStorageService } from '@core/local-storage/local-storage.service';
 import { FormService } from '@core/services/form.service';
 import { NotificationService } from '@core/services/notification.service';
 import { PartnerService } from '@modules/partner/partner.service';
@@ -62,7 +63,8 @@ export class PartnerFormComponent implements OnInit {
     private notificationService: NotificationService,
     private service: PartnerService,
     private modalService: NzModalService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private localStorageService: LocalStorageService,
   ) { }
 
   ngOnInit() {
@@ -74,32 +76,32 @@ export class PartnerFormComponent implements OnInit {
     this.view = this.action == RouteAction.View;
 
     this.formPartner = this.formBuilder.group({
-      email: [''],
+      email: ['', Validators.required],
       enabled: [''],
-      displayName: [''],
+      displayName: ['', Validators.required],
       password: [''],
       passwordConfirm: [''],
       statusCadastro: [''],
-      imagem: [''],
+      imagem: ['', Validators.required],
       dataNascimento: [''],
-      cpf: [''],
+      cpf: ['', Validators.required],
       cep: [''],
       logradouro: [''],
       numero: [''],
       bairro: [''],
       cidade: [''],
       uf: [],
-      celular: [''],
+      celular: ['', Validators.required],
       foneFixo: [''],
       foneComercial: [''],
-      pix: [''],
-      banco: [''],
-      tipoContaEnum: [''],
-      agencia: [''],
-      conta: [''],
-      digito: [''],
+      pix: ['', Validators.required],
+      banco: ['', Validators.required],
+      tipoContaEnum: ['', Validators.required],
+      agencia: ['', Validators.required],
+      conta: ['', Validators.required],
+      digito: ['', Validators.required],
       termoUso: [''],
-      provider: ['local']
+      provider: ['local'],
     })
 
     // this.formAddress = this.formBuilder.group({
@@ -137,9 +139,7 @@ export class PartnerFormComponent implements OnInit {
     if (this.edit) {
       if (this.param) {
         this.service.getIdPartner(this.param).subscribe((res: any) => {
-          console.log(res)
           res.uf = Number(res.uf);
-          res.cidade = Number(res.cidade);
 
           if(res.dataNascimento)
             res.dataNascimento = dayjs(res.dataNascimento).format('DD-MM-YYYY');
@@ -160,6 +160,8 @@ export class PartnerFormComponent implements OnInit {
 
   savePartner(): void {
     let messages: any[] = [];
+    this.formPartner.controls['imagem'].setValue(this.imageUser);
+
     const messagesFormPartner = this.formService.getValidationsMessages(this.formPartner, this.formElementPartner);
     // const messagesFormAddress = this.formService.getValidationsMessages(this.formAddress, this.formElementAddress);
     // const messagesFormBank = this.formService.getValidationsMessages(this.formBank, this.formElementBank);
@@ -181,7 +183,7 @@ export class PartnerFormComponent implements OnInit {
       // obj.address = { ...this.formAddress.getRawValue() };
       // obj.financeData = { ...this.formBank.getRawValue() };
       // obj.contact = { ...this.formContact.getRawValue() };
-      obj.imagem = this.imageUser;
+      // obj.imagem = this.imageUser;
       // obj.termoUso = this.termoUso;
 
       obj.cpf = this.removeCaracteres(obj.cpf)
@@ -196,18 +198,23 @@ export class PartnerFormComponent implements OnInit {
       obj.id = this.authenticationService.currentUserValue.id;
       obj.providerUserId = this.authenticationService.currentUserValue.id;
 
+      const userData = this.authenticationService.currentUserValue;
+      const pageHome = userData.statusCadastro == false ? true : false;
+      userData.statusCadastro = true;
+      this.authenticationService.setCurrentUser(userData)
+
       switch (this.action) {
         case RouteAction.Insert:
-          // this.service.insertPartner(obj).subscribe((res: any) => {
-          //   this.notificationService.success('Cadastro realizado com sucesso!!!', '');
-          //   this.returnPage();
-          // })
+          this.service.insertPartner(obj).subscribe((res: any) => {
+            this.notificationService.success('Cadastro realizado com sucesso!!!', '');
+            this.returnPage();
+          })
           break;
         case RouteAction.Edit:
           console.log(obj)
           this.service.editPartner(this.param, obj).subscribe((data) => {
             this.notificationService.success('Parceiro editado com sucesso!!!', '');
-            this.returnPage();
+            pageHome ? this.homePage() : this.returnPage();
           })
           break;
       }
@@ -238,6 +245,10 @@ export class PartnerFormComponent implements OnInit {
 
   returnPage(): void {
     this.router.navigate([`/${this.routePrevious}`], { queryParams: { param: true }})
+  }
+
+  homePage(): void {
+    this.router.navigate(['/'])
   }
 
   beforeUpload = (file: NzUploadFile): boolean => {

@@ -54,8 +54,8 @@ export class PartnerService {
 
   getTiposConta() {
     return of([
-      { id: 1, name: "Conta Corrente", value: "0"},
-      { id: 2, name: "Conta Poupanca", value: "1"}
+      { id: 1, name: "Conta Corrente", value: "CORRENTE"},
+      { id: 2, name: "Conta Poupanca", value: "POUPANCA"}
     ]);
   }
 }

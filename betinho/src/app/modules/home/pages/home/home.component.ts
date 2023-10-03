@@ -40,15 +40,14 @@ export class HomeComponent implements OnInit {
 
   getListRecommendation() {
     this.serviceRecommendation.getListRecommendation(this.statusSelect).subscribe((res: any) => {
-      this.data = res.results;
-      this.list = res.results;
+      this.listRecommendation = res;
       this.initLoading = false;
     });
   }
 
   onLoadMore(): void {
     this.loadingMore = true;
-    this.list = this.data.concat([...Array(count)].fill(<any>{}).map(() => ({ loading: true, name: {} })));
+    this.listRecommendation = this.data.concat([...Array(count)].fill(<any>{}).map(() => ({ loading: true, name: {} })));
     this.getListRecommendation();
   }
 

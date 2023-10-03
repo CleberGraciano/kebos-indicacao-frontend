@@ -16,24 +16,28 @@
         </nz-select>
       </div>
 
-      <nz-list class="col-12 mt-5" [nzLoading]="initLoading">
-        <nz-list-item *ngFor="let item of listRecommendation">
-          <ng-container *ngIf="!item.loading">
-            <ul nz-list-item-actions>
-              <nz-list-item-action>{{ item.id }}</nz-list-item-action>
-              <nz-list-item-action>{{ item.status }}</nz-list-item-action>
-              <nz-list-item-action>{{ item.nomePessoaEmpresa }}</nz-list-item-action>
-              <nz-list-item-action>{{ item.createdDate | brDate }}</nz-list-item-action>
-              <nz-list-item-action>{{ item.modifiedDate | brDate }}</nz-list-item-action>
-            </ul>
-          </ng-container>
-        </nz-list-item>
-        <ng-container *ngIf="listRecommendation.length">
-          <div class="loadmore col-12" nz-list-load-more>
-            <button nz-button *ngIf="!loadingMore" (click)="onLoadMore()">Carregar Mais</button>
-          </div>
-        </ng-container>
-      </nz-list>
+      <div class="col-12 mt-4">
+        <nz-table [nzData]="listRecommendation" [nzFrontPagination]="false">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Status</th>
+              <th>Nome Pessoa / Empresa</th>
+              <th>Data Criação</th>
+              <th>Data Modificação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of listRecommendation">
+              <td>{{data.id}}</td>
+              <td>{{data.status}}</td>
+              <td>{{data.nomePessoaEmpresa}}</td>
+              <td>{{data.createdDate | brDate}}</td>
+              <td>{{data.modifiedDate | brDate}}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
     </div>
   </ng-container>
 

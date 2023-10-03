@@ -35,17 +35,21 @@
           <thead>
             <tr>
               <th scope="col">Nome</th>
-              <th scope="col">Empresa</th>
-              <th scope="col">URL</th>
+              <th scope="col">Email</th>
+              <th scope="col">Cidade</th>
+              <th scope="col" nzWidth="15%">Estado</th>
+              <th scope="col">Celular</th>
               <th scope="col" nzWidth="100px" class="text-center">Ações</th>
             </tr>
           </thead>
           <tbody>
             <ng-template nz-virtual-scroll let-data let-index="index">
               <tr>
-                <td>{{data.name}}</td>
-                <td>{{data.vendor}}</td>
-                <td>{{data.url}}</td>
+                <td>{{data.displayName}}</td>
+                <td>{{data.email}}</td>
+                <td>{{data.cidade}}</td>
+                <td>{{data.uf}}</td>
+                <td>{{data.celular}}</td>
                 <td class="text-center">
                   <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Editar" (click)="edit(data)">
                     <span nz-icon nzType="edit" nzTheme="outline"></span>
