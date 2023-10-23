@@ -37,6 +37,7 @@ export class PartnerListComponent implements OnInit {
   ngOnInit() {
     this.formFiltro = this.formBuilder.group({
       name: [''],
+      email: [''],
       vendor: [''],
       status: ['true']
     });

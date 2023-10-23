@@ -47,7 +47,7 @@
               <th scope="col">E-mail</th>
               <th scope="col">Telefone</th>
               <th scope="col">Data de Cadastro</th>
-              <th scope="col" nzWidth="100px" class="text-center">Ações</th>
+              <!-- <th scope="col" nzWidth="100px" class="text-center">Ações</th> -->
             </tr>
           </thead>
           <tbody>
@@ -57,15 +57,15 @@
                 <td>{{data.nome}}</td>
                 <td>{{data.email}}</td>
                 <td>{{data.telefone}}</td>
-                <td>{{data.created}}</td>
-                <td class="text-center">
+                <td>{{data.createdDate | brDate }}</td>
+                <!-- <td class="text-center">
                   <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Editar" (click)="edit(data)">
                     <span nz-icon nzType="edit" nzTheme="outline"></span>
                   </a>
                   <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Excluir" (click)="remove(data)">
                     <span nz-icon nzType="delete" nzTheme="outline"></span>
                   </a>
-                </td>
+                </td> -->
               </tr>
             </ng-template>
           </tbody>

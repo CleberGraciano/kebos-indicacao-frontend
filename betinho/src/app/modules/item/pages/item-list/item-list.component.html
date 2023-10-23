@@ -33,7 +33,7 @@
           <thead>
             <tr>
               <th scope="col">Nome</th>
-              <th scope="col">Tipo</th>
+              <th scope="col">Categoria</th>
               <th scope="col">Bônus</th>
               <th scope="col">Data de Cadastro</th>
               <th scope="col" nzWidth="100px" class="text-center">Ações</th>
@@ -43,7 +43,7 @@
             <ng-template nz-virtual-scroll let-data let-index="index">
               <tr>
                 <td>{{ data?.nome }}</td>
-                <td>{{ data?.tipo?.nome }}</td>
+                <td>{{ data?.category?.nome }}</td>
                 <td>{{ data?.bonus }}</td>
                 <td>{{ data?.created | brDate }}</td>
                 <td class="text-center">

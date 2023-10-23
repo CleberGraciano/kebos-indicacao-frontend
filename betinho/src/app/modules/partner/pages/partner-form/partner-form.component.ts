@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouteAction } from '@core/action/action';
 import { AuthenticationService } from '@core/auth/authentication.service';
@@ -9,10 +9,11 @@ import { FormService } from '@core/services/form.service';
 import { NotificationService } from '@core/services/notification.service';
 import { PartnerService } from '@modules/partner/partner.service';
 import { TermsOfUse } from '@shared/termsOfUse/text';
-import { error } from 'console';
-import * as dayjs from 'dayjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
+import * as dayjs from 'dayjs';
+import * as customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat)
 
 @Component({
   selector: 'app-partner-form',
@@ -20,6 +21,7 @@ import { NzUploadFile } from 'ng-zorro-antd/upload';
   styleUrls: ['./partner-form.component.scss']
 })
 export class PartnerFormComponent implements OnInit {
+
 
   formPartner!: FormGroup;
   formAddress!: FormGroup;
@@ -42,7 +44,7 @@ export class PartnerFormComponent implements OnInit {
   maskCPF = { mask: Masks.cpf, guide: false };
   maskRG = { mask: Masks.rg, guide: false };
   maskCEP = { mask: Masks.cep, guide: false };
-  dateFormat = "dd-MM-YYYY";
+  dateFormat = "dd/MM/YYYY";
 
   fileList: any[] = [];
   typesAcountBack: any[] = [];
@@ -140,9 +142,7 @@ export class PartnerFormComponent implements OnInit {
       if (this.param) {
         this.service.getIdPartner(this.param).subscribe((res: any) => {
           res.uf = Number(res.uf);
-
-          if(res.dataNascimento)
-            res.dataNascimento = dayjs(res.dataNascimento).format('DD-MM-YYYY');
+          res.dataNascimento = this.editFormatDate(res.dataNascimento);
 
           this.formPartner.patchValue(res);
           // this.formAddress.patchValue(res.address);
@@ -192,7 +192,7 @@ export class PartnerFormComponent implements OnInit {
       obj.foneFixo = this.removeCaracteres(obj.foneFixo);
       obj.foneComercial = this.removeCaracteres(obj.foneComercial);
 
-      if(obj.dataNascimento)
+      if (obj.dataNascimento)
         obj.dataNascimento = dayjs(obj.dataNascimento).format('DD-MM-YYYY');
 
       obj.id = this.authenticationService.currentUserValue.id;
@@ -244,7 +244,7 @@ export class PartnerFormComponent implements OnInit {
   }
 
   returnPage(): void {
-    this.router.navigate([`/${this.routePrevious}`], { queryParams: { param: true }})
+    this.router.navigate([`/${this.routePrevious}`], { queryParams: { param: true } })
   }
 
   homePage(): void {
@@ -269,6 +269,20 @@ export class PartnerFormComponent implements OnInit {
 
   removeCaracteres(value: string) {
     return (value) ? value.replace(/[^\d]/g, "") : value
+  }
+
+  editFormatDate(data: any) {
+    let dataNascimento = data.replace(/-/g, '/');
+    const partes = dataNascimento.split('/');
+    const dia = parseInt(partes[0], 10);
+    const mes = parseInt(partes[1], 10) - 1;
+    const ano = parseInt(partes[2], 10);
+
+    if (!isNaN(dia) && !isNaN(mes) && !isNaN(ano)) {
+      const data = new Date(ano, mes, dia);
+      return data;
+    }
+    return data
   }
 
   get ufForm() {

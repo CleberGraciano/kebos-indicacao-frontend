@@ -5,23 +5,30 @@
     <div class="col-12 d-flex justify-content-between mb-3">
       <h4 class="mb-3">Lista de Parceiros</h4>
 
-      <button class="ms-2 rounded-pill" nz-button nzType="primary" type="submit" form="formFiltro" nzSize="default" [routerLink]="['/partner/insert']">
+      <button class="ms-2 rounded-pill" nz-button nzType="primary" type="submit" form="formFiltro" nzSize="default"
+        [routerLink]="['/partner/insert']">
         <span nz-icon nzType="plus-circle"></span>
         Cadastrar
       </button>
     </div>
 
     <form id="formFiltro" [formGroup]="formFiltro" (ngSubmit)="search(); activeTable = true">
-      <div class="col">
-       <div class="mb-3">
-        <label for="name" class="form-label">Nome</label>
-        <input nz-input formControlName="name" type="text" />
-       </div>
+      <div class="row row-cols-2">
+        <div class="col mb-3">
+          <label for="name" class="form-label">Nome</label>
+          <input nz-input formControlName="name" type="text" />
+        </div>
+        <div class="col mb-3">
+          <label for="email" class="form-label">E-mail</label>
+          <input nz-input formControlName="email" type="text" />
+        </div>
       </div>
 
       <div class="d-flex justify-content-end mb-3">
-        <button class="me-2 rounded-pill" nz-button nzType="default" nzSize="default" type="button" (click)="clear()">Limpar</button>
-        <button class="ms-2 rounded-pill" nz-button nzType="primary" type="submit" form="formFiltro" nzSize="default">Pesquisar</button>
+        <button class="me-2 rounded-pill" nz-button nzType="default" nzSize="default" type="button"
+          (click)="clear()">Limpar</button>
+        <button class="ms-2 rounded-pill" nz-button nzType="primary" type="submit" form="formFiltro"
+          nzSize="default">Pesquisar</button>
       </div>
     </form>
 
@@ -51,10 +58,12 @@
                 <td>{{data.uf}}</td>
                 <td>{{data.celular}}</td>
                 <td class="text-center">
-                  <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Editar" (click)="edit(data)">
+                  <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Editar"
+                    (click)="edit(data)">
                     <span nz-icon nzType="edit" nzTheme="outline"></span>
                   </a>
-                  <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Excluir" (click)="remove(data)">
+                  <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Excluir"
+                    (click)="remove(data)">
                     <span nz-icon nzType="delete" nzTheme="outline"></span>
                   </a>
                 </td>
