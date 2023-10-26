@@ -47,10 +47,10 @@ export class ItemService {
     return this.apiService.get<any>(routes.getId(id));
   }
 
-  getTipos() {
-    return of([
-      { id: 1, name: "Produto", value: "Produto"},
-      { id: 2, name: "Serviço", value: "Servico"}
-    ]);
-  }
+  // getTipos() {
+  //   return of([
+  //     { id: 1, name: "Produto", value: "Produto"},
+  //     { id: 2, name: "Serviço", value: "Servico"}
+  //   ]);
+  // }
 }

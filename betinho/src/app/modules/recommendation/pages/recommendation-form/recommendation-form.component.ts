@@ -7,9 +7,11 @@ import { UserAuth } from '@core/auth/user';
 import { Masks } from '@core/custom-validators/masks';
 import { FormService } from '@core/services/form.service';
 import { NotificationService } from '@core/services/notification.service';
+import { CategoryService } from '@modules/category/category.service';
 import { ItemService } from '@modules/item/item.service';
 import { ItemElement } from '@modules/recommendation/recommendation';
 import { RecommendationService } from '@modules/recommendation/recommendation.service';
+import { SellerService } from '@modules/seller/seller.service';
 
 @Component({
   selector: 'app-recommendation-form',
@@ -42,7 +44,7 @@ export class RecommendationFormComponent implements OnInit {
   selectedValue = null;
   //listItems: Array<{ value: string; name: string }> = [];
   listItems: any[] = [];
-  listSellers: Array<{ value: string; name: string }> = [];
+  listSellers: any = [];
   typeSelect: number = 0;
   nzFilterOption = (): boolean => true;
   total: number = 0;
@@ -53,8 +55,10 @@ export class RecommendationFormComponent implements OnInit {
     public route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService,
+    private sellerService: SellerService,
     private service: RecommendationService,
     private serviceItem: ItemService,
+    private categoryService: CategoryService,
     private authenticationService: AuthenticationService
   ) { }
 
@@ -79,10 +83,8 @@ export class RecommendationFormComponent implements OnInit {
       observacao: ['']
     })
 
-    this.serviceItem.getTipos().subscribe((res: any) => this.tipos = res);
-
-    // falta buscar nova api
-    this.serviceItem.getTipos().subscribe((res: any) => this.listSellers = res);
+    this.categoryService.filter().subscribe((res: any) => this.tipos = res);
+    this.sellerService.filter().subscribe((res: any) => this.listSellers = res);
 
     if (this.edit)
       this.param ? this.service.getIdRecommendation(this.param).subscribe(res => this.formRecommendation.patchValue(res)) : this.returnPage();
@@ -102,8 +104,6 @@ export class RecommendationFormComponent implements OnInit {
       obj.items = this.replaceItems();
       obj.valortotal = this.total;
       obj.user = null; //usuarioLogado
-
-      console.log(obj)
 
       switch (this.action) {
         case RouteAction.Insert:
@@ -133,7 +133,7 @@ export class RecommendationFormComponent implements OnInit {
   }
 
   typeSelectData(data: any): void {
-    this.typeSelect = data.tipo.name.id;
+    this.typeSelect = data?.tipo?.name?.id;
     this.search(null, this.typeSelect)
   }
 
@@ -185,9 +185,9 @@ export class RecommendationFormComponent implements OnInit {
   }
 
   search(value: any, type: number): void {
-    this.serviceItem.getItems(value).subscribe(res => {
-        const listOfOption: Array<{ value: string; name: string }> = [];
-        res.filter((x: any) => x.tipo == type).forEach((item: any) => listOfOption.push(item));
+    this.serviceItem.getItems(value?.tipo?.name?.id).subscribe(res => {
+        const listOfOption: Array<any> = [];
+        res.filter((x: any) => x.category.id == type).forEach((item: any) => listOfOption.push(item));
         this.listItems = listOfOption;
       });
   }
