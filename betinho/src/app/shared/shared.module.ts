@@ -18,6 +18,7 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import { CPFPipe } from './pipes/cpf.pipe';
 import { ArraySortPipe } from './pipes/sort-array.pipe';
 import { HtmlEditorComponent } from './components/html-editor/html-editor.component';
+import { TelefonePipe } from './pipes/telefone.pipe';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { HtmlEditorComponent } from './components/html-editor/html-editor.compon
     CPFPipe,
     ArraySortPipe,
     HtmlEditorComponent,
+    TelefonePipe
   ],
   imports: [
     CommonModule,
@@ -56,6 +58,7 @@ import { HtmlEditorComponent } from './components/html-editor/html-editor.compon
     TextConfirmComponent,
     CPFPipe,
     ArraySortPipe,
+    TelefonePipe
   ],
   providers:[
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true },

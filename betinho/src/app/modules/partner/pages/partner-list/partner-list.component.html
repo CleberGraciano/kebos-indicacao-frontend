@@ -56,7 +56,7 @@
                 <td>{{data.email}}</td>
                 <td>{{data.cidade}}</td>
                 <td>{{data.uf}}</td>
-                <td>{{data.celular}}</td>
+                <td>{{data.celular | telefone}}</td>
                 <td class="text-center">
                   <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Editar"
                     (click)="edit(data)">

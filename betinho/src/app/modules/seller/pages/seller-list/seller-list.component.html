@@ -48,7 +48,7 @@
                 <td>{{data?.id}}</td>
                 <td>{{data?.nome}}</td>
                 <td>{{data?.email}}</td>
-                <td>{{data?.telefone}}</td>
+                <td>{{data?.telefone | telefone }}</td>
                 <td>{{data?.created | brDate }}</td>
                 <!-- <td class="text-center">
                   <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Editar" (click)="edit(data)">

@@ -54,7 +54,7 @@ export class RecommendationService {
       { id: 0, name: "CANCELADO", value: "CANCELADO"},
       { id: 1, name: "ENCERRADO", value: "ENCERRADO"},
       { id: 2, name: "ENVIADO", value: "ENVIADO"},
-      { id: 3, name: "NEGOCIADO", value: "NEGOCIADO"},
+      { id: 3, name: "NEGOCIANDO", value: "NEGOCIANDO"},
       { id: 4, name: "VENDIDO", value: "VENDIDO"}
     ]);
   }
