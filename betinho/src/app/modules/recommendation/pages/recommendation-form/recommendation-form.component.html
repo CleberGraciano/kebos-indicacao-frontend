@@ -33,7 +33,7 @@
         </div>
         <div class="col mb-3">
           <label for="seller" class="form-label col-12">Vendedor Kebos</label>
-          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o vendedor" class="nz-select-custom">
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o vendedor" class="nz-select-custom" formControlName="seller">
            <nz-option [nzLabel]="item.nome" [nzValue]="item" *ngFor="let item of listSellers">
            </nz-option>
          </nz-select>
