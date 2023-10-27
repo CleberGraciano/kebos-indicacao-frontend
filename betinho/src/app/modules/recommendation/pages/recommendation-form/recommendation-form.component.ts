@@ -201,6 +201,9 @@ export class RecommendationFormComponent implements OnInit {
       if (x.totalBonus)
         itemReset.totalBonus = x.totalBonus;
 
+      if (x.quantidade)
+        itemReset.quantidade = x.quantidade;
+
       items.push(itemReset)
     })
     items = items.filter((x:any) => x.totalBonus);
