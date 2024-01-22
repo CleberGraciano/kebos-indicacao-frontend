@@ -16,8 +16,24 @@ import { SharedModule } from '@shared/shared.module';
 import { HomeModule } from '@modules/home/home.module';
 import { PartnerModule } from '@modules/partner/partner.module';
 import { UserAuth } from '@core/auth/user';
+import { AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule } from 'angularx-social-login';
 
 registerLocaleData(pt);
+
+const config = new AuthServiceConfig([
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider('1065465778018885')
+  },
+  // {
+  //   id: LinkedInLoginProvider.PROVIDER_ID,
+  //   provider: new LinkedInLoginProvider("78iqy5cu2e1fgr")
+  // }
+]);
+
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -33,7 +49,8 @@ registerLocaleData(pt);
     CoreModule,
     SharedModule,
     HomeModule,
-    PartnerModule
+    PartnerModule,
+    SocialLoginModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: pt_BR },
@@ -43,6 +60,10 @@ registerLocaleData(pt);
       useFactory: loadPermissions,
       deps: [NgxPermissionsService, NgxRolesService, LocalStorageService],
       multi: true
+    },
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
     }
   ],
   bootstrap: [AppComponent]

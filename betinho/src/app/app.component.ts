@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
   verificarRota() {
     let urlCadastrar = window.location.href.includes('cadastrar');
     let urlLogin = window.location.href.includes('login');
-    (!urlCadastrar || !urlLogin) && this.router.navigate(['/']);
+    (!urlCadastrar || !urlLogin) ?? this.router.navigate(['/']);
 
     this.router.events.pipe(
       filter((event: any) => event instanceof NavigationEnd),
@@ -47,7 +47,9 @@ export class AppComponent implements OnInit {
         return { event, route: this.rootRoute(this.activedRouted) };
       })
     ).subscribe((data: { event: NavigationEnd, route: ActivatedRoute }) => {
-      this.validarCadastro(data);
+      if(this.authenticationService.currentUserValue) {
+        this.validarCadastro(data);
+      }
       if (data.route.snapshot.data?.['layout']?.padrao == undefined) {
         this.urlAtual = false
       } else {

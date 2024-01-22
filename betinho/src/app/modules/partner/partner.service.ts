@@ -1,9 +1,11 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiService } from '@core/services/api.service';
 import { environment } from '@env/environment';
 import { of } from 'rxjs';
 
 const routes = {
+  filterSearch: `search`,
   filter: `partnes`,
   insert: `partner`,
   edit: (id: number) => `partner/${id}`,
@@ -21,12 +23,11 @@ export class PartnerService {
     private apiService:ApiService
   ) { }
 
-  // filtrar(obj: ColaboradorFiltro, pagina:number, itensPagina:number) {
-  //   let params = new HttpParams();
-  //   params = params.append('pagina',pagina);
-  //   params = params.append('itensPagina',itensPagina);
-  //   return this.apiService.post<DadosPaginados<ColaboradorElement>>(`${routes.filtrar}`, obj,false,undefined,params);
-  // }
+  filterSearch(search: string) {
+    let params = new HttpParams();
+    params = params.append('name', search);
+    return this.apiService.get<any>(environment.auth + routes.filterSearch, undefined, params );
+  }
 
   filter() {
     return this.apiService.get<any>(environment.auth + routes.filter);

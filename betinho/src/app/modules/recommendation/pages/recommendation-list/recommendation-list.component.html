@@ -13,8 +13,8 @@
     </div>
 
     <form id="formFiltroRecommendation" [formGroup]="formFiltroRecommendation" (ngSubmit)="search()">
-      <div class="row row-cols-sm-3">
-        <div class="col mb-3">
+      <div class="row row-cols-sm-1">
+        <!-- <div class="col mb-3">
           <label for="nomePessoaEmpresa" class="form-label">Nome</label>
           <input nz-input formControlName="nomePessoaEmpresa" type="text" />
         </div>
@@ -25,6 +25,13 @@
         <div class="col mb-3">
          <label for="telefone" class="form-label">Telefone</label>
          <input nz-input formControlName="telefone" type="text" [textMask]="maskTEL" />
+        </div> -->
+        <div class="col">
+          <label for="status" class="form-label">Selecione o Status</label>
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o Status" class="col-12" formControlName="status">
+            <nz-option [nzLabel]="item.name" [nzValue]="item.value" *ngFor="let item of listStatusRecommendation">
+            </nz-option>
+          </nz-select>
         </div>
       </div>
       <div class="d-flex justify-content-end mt-2 mb-3">

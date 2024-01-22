@@ -219,6 +219,9 @@ export class PartnerFormComponent implements OnInit {
           break;
       }
     }
+    else {
+      this.notificationService.warn('Atenção:', 'Existem campos obrigatórios a serem preenchidos');
+    }
   }
 
   openTermsOfUse(): void {
@@ -272,16 +275,21 @@ export class PartnerFormComponent implements OnInit {
   }
 
   editFormatDate(data: any) {
-    let dataNascimento = data.replace(/-/g, '/');
-    const partes = dataNascimento.split('/');
-    const dia = parseInt(partes[0], 10);
-    const mes = parseInt(partes[1], 10) - 1;
-    const ano = parseInt(partes[2], 10);
+    let dataNascimento;
 
-    if (!isNaN(dia) && !isNaN(mes) && !isNaN(ano)) {
-      const data = new Date(ano, mes, dia);
-      return data;
+    if(data) {
+      dataNascimento = data.replace(/-/g, '/');
+      const partes = dataNascimento.split('/');
+      const dia = parseInt(partes[0], 10);
+      const mes = parseInt(partes[1], 10) - 1;
+      const ano = parseInt(partes[2], 10);
+
+      if (!isNaN(dia) && !isNaN(mes) && !isNaN(ano)) {
+        const data = new Date(ano, mes, dia);
+        return data;
+      }
     }
+
     return data
   }
 

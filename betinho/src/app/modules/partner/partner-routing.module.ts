@@ -36,13 +36,13 @@ const routes: Routes = [
       {
         path: 'edit/:param',
         component: PartnerFormComponent,
-        canActivate: [AuthGuardService, NgxPermissionsGuard],
+        canActivate: [AuthGuardService],
         data: {
           acao: RouteAction.Edit,
-          permissions: {
-            only: [PermissoesEnum.Adm, PermissoesEnum.Moderador, PermissoesEnum.User],
-            redirectTo: '/'
-          }
+          // permissions: {
+          //   only: [PermissoesEnum.Adm, PermissoesEnum.Moderador, PermissoesEnum.User],
+          //   redirectTo: '/'
+          // }
         },
       }
     ]

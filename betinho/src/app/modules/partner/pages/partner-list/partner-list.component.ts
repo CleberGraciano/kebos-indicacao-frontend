@@ -47,7 +47,10 @@ export class PartnerListComponent implements OnInit {
 
   buscarDados(): void {
     this.loadingTabela = true;
-    this.service.filter().subscribe(
+
+    const searchName = this.formFiltro?.controls['name']?.value ;
+
+    this.service.filterSearch(searchName).subscribe(
       {
         next: async (res) => {
           if (res) {

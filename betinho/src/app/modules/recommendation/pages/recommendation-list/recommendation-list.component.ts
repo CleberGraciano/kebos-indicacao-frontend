@@ -27,6 +27,9 @@ export class RecommendationListComponent implements OnInit {
   dateFormat = "dd/MM/yyyy";
   maskTEL = { mask: Masks.telefone, guide: false };
 
+  statusSelect: string = 'ENVIADO';
+  listStatusRecommendation: any[] = [];
+
   constructor(
     private formBuilder: FormBuilder,
     public route: ActivatedRoute,
@@ -42,15 +45,19 @@ export class RecommendationListComponent implements OnInit {
       nomePessoaEmpresa: [''],
       emailprivate: [''],
       telefone: [''],
+      status: ['ENVIADO']
     });
 
     this.search();
+
+    this.service.getStatusRecommendation().subscribe((res) => this.listStatusRecommendation = res);
   }
 
   buscarDados(): void {
     this.loadingTabela = true;
-    this.service.filter().subscribe(
-      {
+    const status = this.formFiltroRecommendation?.controls['status']?.value;
+    if(status) {
+      this.service.getListRecommendation(status).subscribe({
         next: (res) => {
           if (res) {
             this.dataSet = res;
@@ -61,6 +68,22 @@ export class RecommendationListComponent implements OnInit {
         complete: () => this.loadingTabela = false,
         error: () => this.loadingTabela = false
       });
+    }
+
+
+
+    // this.service.filter().subscribe(
+    //   {
+    //     next: (res) => {
+    //       if (res) {
+    //         this.dataSet = res;
+    //         this.nzTableComponent?.cdkVirtualScrollViewport?.checkViewportSize();
+    //         this.total = this.dataSet.length;
+    //       }
+    //     },
+    //     complete: () => this.loadingTabela = false,
+    //     error: () => this.loadingTabela = false
+    //   });
   }
 
   clear(): void {

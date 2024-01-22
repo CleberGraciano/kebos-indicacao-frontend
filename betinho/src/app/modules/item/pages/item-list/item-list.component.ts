@@ -44,7 +44,9 @@ export class ItemListComponent implements OnInit {
 
   buscarDados(): void {
     this.loadingTabela = true;
-    this.service.filter().subscribe(
+    const searchName = this.formFiltro?.controls['nome']?.value;
+
+    this.service.filterSearch(searchName).subscribe(
       {
         next: (res) => {
           if (res) {
