@@ -11,7 +11,6 @@ export const environment = {
   auth:'http://89.116.214.72:8081/api/auth/',
   api:'http://89.116.214.72:8081/api/',
   refreshToken: '',
-  URL_LOGIN: `${URL_ATUAL}/login`,
   GOOGLE_AUTH_URL: `${BASE_URL}/${OAUTH2_URL}/google/${REDIRECT_URL}`,
   FACEBOOK_AUTH_URL: `${BASE_URL}/${OAUTH2_URL}/facebook/${REDIRECT_URL}`,
   GITHUB_AUTH_URL: `${BASE_URL}/${OAUTH2_URL}/github/${REDIRECT_URL}`,

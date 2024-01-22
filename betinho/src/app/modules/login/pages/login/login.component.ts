@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   forgotPasswordForm!: FormGroup;
-  urlLogin = environment.URL_LOGIN;
   googleURL = environment.GOOGLE_AUTH_URL;
   facebookURL = environment.FACEBOOK_AUTH_URL;
   githubURL = environment.GITHUB_AUTH_URL;
