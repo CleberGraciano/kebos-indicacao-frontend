@@ -24,10 +24,15 @@ const config = new AuthServiceConfig([
   {
     id: FacebookLoginProvider.PROVIDER_ID,
     provider: new FacebookLoginProvider('1065465778018885')
+    // provider: new FacebookLoginProvider('268481119590032')
   },
   // {
-  //   id: LinkedInLoginProvider.PROVIDER_ID,
-  //   provider: new LinkedInLoginProvider("78iqy5cu2e1fgr")
+  //   id: FacebookLoginProvider.PROVIDER_ID,
+  //   provider: new FacebookLoginProvider('268481119590032')
+  // },
+  // {
+  //   id: LinkedinLoginProvider.PROVIDER_ID,
+  //   provider: new LinkedinLoginProvider('860w94wzqfcu8')
   // }
 ]);
 

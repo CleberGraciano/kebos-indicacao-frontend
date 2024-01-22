@@ -26,7 +26,7 @@ export class ItemService {
   filterSearch(search: string) {
     let params = new HttpParams();
     params = params.append('name', search);
-    return this.apiService.get<any>(environment.auth + routes.filterSearch, undefined, params );
+    return this.apiService.get<any>(routes.filterSearch, undefined, params );
   }
 
   filter() {

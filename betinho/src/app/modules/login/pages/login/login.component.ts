@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@core/auth/authentication.service';
 import { NotificationService } from '@core/services/notification.service';
 import { environment } from '@env/environment';
-
+import { LinkedinAuthService } from '@core/services/linkedin-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,10 +16,6 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   forgotPasswordForm!: FormGroup;
-  googleURL = environment.GOOGLE_AUTH_URL;
-  facebookURL = environment.FACEBOOK_AUTH_URL;
-  githubURL = environment.GITHUB_AUTH_URL;
-  linkedinURL = environment.LINKEDIN_AUTH_URL;
 
   passwordVisible: boolean = false;
   password?: string;
@@ -31,7 +27,8 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private router: Router,
     private notificationService: NotificationService,
-    private socialAuthService: AuthService
+    private socialAuthService: AuthService,
+    private linkedinAuthService: LinkedinAuthService
   ) { }
 
   ngOnInit(): void {
@@ -55,6 +52,11 @@ export class LoginComponent implements OnInit {
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then((response: any) => {
       this.authenticationService.login(response?.email, response?.id).subscribe((res) => this.router.navigate(['/home']), (error) => this.notificationService.error('Ops...', 'Usuário e/ou senha estão incorretos.'))
     });
+  }
+
+  signInWithLinkedin(): void {
+    const authorizationUrl = this.linkedinAuthService.getAuthorizationUrl();
+    window.location.href = authorizationUrl;
   }
 
   forgotPassword() {
