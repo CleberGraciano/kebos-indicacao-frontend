@@ -112,6 +112,11 @@ export class RecommendationListComponent implements OnInit {
     this.router.navigate([`/${this.routePrevious}/edit/${model.id}`]);
   }
 
+  editStatus(model: any): void {
+    this.dataSet = [];
+    this.router.navigate([`/${this.routePrevious}/status/edit/${model.id}`]);
+  }
+
   trackByIndex(_: number, data: any): number {
     return data.id;
   }

@@ -4,12 +4,14 @@ import { RecommendationFormComponent } from './pages/recommendation-form/recomme
 import { RecommendationListComponent } from './pages/recommendation-list/recommendation-list.component';
 import { RecommendationRoutingModule } from './recommendation-routing.module';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { RecommendationStatusComponent } from './pages/recommendation-status/recommendation-status.component';
 
 
 @NgModule({
   declarations: [
     RecommendationListComponent,
-    RecommendationFormComponent
+    RecommendationFormComponent,
+    RecommendationStatusComponent
   ],
   imports: [
     SharedModule,

@@ -11,6 +11,7 @@ const routes = {
   edit: (id: number) => `recommendations/${id}`,
   getId: (id: number) => `recommendations/${id}`,
   getListRecommendation: (status: string)=> `recommendations/status/${status}`,
+  editStatusRecommendation: (idRecommendation: number)=> `recommendations/${idRecommendation}`,
 }
 
 @Injectable({
@@ -47,6 +48,18 @@ export class RecommendationService {
 
   getListRecommendation(status: string) {
     return this.apiService.get<any>(routes.getListRecommendation(status));
+  }
+
+  editStatusRecommendation(obj: any, idRecommendation: number) {
+    let params = new HttpParams();
+
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        params = params.append(key, obj[key]);
+      }
+    }
+
+    return this.apiService.put<any>(routes.editStatusRecommendation(idRecommendation), undefined, undefined, params);
   }
 
   getStatusRecommendation() {

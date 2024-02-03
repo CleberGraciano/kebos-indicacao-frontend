@@ -1,0 +1,40 @@
+<div class="row">
+  <h4 class="col-12 mb-4">
+    <span class="text-capitalize">
+      Editar Status
+    </span>
+  </h4>
+</div>
+<div class="row">
+
+  <div>
+    <nz-descriptions nzTitle="Informações da Indicação">
+      <nz-descriptions-item nzTitle="Código">{{ recommendation?.id }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Nome Pessoa / Empresa">{{ recommendation?.nomePessoaEmpresa }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Email">{{ recommendation?.email }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Telefone">{{ recommendation?.telefone | telefone }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Data de Criação">{{ recommendation?.createdDate | brDate }}</nz-descriptions-item>
+    </nz-descriptions>
+  </div>
+
+  <div class="col-12 my-3">
+    <form id="recommendationStatusForm" name="recommendationStatusForm" [formGroup]="recommendationStatusForm" #formElement>
+      <div class="row row-cols-1">
+        <label class="col-12 mb-2">Editar Status</label>
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o Status" class="col-12 col-sm-3" formControlName="statusRecommendationEnum">
+          <nz-option [nzLabel]="item.name" [nzValue]="item.value" *ngFor="let item of listStatusRecommendation">
+          </nz-option>
+        </nz-select>
+        </div>
+    </form>
+  </div>
+
+  <div class="col-12 d-flex justify-content-end mt-3">
+    <button class="capitalize me-2 btn-kebos-line rounded-pill" nz-button nzType="default" type="button" nzSize="default" *ngIf="action != routeAction.View" (click)="cancel()">Cancelar</button>
+    <button class="capitalize me-2 btn-kebos-line rounded-pill" nz-button nzType="default" type="button" nzSize="default" *ngIf="action == routeAction.View">Voltar</button>
+    <button class="capitalize btn-kebos rounded-pill" nz-button nzType="primary" type="button" nzSize="default" form="recommendationStatusForm" *ngIf="action != routeAction.View" (click)="submit()">Confirmar</button>
+  </div>
+
+
+
+</div>

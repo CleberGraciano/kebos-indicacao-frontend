@@ -6,6 +6,7 @@ import { RecommendationFormComponent } from './pages/recommendation-form/recomme
 import { RecommendationListComponent } from './pages/recommendation-list/recommendation-list.component';
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { PermissoesEnum } from '@core/auth/user';
+import { RecommendationStatusComponent } from './pages/recommendation-status/recommendation-status.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,19 @@ const routes: Routes = [
           acao: RouteAction.Edit,
           permissions: {
             only: [PermissoesEnum.Adm, PermissoesEnum.User],
+            redirectTo: '/'
+          }
+        },
+      },
+      {
+        path: 'status/edit/:param',
+        component: RecommendationStatusComponent,
+        canActivate: [AuthGuardService, NgxPermissionsGuard],
+        data: {
+          breadcrumb: "Editar",
+          acao: RouteAction.Edit,
+          permissions: {
+            only: [PermissoesEnum.Adm, PermissoesEnum.Moderador],
             redirectTo: '/'
           }
         },
