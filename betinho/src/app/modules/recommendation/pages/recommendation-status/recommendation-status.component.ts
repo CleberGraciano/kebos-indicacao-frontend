@@ -15,13 +15,12 @@ import { SellerService } from '@modules/seller/seller.service';
 @Component({
   selector: 'app-recommendation-status',
   templateUrl: './recommendation-status.component.html',
-  styleUrls: ['./recommendation-status.component.scss']
+  styleUrls: ['./recommendation-status.component.scss'],
 })
 export class RecommendationStatusComponent implements OnInit {
-
   recommendationStatusForm!: FormGroup;
   @ViewChild('formElement') formElement!: ElementRef;
-  routePrevious = "recommendation";
+  routePrevious = 'recommendation';
 
   action!: RouteAction;
   param!: number;
@@ -40,26 +39,36 @@ export class RecommendationStatusComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private service: RecommendationService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.route.params.subscribe((res) => this.param = res['param']);
+    this.route.params.subscribe((res) => (this.param = res['param']));
 
     this.recommendationStatusForm = this.formBuilder.group({
-      statusRecommendationEnum: ['', Validators.required]
-    })
+      statusRecommendationEnum: ['', Validators.required],
+    });
 
-    this.service.getStatusRecommendation().subscribe((res) => this.listStatusRecommendation = res);
+    this.service
+      .getStatusRecommendation()
+      .subscribe((res) => (this.listStatusRecommendation = res));
 
-    if(this.param)
-        this.service.getIdRecommendation(this.param).subscribe(res => this.recommendation = res);
+    if (this.param)
+      this.service
+        .getIdRecommendation(this.param)
+        .subscribe((res) => (this.recommendation = res));
   }
 
   submit(): void {
-    const messages = this.formService.getValidationsMessages(this.recommendationStatusForm, this.formElement);
+    const messages = this.formService.getValidationsMessages(
+      this.recommendationStatusForm,
+      this.formElement
+    );
 
     if (messages.length) {
-      this.notificationService.warn('Os seguintes campos abaixo devem ser preenchidos corretamente:', this.formService.createValidationList(messages));
+      this.notificationService.warn(
+        'Os seguintes campos abaixo devem ser preenchidos corretamente:',
+        this.formService.createValidationList(messages)
+      );
       return;
     }
 
@@ -67,9 +76,12 @@ export class RecommendationStatusComponent implements OnInit {
       let obj = { ...this.recommendationStatusForm.getRawValue() };
 
       this.service.editStatusRecommendation(obj, this.param).subscribe(() => {
-        this.notificationService.success('Status alterado com com sucesso!!!', '');
+        this.notificationService.success(
+          'Status alterado com com sucesso!!!',
+          ''
+        );
         this.returnPage();
-      })
+      });
     }
   }
 
@@ -79,7 +91,8 @@ export class RecommendationStatusComponent implements OnInit {
   }
 
   returnPage(): void {
-    this.router.navigate([`/${this.routePrevious}`], { queryParams: { param: true }})
+    this.router.navigate([`/${this.routePrevious}`], {
+      queryParams: { param: true },
+    });
   }
-
 }

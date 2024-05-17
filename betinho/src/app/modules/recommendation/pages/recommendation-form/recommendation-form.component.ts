@@ -16,14 +16,13 @@ import { SellerService } from '@modules/seller/seller.service';
 @Component({
   selector: 'app-recommendation-form',
   templateUrl: './recommendation-form.component.html',
-  styleUrls: ['./recommendation-form.component.scss']
+  styleUrls: ['./recommendation-form.component.scss'],
 })
 export class RecommendationFormComponent implements OnInit {
-
   formRecommendation!: FormGroup;
   formObservacoes!: FormGroup;
   @ViewChild('formElement') formElement!: ElementRef;
-  routePrevious = "Recommendation";
+  routePrevious = 'Recommendation';
 
   action!: RouteAction;
   param!: number;
@@ -36,7 +35,7 @@ export class RecommendationFormComponent implements OnInit {
   maskCpfCnpj = { mask: Masks.cpfCnpj, guide: false };
 
   i = 1;
-  editId: string | null = null;
+  editId: string = '';
   listOfData: any[] = [];
   tipos: any[] = [];
   items: any[] = [];
@@ -60,11 +59,11 @@ export class RecommendationFormComponent implements OnInit {
     private serviceItem: ItemService,
     private categoryService: CategoryService,
     private authenticationService: AuthenticationService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.route.data.subscribe((res) => this.action = res['acao']);
-    this.route.params.subscribe((res) => this.param = res['params']);
+    this.route.data.subscribe((res) => (this.action = res['acao']));
+    this.route.params.subscribe((res) => (this.param = Number(res['param'])));
 
     this.create = this.action == RouteAction.Insert;
     this.edit = this.action == RouteAction.Edit;
@@ -76,30 +75,44 @@ export class RecommendationFormComponent implements OnInit {
       emailprivate: ['', Validators.required],
       nomeContato: ['', Validators.required],
       telefone: ['', Validators.required],
-      seller: ['', Validators.required]
-    })
+      seller: ['', Validators.required],
+    });
 
     this.formObservacoes = this.formBuilder.group({
-      observacao: ['']
-    })
+      observacao: [''],
+    });
 
-    this.categoryService.filter().subscribe((res: any) => this.tipos = res);
-    this.sellerService.filter().subscribe((res: any) => this.listSellers = res);
+    this.categoryService.filter().subscribe((res: any) => (this.tipos = res));
+    this.sellerService
+      .filter()
+      .subscribe((res: any) => (this.listSellers = res));
 
-    if (this.edit)
-      this.param ? this.service.getIdRecommendation(this.param).subscribe(res => this.formRecommendation.patchValue(res)) : this.returnPage();
+    if (this.action !== RouteAction.Edit)
+      this.param
+        ? this.service
+            .getIdRecommendation(67)
+            .subscribe((res) => this.formRecommendation.patchValue(res))
+        : this.returnPage();
   }
 
   saveRecommendation(): void {
-    const messages = this.formService.getValidationsMessages(this.formRecommendation, this.formElement);
+    const messages = this.formService.getValidationsMessages(
+      this.formRecommendation,
+      this.formElement
+    );
 
     if (messages.length) {
-      this.notificationService.warn('Os seguintes campos abaixo devem ser preenchidos corretamente:', this.formService.createValidationList(messages));
-      return;
+      return this.notificationService.warn(
+        'Os seguintes campos abaixo devem ser preenchidos corretamente:',
+        this.formService.createValidationList(messages)
+      );
     }
 
     if (this.formRecommendation.valid) {
-      let obj = { ...this.formRecommendation.getRawValue(), ...this.formObservacoes.getRawValue() };
+      const obj = {
+        ...this.formRecommendation.getRawValue(),
+        ...this.formObservacoes.getRawValue(),
+      };
 
       obj.items = this.replaceItems();
       obj.valortotal = this.total;
@@ -108,19 +121,24 @@ export class RecommendationFormComponent implements OnInit {
       switch (this.action) {
         case RouteAction.Insert:
           this.service.insertRecommendation(obj).subscribe((data) => {
-            this.notificationService.success('Cadastro realizado com sucesso!!!', '');
+            this.notificationService.success(
+              'Cadastro realizado com sucesso!!!',
+              ''
+            );
             this.returnPage();
-          })
+          });
           break;
         case RouteAction.Edit:
           this.service.editRecommendation(this.param, obj).subscribe((data) => {
-            this.notificationService.success('Vendedor editado com sucesso!!!', '');
+            this.notificationService.success(
+              'Vendedor editado com sucesso!!!',
+              ''
+            );
             this.returnPage();
-          })
+          });
           break;
       }
     }
-
   }
 
   cancel(): void {
@@ -129,18 +147,20 @@ export class RecommendationFormComponent implements OnInit {
   }
 
   returnPage(): void {
-    this.router.navigate([`/${this.routePrevious}`], { queryParams: { param: true }})
+    this.router.navigate([`/${this.routePrevious}`], {
+      queryParams: { param: true },
+    });
   }
 
   typeSelectData(data: any): void {
     this.typeSelect = data?.tipo?.name?.id;
-    this.search(null, this.typeSelect)
+    this.search(null, this.typeSelect);
   }
 
   resetItensData(data: any) {
     data.id = data.id;
     data.nome = null;
-    data.quantidade, data.bonus, data.totalBonus = 0;
+    data.quantidade, data.bonus, (data.totalBonus = 0);
     return data;
   }
 
@@ -149,7 +169,11 @@ export class RecommendationFormComponent implements OnInit {
   }
 
   stopEdit(id: string): void {
-    this.editId = null;
+    this.editId = '';
+    this.editBonus(id);
+  }
+  
+  updateTotalBonus(id: string) {
     this.editBonus(id);
   }
 
@@ -159,54 +183,56 @@ export class RecommendationFormComponent implements OnInit {
       {
         id: `${this.i}`,
         nome: { nome: 'Pesquise o produto' },
-        tipo: { tipo: { name: 'Selecione o Tipo' }},
+        tipo: { tipo: { name: 'Selecione o Tipo' } },
         quantidade: 0,
         bonus: 0,
-        totalBonus: 0
-      }
+        totalBonus: 0,
+      },
     ];
     this.i++;
   }
 
   editBonus(id: any) {
-    this.listOfData.find((x:any) => {
-      if (x.id == id)
-        x.totalBonus = x.nome.bonus * x.quantidade
+    this.listOfData.find((x: any) => {
+      if (x.id == id) x.totalBonus = x.nome.bonus * x.quantidade;
     });
-    this.total = this.listOfData.reduce((total, item) => total + item.totalBonus, 0);
+    this.total = this.listOfData.reduce(
+      (total, item) => total + item.totalBonus,
+      0
+    );
   }
 
   deleteRow(id: string): void {
-    this.listOfData = this.listOfData.filter(d => d.id !== id);
+    this.listOfData = this.listOfData.filter((d) => d.id !== id);
   }
 
   searchValue(value: string): void {
-    this.search(value, this.typeSelect)
+    this.search(value, this.typeSelect);
   }
 
   search(value: any, type: number): void {
-    this.serviceItem.getItems(value?.tipo?.name?.id).subscribe(res => {
-        const listOfOption: Array<any> = [];
-        res.filter((x: any) => x.category.id == type).forEach((item: any) => listOfOption.push(item));
-        this.listItems = listOfOption;
-      });
+    this.serviceItem.getItems(value?.tipo?.name?.id).subscribe((res) => {
+      const listOfOption: Array<any> = [];
+      res
+        .filter((x: any) => x.category.id == type)
+        .forEach((item: any) => listOfOption.push(item));
+      this.listItems = listOfOption;
+    });
   }
 
   replaceItems() {
-    let items: any[]=[];
+    let items: any[] = [];
     this.listOfData.forEach((x: any) => {
       let itemReset;
       itemReset = x.nome;
 
-      if (x.totalBonus)
-        itemReset.totalBonus = x.totalBonus;
+      if (x.totalBonus) itemReset.totalBonus = x.totalBonus;
 
-      if (x.quantidade)
-        itemReset.quantidade = x.quantidade;
+      if (x.quantidade) itemReset.quantidade = x.quantidade;
 
-      items.push(itemReset)
-    })
-    items = items.filter((x:any) => x.totalBonus);
+      items.push(itemReset);
+    });
+    items = items.filter((x: any) => x.totalBonus);
     return items;
   }
 

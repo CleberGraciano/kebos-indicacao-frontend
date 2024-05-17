@@ -101,13 +101,13 @@
                     <fieldset class="fieldset-border mb-3">
                       <legend class="fieldset-border mb-3">Dados Endereço</legend>
                       <div class="row mb-3">
-                        <label for="cep" class="col-sm-4 col-form-label required">CEP</label>
+                        <label for="cep" class="col-sm-4 col-form-label">CEP</label>
                         <div class="col-sm-8 d-flex flex-column">
                           <input nz-input formControlName="cep" type="text" [textMask]="maskCEP" />
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label for="uf" class="col-sm-4 col-form-label required">UF</label>
+                        <label for="uf" class="col-sm-4 col-form-label">UF</label>
                         <div class="col-sm-8 d-flex flex-column">
                           <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o estado" formControlName="uf">
                             <nz-option [nzLabel]="item.sigla" [nzValue]="item.id" *ngFor="let item of listaEstados">
@@ -116,7 +116,7 @@
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label for="cidade" class="col-sm-4 col-form-label required">Cidade</label>
+                        <label for="cidade" class="col-sm-4 col-form-label">Cidade</label>
                         <div class="col-sm-8 d-flex flex-column">
                           <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione a cidade"
                             formControlName="cidade">
@@ -126,19 +126,19 @@
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label for="logradouro" class="col-sm-4 col-form-label required">Logradouro</label>
+                        <label for="logradouro" class="col-sm-4 col-form-label">Logradouro</label>
                         <div class="col-sm-8 d-flex flex-column">
                           <input nz-input formControlName="logradouro" type="text" />
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label for="numero" class="col-sm-4 col-form-label required">Número</label>
+                        <label for="numero" class="col-sm-4 col-form-label">Número</label>
                         <div class="col-sm-8 d-flex flex-column">
                           <input nz-input formControlName="numero" type="number" min="0" />
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label for="bairro" class="col-sm-4 col-form-label required">Bairro</label>
+                        <label for="bairro" class="col-sm-4 col-form-label">Bairro</label>
                         <div class="col-sm-8 d-flex flex-column">
                           <input nz-input formControlName="bairro" type="text" />
                         </div>
@@ -158,13 +158,13 @@
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label for="banco" class="col-sm-4 col-form-label required">Banco</label>
+                        <label for="banco" class="col-sm-4 col-form-label">Banco</label>
                         <div class="col-sm-8 d-flex flex-column">
                           <input nz-input formControlName="banco" type="text" />
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label for="tipoContaEnum" class="col-sm-4 col-form-label required">Tipo Conta</label>
+                        <label for="tipoContaEnum" class="col-sm-4 col-form-label">Tipo Conta</label>
                         <div class="col-sm-8 d-flex flex-column">
                           <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Tipo de Conta"
                             formControlName="tipoContaEnum">
@@ -175,19 +175,19 @@
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label for="agencia" class="col-sm-4 col-form-label required">Agência</label>
+                        <label for="agencia" class="col-sm-4 col-form-label">Agência</label>
                         <div class="col-sm-8 d-flex flex-column">
                           <input nz-input formControlName="agencia" type="number" min="0" />
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label for="conta" class="col-sm-4 col-form-label required">Conta</label>
+                        <label for="conta" class="col-sm-4 col-form-label">Conta</label>
                         <div class="col-sm-8 d-flex flex-column">
                           <input nz-input formControlName="conta" type="text" min="0" />
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label for="digito" class="col-sm-4 col-form-label required">Dígito</label>
+                        <label for="digito" class="col-sm-4 col-form-label">Dígito</label>
                         <div class="col-sm-8 d-flex flex-column">
                           <input nz-input formControlName="digito" type="number" min="0" />
                         </div>
@@ -208,7 +208,7 @@
                   <div class="row row-cols-2">
                     <div class="col">
                       <div class="row mb-3">
-                        <label for="celular" class="col-sm-4 col-form-label required">Celular</label>
+                        <label for="celular" class="col-sm-4 col-form-label">Celular</label>
                         <div class="col-sm-8 d-flex flex-column">
                           <input nz-input formControlName="celular" autocomplete="false" [textMask]="maskTEL" />
                         </div>
@@ -216,7 +216,7 @@
                     </div>
                     <div class="col">
                       <div class="row mb-3">
-                        <label for="foneFixo" class="col-sm-4 col-form-label required"
+                        <label for="foneFixo" class="col-sm-4 col-form-label"
                           style="padding-left: 32px !important">Telefone Fixo</label>
                         <div class="ps-sm-4 col-sm-8 d-flex flex-column">
                           <input nz-input formControlName="foneFixo" autocomplete="false" [textMask]="maskTEL" />
@@ -225,7 +225,7 @@
                     </div>
                     <div class="col">
                       <div class="row mb-3">
-                        <label for="foneComercial" class="col-sm-4 col-form-label required">Telefone Celular</label>
+                        <label for="foneComercial" class="col-sm-4 col-form-label">Telefone Celular</label>
                         <div class="col-sm-8 d-flex flex-column">
                           <input nz-input formControlName="foneComercial" autocomplete="false" [textMask]="maskTEL" />
                         </div>
