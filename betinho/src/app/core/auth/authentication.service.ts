@@ -63,7 +63,6 @@ export class AuthenticationService {
             const permissions = <any>[];
             dadosUsuario.roles.forEach((x: any) => permissions.push(x));
             this.permissionService.loadPermissions(permissions);
-            console.log(dadosUsuario.roles)
 
             this.loggedIn.next(true);
           }

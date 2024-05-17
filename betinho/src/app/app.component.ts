@@ -37,8 +37,8 @@ export class AppComponent implements OnInit {
   }
 
   verificarRota() {
-    let urlCadastrar = window.location.href.includes('cadastrar');
-    let urlLogin = window.location.href.includes('login');
+    const urlCadastrar = window.location.href.includes('cadastrar');
+    const urlLogin = window.location.href.includes('login');
     (!urlCadastrar || !urlLogin) ?? this.router.navigate(['/']);
 
     this.router.events.pipe(
@@ -72,9 +72,9 @@ export class AppComponent implements OnInit {
   }
 
   validarCadastro(data: any) {
-    let statusCadastro = this.usuarioLogado?.statusCadastro;
-    let urlEditPartner = data.event.url.includes('partner/edit');
-    let urlLogin = data.event.url.includes('/login');
+    const statusCadastro = this.usuarioLogado?.statusCadastro;
+    const urlEditPartner = data.event.url.includes('partner/edit');
+    const urlLogin = data.event.url.includes('/login');
     (!statusCadastro && !urlEditPartner && !urlLogin) ? this.statusSignupModal() : null;
   }
 

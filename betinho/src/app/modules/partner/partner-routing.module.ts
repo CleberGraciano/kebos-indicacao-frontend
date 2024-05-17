@@ -9,16 +9,16 @@ import { PermissoesEnum } from '@core/auth/user';
 
 const routes: Routes = [
   {
-    path:'',
+    path: '',
     component: PartnerListComponent,
-    canActivate:[AuthGuardService, NgxPermissionsGuard],
+    canActivate: [AuthGuardService, NgxPermissionsGuard],
     data: {
-      breadcrumb: "Lista",
+      breadcrumb: 'Lista',
       acao: RouteAction.Insert,
       permissions: {
         only: [PermissoesEnum.Adm, PermissoesEnum.Moderador],
-        redirectTo: '/'
-      }
+        redirectTo: '/',
+      },
     },
     children: [
       {
@@ -29,28 +29,32 @@ const routes: Routes = [
           acao: RouteAction.Insert,
           permissions: {
             only: [PermissoesEnum.Adm, PermissoesEnum.Moderador],
-            redirectTo: '/'
-          }
+            redirectTo: '/',
+          },
         },
       },
-      {
-        path: 'edit/:param',
-        component: PartnerFormComponent,
-        canActivate: [AuthGuardService],
-        data: {
-          acao: RouteAction.Edit,
-          // permissions: {
-          //   only: [PermissoesEnum.Adm, PermissoesEnum.Moderador, PermissoesEnum.User],
-          //   redirectTo: '/'
-          // }
-        },
-      }
-    ]
-  }
+    ],
+  },
+  {
+    path: 'edit/:param',
+    component: PartnerFormComponent,
+    canActivate: [AuthGuardService],
+    data: {
+      acao: RouteAction.Edit,
+      permissions: {
+        only: [
+          PermissoesEnum.Adm,
+          PermissoesEnum.Moderador,
+          PermissoesEnum.User,
+        ],
+        redirectTo: '/',
+      },
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PartnerRoutingModule { }
+export class PartnerRoutingModule {}

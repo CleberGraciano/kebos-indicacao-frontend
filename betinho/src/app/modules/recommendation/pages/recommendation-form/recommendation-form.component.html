@@ -45,7 +45,7 @@
   <div class="col-12 mb-3">
     <div class="col-12 d-flex align-items-end justify-content-between mb-2">
       <h6>Itens</h6>
-      <button class="capitalize btn-kebos rounded-pill" nz-button nzType="primary" type="button" nzSize="default" (click)="addRow()">Adicionar Items</button>
+      <button class="capitalize btn-kebos rounded-pill" nz-button nzType="primary" type="button" nzSize="default" (click)="addRow()"  *ngIf="action != routeAction.View" >Adicionar Items</button>
     </div>
 
     <nz-table #editRowTable nzBordered [nzData]="listOfData" [nzFooter]="footerTabela" [nzNoResult]="empty" nzFrontPagination="false">
@@ -84,7 +84,7 @@
             <div class="editable-cell" [hidden]="editId === data.id" (click)="startEdit(data.id)">
               {{ data.quantidade }}
             </div>
-            <input [hidden]="editId !== data.id" type="number" nz-input [(ngModel)]="data.quantidade" (blur)="stopEdit(data.id)" min="0" />
+            <input [hidden]="editId !== data.id" type="number" nz-input [(ngModel)]="data.quantidade" (change)="updateTotalBonus(data.id)" min="0" />
           </td>
           <td>{{ data?.nome?.bonus | currency:'BRL' }}</td>
           <td>{{ data?.totalBonus | currency:'BRL' }}</td>
@@ -122,7 +122,7 @@
 
   <div class="col-12 d-flex justify-content-end mt-3">
     <button class="capitalize me-2 btn-kebos-line rounded-pill" nz-button nzType="default" type="button" nzSize="default" *ngIf="action != routeAction.View" (click)="cancel()">Cancelar</button>
-    <button class="capitalize me-2 btn-kebos-line rounded-pill" nz-button nzType="default" type="button" nzSize="default" *ngIf="action == routeAction.View">Voltar</button>
+    <button class="capitalize me-2 btn-kebos-line rounded-pill" nz-button nzType="default" type="button" nzSize="default" *ngIf="action == routeAction.View" (click)="returnPage()">Voltar</button>
     <button class="capitalize btn-kebos rounded-pill" nz-button nzType="primary" type="button" nzSize="default" *ngIf="action != routeAction.View" (click)="saveRecommendation()">Confirmar</button>
   </div>
 

@@ -10,16 +10,20 @@ import { RecommendationStatusComponent } from './pages/recommendation-status/rec
 
 const routes: Routes = [
   {
-    path:'',
+    path: '',
     component: RecommendationListComponent,
-    canActivate:[AuthGuardService],
+    canActivate: [AuthGuardService],
     data: {
-      breadcrumb: "Lista",
+      breadcrumb: 'Lista',
       acao: RouteAction.Insert,
       permissions: {
-        only: [PermissoesEnum.Adm, PermissoesEnum.User, PermissoesEnum.Moderador],
-        redirectTo: '/'
-      }
+        only: [
+          PermissoesEnum.Adm,
+          PermissoesEnum.User,
+          PermissoesEnum.Moderador,
+        ],
+        redirectTo: '/',
+      },
     },
     children: [
       {
@@ -27,46 +31,61 @@ const routes: Routes = [
         component: RecommendationFormComponent,
         canActivate: [AuthGuardService, NgxPermissionsGuard],
         data: {
-          breadcrumb: "Cadastrar",
+          breadcrumb: 'Cadastrar',
           acao: RouteAction.Insert,
           permissions: {
             only: [PermissoesEnum.Adm, PermissoesEnum.User],
-            redirectTo: '/'
-          }
+            redirectTo: '/',
+          },
         },
       },
-      {
-        path: 'edit/:param',
-        component: RecommendationFormComponent,
-        canActivate: [AuthGuardService, NgxPermissionsGuard],
-        data: {
-          breadcrumb: "Editar",
-          acao: RouteAction.Edit,
-          permissions: {
-            only: [PermissoesEnum.Adm, PermissoesEnum.User],
-            redirectTo: '/'
-          }
-        },
-      },
+      // This route shouldn't be used.
+      // Editing recommendations is NOT a feature.
+      // {
+      //   path: 'edit/:param',
+      //   component: RecommendationFormComponent,
+      //   canActivate: [AuthGuardService, NgxPermissionsGuard],
+      //   data: {
+      //     breadcrumb: 'Editar',
+      //     acao: RouteAction.Edit,
+      //     permissions: {
+      //       only: [PermissoesEnum.Adm, PermissoesEnum.User],
+      //       redirectTo: '/',
+      //     },
+      //   },
+      // },
       {
         path: 'status/edit/:param',
         component: RecommendationStatusComponent,
         canActivate: [AuthGuardService, NgxPermissionsGuard],
         data: {
-          breadcrumb: "Editar",
+          breadcrumb: 'Editar',
           acao: RouteAction.Edit,
           permissions: {
             only: [PermissoesEnum.Adm, PermissoesEnum.Moderador],
-            redirectTo: '/'
-          }
+            redirectTo: '/',
+          },
         },
-      }
-    ]
-  }
+      },
+      {
+        path: 'view/:param',
+        component: RecommendationFormComponent,
+        canActivate: [AuthGuardService, NgxPermissionsGuard],
+        data: {
+          breadcrumb: 'Visualizar',
+          acao: RouteAction.View,
+          permissions: {
+            only: [PermissoesEnum.Adm, PermissoesEnum.Moderador],
+            redirectTo: '/',
+          },
+        },
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class RecommendationRoutingModule { }
+export class RecommendationRoutingModule {}

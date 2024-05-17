@@ -6,7 +6,8 @@
     <div class="col-12 d-flex justify-content-between mb-3">
       <h4 class="mb-3 title">Lista de Indicações</h4>
 
-      <button class="ms-2 rounded-pill btn-text" nz-button nzType="primary" type="submit" form="formFiltro" nzSize="default" [routerLink]="['/recommendation/insert']">
+      <button class="ms-2 rounded-pill btn-text" nz-button nzType="primary" type="submit" form="formFiltro"
+        nzSize="default" [routerLink]="['/recommendation/insert']">
         <span nz-icon nzType="plus-circle"></span>
         Cadastrar
       </button>
@@ -28,15 +29,18 @@
         </div> -->
         <div class="col">
           <label for="status" class="form-label">Selecione o Status</label>
-          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o Status" class="col-12" formControlName="status">
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o Status" class="col-12"
+            formControlName="status">
             <nz-option [nzLabel]="item.name" [nzValue]="item.value" *ngFor="let item of listStatusRecommendation">
             </nz-option>
           </nz-select>
         </div>
       </div>
       <div class="d-flex justify-content-end mt-2 mb-3">
-        <button class="me-2 rounded-pill" nz-button nzType="default" nzSize="default" type="button" (click)="clear()">Limpar</button>
-        <button class="ms-2 rounded-pill" nz-button nzType="primary" type="submit" form="formFiltroRecommendation" nzSize="default">Pesquisar</button>
+        <button class="me-2 rounded-pill" nz-button nzType="default" nzSize="default" type="button"
+          (click)="clear()">Limpar</button>
+        <button class="ms-2 rounded-pill" nz-button nzType="primary" type="submit" form="formFiltroRecommendation"
+          nzSize="default">Pesquisar</button>
       </div>
     </form>
 
@@ -65,16 +69,15 @@
                 <td>{{ data.email }}</td>
                 <td>{{ data.telefone | telefone }}</td>
                 <td>{{ data.createdDate | brDate }}</td>
-                <td class="text-center">
-                  <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Editar Status" (click)="editStatus(data)">
+                <td class="text-center actions">
+                  <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip
+                    nzTooltipTitle="Alterar Status" (click)="editStatus(data)">
                     <span nz-icon nzType="edit" nzTheme="outline"></span>
                   </a>
-                  <!-- <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Editar" (click)="edit(data)">
-                    <span nz-icon nzType="edit" nzTheme="outline"></span>
+                  <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Visualizar"
+                    (click)="viewItem(data)">
+                    <span nz-icon nzType="eye" nzTheme="outline"></span>
                   </a>
-                  <a nz-button nzType="text" class="pointer px-2 fs-6" nzDanger nz-tooltip nzTooltipTitle="Excluir" (click)="remove(data)">
-                    <span nz-icon nzType="delete" nzTheme="outline"></span>
-                  </a> -->
                 </td>
               </tr>
             </ng-template>

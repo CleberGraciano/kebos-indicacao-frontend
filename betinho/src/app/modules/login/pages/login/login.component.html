@@ -27,28 +27,13 @@
             class="mb-3">Entrar</button>
         </div>
       </div>
-      <div class="row mt-2">
-        <p class="social-login text-center">
-          Acessar com:
-
-          <button class="btn p-0 m-0" type="button" (click)="signInWithFB()">
-            <img alt="Login with Facebook" src="/assets/images/redes-sociais/facebook.png" class="btn-img">
-          </button>
-
-          <button class="btn p-0 m-0" type="button" (click)="signInWithFB()">
-            <img alt="Login with Instagram" src="/assets/images/redes-sociais/instagram.png" class="btn-img">
-          </button>
-
-          <button class="btn p-0 m-0" type="button" (click)="signInWithLinkedin()">
-            <img alt="Login with Linkedin" src="/assets/images/redes-sociais/linkedin.png" class="btn-img">
-          </button>
-        </p>
-      </div>
       <div class="row link mt-3">
-        <button nz-button nzType="link" type="button" nzSize="default" [routerLink]="['/cadastrar']">Criar Conta</button>
+        <button nz-button nzType="link" type="button" nzSize="default" [routerLink]="['/cadastrar']">Criar
+          Conta</button>
       </div>
       <div class="row link">
-        <button nz-button nzType="link" type="button" nzSize="default" (click)="isLogin = false">Esqueci minha senha</button>
+        <button nz-button nzType="link" type="button" nzSize="default" (click)="isLogin = false">Esqueci minha
+          senha</button>
       </div>
     </form>
   </ng-container>
@@ -65,15 +50,17 @@
           <input nz-input formControlName="email" name="email" />
         </div>
         <div class="col-12 mt-2">
-          <button nz-button nzType="primary" type="submit" form="forgotPasswordForm" nzSize="default"
-            class="mb-3" nzBlock>Recuperar Senha</button>
+          <button nz-button nzType="primary" type="submit" form="forgotPasswordForm" nzSize="default" class="mb-3"
+            nzBlock>Recuperar Senha</button>
         </div>
       </div>
       <div class="row link mt-3">
-        <button nz-button nzType="link" type="button" nzSize="default" [routerLink]="['/cadastrar']">Criar Conta</button>
+        <button nz-button nzType="link" type="button" nzSize="default" [routerLink]="['/cadastrar']">Criar
+          Conta</button>
       </div>
       <div class="row link mt-3">
-        <button nz-button nzType="link" type="button" nzSize="default" (click)="isLogin = true">Acessar com Login</button>
+        <button nz-button nzType="link" type="button" nzSize="default" (click)="isLogin = true">Acessar com
+          Login</button>
       </div>
     </form>
   </ng-container>

@@ -13,16 +13,14 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import * as dayjs from 'dayjs';
 import * as customParseFormat from 'dayjs/plugin/customParseFormat';
-dayjs.extend(customParseFormat)
+dayjs.extend(customParseFormat);
 
 @Component({
   selector: 'app-partner-form',
   templateUrl: './partner-form.component.html',
-  styleUrls: ['./partner-form.component.scss']
+  styleUrls: ['./partner-form.component.scss'],
 })
 export class PartnerFormComponent implements OnInit {
-
-
   formPartner!: FormGroup;
   formAddress!: FormGroup;
   formBank!: FormGroup;
@@ -31,7 +29,7 @@ export class PartnerFormComponent implements OnInit {
   @ViewChild('formElementAddress') formElementAddress!: ElementRef;
   @ViewChild('formElementBank') formElementBank!: ElementRef;
   @ViewChild('formElementContact') formElementContact!: ElementRef;
-  routePrevious = "partner";
+  routePrevious = 'partner';
 
   action!: RouteAction;
   param!: number;
@@ -44,7 +42,7 @@ export class PartnerFormComponent implements OnInit {
   maskCPF = { mask: Masks.cpf, guide: false };
   maskRG = { mask: Masks.rg, guide: false };
   maskCEP = { mask: Masks.cep, guide: false };
-  dateFormat = "dd/MM/YYYY";
+  dateFormat = 'dd/MM/YYYY';
 
   fileList: any[] = [];
   typesAcountBack: any[] = [];
@@ -66,12 +64,12 @@ export class PartnerFormComponent implements OnInit {
     private service: PartnerService,
     private modalService: NzModalService,
     private authenticationService: AuthenticationService,
-    private localStorageService: LocalStorageService,
-  ) { }
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit() {
-    this.route.data.subscribe((res) => this.action = res['acao']);
-    this.route.params.subscribe((res) => this.param = res['param']);
+    this.route.data.subscribe((res) => (this.action = res['acao']));
+    this.route.params.subscribe((res) => (this.param = res['param']));
 
     this.create = this.action == RouteAction.Insert;
     this.edit = this.action == RouteAction.Edit;
@@ -84,7 +82,7 @@ export class PartnerFormComponent implements OnInit {
       password: [''],
       passwordConfirm: [''],
       statusCadastro: [''],
-      imagem: ['', Validators.required],
+      imagem: [''],
       dataNascimento: [''],
       cpf: ['', Validators.required],
       cep: [''],
@@ -93,18 +91,18 @@ export class PartnerFormComponent implements OnInit {
       bairro: [''],
       cidade: [''],
       uf: [],
-      celular: ['', Validators.required],
+      celular: [''],
       foneFixo: [''],
       foneComercial: [''],
       pix: ['', Validators.required],
-      banco: ['', Validators.required],
-      tipoContaEnum: ['', Validators.required],
-      agencia: ['', Validators.required],
-      conta: ['', Validators.required],
-      digito: ['', Validators.required],
+      banco: [''],
+      tipoContaEnum: [''],
+      agencia: [''],
+      conta: [''],
+      digito: [''],
       termoUso: [''],
       provider: ['local'],
-    })
+    });
 
     // this.formAddress = this.formBuilder.group({
     //   cep: ['', Validators.required],
@@ -130,13 +128,17 @@ export class PartnerFormComponent implements OnInit {
     //   foneComercial: ['', Validators.required]
     // })
 
-    this.service.getTiposConta().subscribe(res => this.typesAcountBack = res);
-    this.service.getEstados().subscribe(res => this.listaEstados = res);
+    this.service
+      .getTiposConta()
+      .subscribe((res) => (this.typesAcountBack = res));
+    this.service.getEstados().subscribe((res) => (this.listaEstados = res));
 
     this.ufForm.valueChanges.subscribe((val) => {
       if (val)
-        this.service.getMunicipios(val).subscribe(res => this.listaMunicipios = res);
-    })
+        this.service
+          .getMunicipios(val)
+          .subscribe((res) => (this.listaMunicipios = res));
+    });
 
     if (this.edit) {
       if (this.param) {
@@ -150,9 +152,8 @@ export class PartnerFormComponent implements OnInit {
           // this.formContact.patchValue(res.contact);
           this.imageUser = res.imagem;
           // this.termoUso = res.termoUso;
-        })
-      }
-      else {
+        });
+      } else {
         this.returnPage();
       }
     }
@@ -162,18 +163,24 @@ export class PartnerFormComponent implements OnInit {
     let messages: any[] = [];
     this.formPartner.controls['imagem'].setValue(this.imageUser);
 
-    const messagesFormPartner = this.formService.getValidationsMessages(this.formPartner, this.formElementPartner);
+    const messagesFormPartner = this.formService.getValidationsMessages(
+      this.formPartner,
+      this.formElementPartner
+    );
     // const messagesFormAddress = this.formService.getValidationsMessages(this.formAddress, this.formElementAddress);
     // const messagesFormBank = this.formService.getValidationsMessages(this.formBank, this.formElementBank);
     // const messagesFormContact = this.formService.getValidationsMessages(this.formContact, this.formElementContact);
     // messages = messages.concat(messagesFormPartner, messagesFormAddress, messagesFormBank, messagesFormContact);
 
     if (!this.termosUsoForm.value) {
-      messages.push('Termos de Uso')
+      messages.push('Termos de Uso');
     }
 
     if (messages.length) {
-      this.notificationService.warn('Os seguintes campos abaixo devem ser preenchidos corretamente:', this.formService.createValidationList(messages));
+      this.notificationService.warn(
+        'Os seguintes campos abaixo devem ser preenchidos corretamente:',
+        this.formService.createValidationList(messages)
+      );
       return;
     }
 
@@ -186,7 +193,7 @@ export class PartnerFormComponent implements OnInit {
       // obj.imagem = this.imageUser;
       // obj.termoUso = this.termoUso;
 
-      obj.cpf = this.removeCaracteres(obj.cpf)
+      obj.cpf = this.removeCaracteres(obj.cpf);
       obj.cep = this.removeCaracteres(obj.cep);
       obj.celular = this.removeCaracteres(obj.celular);
       obj.foneFixo = this.removeCaracteres(obj.foneFixo);
@@ -201,26 +208,34 @@ export class PartnerFormComponent implements OnInit {
       const userData = this.authenticationService.currentUserValue;
       const pageHome = userData.statusCadastro == false ? true : false;
       userData.statusCadastro = true;
-      this.authenticationService.setCurrentUser(userData)
+      this.authenticationService.setCurrentUser(userData);
 
       switch (this.action) {
         case RouteAction.Insert:
           this.service.insertPartner(obj).subscribe((res: any) => {
-            this.notificationService.success('Cadastro realizado com sucesso!!!', '');
+            this.notificationService.success(
+              'Cadastro realizado com sucesso!!!',
+              ''
+            );
             this.returnPage();
-          })
+          });
           break;
         case RouteAction.Edit:
-          console.log(obj)
+          console.log(obj);
           this.service.editPartner(this.param, obj).subscribe((data) => {
-            this.notificationService.success('Parceiro editado com sucesso!!!', '');
+            this.notificationService.success(
+              'Parceiro editado com sucesso!!!',
+              ''
+            );
             pageHome ? this.homePage() : this.returnPage();
-          })
+          });
           break;
       }
-    }
-    else {
-      this.notificationService.warn('Atenção:', 'Existem campos obrigatórios a serem preenchidos');
+    } else {
+      this.notificationService.warn(
+        'Atenção:',
+        'Existem campos obrigatórios a serem preenchidos'
+      );
     }
   }
 
@@ -237,7 +252,7 @@ export class PartnerFormComponent implements OnInit {
       },
       nzOnCancel: () => {
         this.termoUso = false;
-      }
+      },
     });
   }
 
@@ -247,11 +262,13 @@ export class PartnerFormComponent implements OnInit {
   }
 
   returnPage(): void {
-    this.router.navigate([`/${this.routePrevious}`], { queryParams: { param: true } })
+    this.router.navigate([`/${this.routePrevious}`], {
+      queryParams: { param: true },
+    });
   }
 
   homePage(): void {
-    this.router.navigate(['/'])
+    this.router.navigate(['/']);
   }
 
   beforeUpload = (file: NzUploadFile): boolean => {
@@ -262,22 +279,23 @@ export class PartnerFormComponent implements OnInit {
     };
     reader.readAsDataURL(file as unknown as File);
     return false;
-  }
+  };
 
   validatePassword() {
     let password = this.passwordForm.value;
     let passwordConfirm = this.passwordConfirmForm.value;
-    (password !== passwordConfirm) && this.notificationService.error('Atenção:', 'As senhas estão diferentes!');
+    password !== passwordConfirm &&
+      this.notificationService.error('Atenção:', 'As senhas estão diferentes!');
   }
 
   removeCaracteres(value: string) {
-    return (value) ? value.replace(/[^\d]/g, "") : value
+    return value ? value.replace(/[^\d]/g, '') : value;
   }
 
   editFormatDate(data: any) {
     let dataNascimento;
 
-    if(data) {
+    if (data) {
       dataNascimento = data.replace(/-/g, '/');
       const partes = dataNascimento.split('/');
       const dia = parseInt(partes[0], 10);
@@ -290,7 +308,7 @@ export class PartnerFormComponent implements OnInit {
       }
     }
 
-    return data
+    return data;
   }
 
   get ufForm() {

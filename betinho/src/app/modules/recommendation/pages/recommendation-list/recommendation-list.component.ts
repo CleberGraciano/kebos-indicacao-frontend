@@ -10,21 +10,21 @@ import { NzTableComponent } from 'ng-zorro-antd/table';
 @Component({
   selector: 'app-recommendation-list',
   templateUrl: './recommendation-list.component.html',
-  styleUrls: ['./recommendation-list.component.scss']
+  styleUrls: ['./recommendation-list.component.scss'],
 })
 export class RecommendationListComponent implements OnInit {
-
-  dataSet: any[] = []
+  dataSet: any[] = [];
   formFiltroRecommendation!: FormGroup;
-  @ViewChild('tabela', { static: false }) nzTableComponent?: NzTableComponent<any>;
+  @ViewChild('tabela', { static: false })
+  nzTableComponent?: NzTableComponent<any>;
   loadingTabela: boolean = false;
   activeTable: boolean = false;
   total: number = 0;
   actions: any[] = [];
   filtro!: RecommendationFilter;
-  routePrevious = "recommendation";
+  routePrevious = 'recommendation';
 
-  dateFormat = "dd/MM/yyyy";
+  dateFormat = 'dd/MM/yyyy';
   maskTEL = { mask: Masks.telefone, guide: false };
 
   statusSelect: string = 'ENVIADO';
@@ -37,7 +37,9 @@ export class RecommendationListComponent implements OnInit {
     private notificationService: NotificationService,
     private service: RecommendationService
   ) {
-    this.route.queryParams.subscribe(atualizar => (atualizar) && this.buscarDados())
+    this.route.queryParams.subscribe(
+      (atualizar) => atualizar && this.buscarDados()
+    );
   }
 
   ngOnInit() {
@@ -45,18 +47,20 @@ export class RecommendationListComponent implements OnInit {
       nomePessoaEmpresa: [''],
       emailprivate: [''],
       telefone: [''],
-      status: ['ENVIADO']
+      status: ['ENVIADO'],
     });
 
     this.search();
 
-    this.service.getStatusRecommendation().subscribe((res) => this.listStatusRecommendation = res);
+    this.service
+      .getStatusRecommendation()
+      .subscribe((res) => (this.listStatusRecommendation = res));
   }
 
   buscarDados(): void {
     this.loadingTabela = true;
     const status = this.formFiltroRecommendation?.controls['status']?.value;
-    if(status) {
+    if (status) {
       this.service.getListRecommendation(status).subscribe({
         next: (res) => {
           if (res) {
@@ -65,12 +69,10 @@ export class RecommendationListComponent implements OnInit {
             this.total = this.dataSet.length;
           }
         },
-        complete: () => this.loadingTabela = false,
-        error: () => this.loadingTabela = false
+        complete: () => (this.loadingTabela = false),
+        error: () => (this.loadingTabela = false),
       });
     }
-
-
 
     // this.service.filter().subscribe(
     //   {
@@ -107,18 +109,24 @@ export class RecommendationListComponent implements OnInit {
     // })
   }
 
-  edit(model: any): void {
-    this.dataSet = [];
-    this.router.navigate([`/${this.routePrevious}/edit/${model.id}`]);
-  }
+  // This route shouldn't be used.
+  // Editing recommendations is NOT a feature.
+  // edit(model: any): void {
+  //   this.dataSet = [];
+  //   this.router.navigate([`/${this.routePrevious}/edit/${model.id}`]);
+  // }
 
   editStatus(model: any): void {
     this.dataSet = [];
     this.router.navigate([`/${this.routePrevious}/status/edit/${model.id}`]);
   }
 
+  viewItem(model: any) {
+    this.dataSet = [];
+    this.router.navigate([`/${this.routePrevious}/view/${model.id}`]);
+  }
+
   trackByIndex(_: number, data: any): number {
     return data.id;
   }
-
 }
