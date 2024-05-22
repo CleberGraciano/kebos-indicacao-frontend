@@ -131,7 +131,7 @@ export class RecommendationFormComponent implements OnInit {
         case RouteAction.Edit:
           this.service.editRecommendation(this.param, obj).subscribe((data) => {
             this.notificationService.success(
-              'Vendedor editado com sucesso!!!',
+              'Recomendação editado com sucesso!!!',
               ''
             );
             this.returnPage();
@@ -147,7 +147,7 @@ export class RecommendationFormComponent implements OnInit {
   }
 
   returnPage(): void {
-    this.router.navigate([`/${this.routePrevious}`], {
+    this.router.navigate([`/${this.routePrevious.toLocaleLowerCase()}`], {
       queryParams: { param: true },
     });
   }
