@@ -5,9 +5,9 @@ services:
     hostname: localhost
     container_name: kebos-app-frontend
     build: .
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./nginx/certs:/etc/nginx/certs
+    # volumes:
+    #   - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    #   - ./nginx/certs:/etc/nginx/certs
     ports:
-      - 8085:80
-      - 443:443
+      - 80:80
+      # - 443:443
