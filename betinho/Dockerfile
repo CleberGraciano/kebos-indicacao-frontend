@@ -6,13 +6,16 @@ WORKDIR /usr/src/app
 
 #RUN npm install -g npm@9.6.7
 
-# RUN npm install
+# RUN npm install --force
 
 COPY . .
 
-# RUN npm run build
+# RUN ng build --configuration=production
 
 # Stage 2
 FROM nginx:alpine
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx/certs/localhost.crt /etc/nginx/certs/
+COPY ./nginx/certs/localhost.key /etc/nginx/certs/
+COPY ./nginx/certs/localhost.crt /etc/nginx/certs/
+COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=node /usr/src/app/dist/kebos-app /usr/share/nginx/html
