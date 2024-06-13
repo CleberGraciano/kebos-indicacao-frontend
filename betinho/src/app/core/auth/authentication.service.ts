@@ -13,10 +13,10 @@ import { NgxPermissionsService } from 'ngx-permissions';
 
 const routes = {
   login: `signin`,
-  forgotPassword: `email/forgot-password`,
+  forgotPassword: `auth/reset-password`,
   changePassword: `user/changepasswd`,
-  signup: `signup`
-}
+  signup: `signup`,
+};
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -24,14 +24,20 @@ export class AuthenticationService {
   public currentUser: Observable<UserAuth>;
   private loggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor(private apiService: ApiService,
+  constructor(
+    private apiService: ApiService,
     private localStorageService: LocalStorageService,
     private router: Router,
     private loaderService: LoaderService,
-    private permissionService: NgxPermissionsService) {
-    this.currentUserSubject = new BehaviorSubject<UserAuth>(JSON.parse(localStorageService.getItem('currentUser')));
+    private permissionService: NgxPermissionsService
+  ) {
+    this.currentUserSubject = new BehaviorSubject<UserAuth>(
+      JSON.parse(localStorageService.getItem('currentUser'))
+    );
     this.currentUser = this.currentUserSubject.asObservable();
-    this.loggedIn = new BehaviorSubject<boolean>(localStorageService.getItem('token') != undefined);
+    this.loggedIn = new BehaviorSubject<boolean>(
+      localStorageService.getItem('token') != undefined
+    );
   }
 
   public get isLoggedIn() {
@@ -48,16 +54,21 @@ export class AuthenticationService {
 
   login(email: string, password: string) {
     let dataInfo = { email, password };
-    return this.apiService.post<any>(environment.auth + routes.login, dataInfo)
-      .pipe(tap(res => {
-        return res;
-      }),
+    return this.apiService
+      .post<any>(environment.auth + routes.login, dataInfo)
+      .pipe(
+        tap((res) => {
+          return res;
+        }),
         concatMap((res) => {
           if (res.accessToken) {
             let helper = new JwtHelperService();
-            let dados = helper.decodeToken(res.accessToken)
-            let dadosUsuario = { ...<UserAuth>dados, ...res.user };
-            this.localStorageService.setItem('token', JSON.stringify(res.accessToken));
+            let dados = helper.decodeToken(res.accessToken);
+            let dadosUsuario = { ...(<UserAuth>dados), ...res.user };
+            this.localStorageService.setItem(
+              'token',
+              JSON.stringify(res.accessToken)
+            );
             this.setCurrentUser(dadosUsuario);
 
             const permissions = <any>[];
@@ -70,7 +81,8 @@ export class AuthenticationService {
         }),
         map((data: UserAuth) => {
           return data;
-        }));
+        })
+      );
   }
 
   forgotPassword(email: string) {
@@ -79,7 +91,6 @@ export class AuthenticationService {
 
   logout(setReturnUrl?: boolean, message?: string) {
     if (!this.router.url.startsWith('/login')) {
-
       let logoutCall = () => {
         this.localStorageService.removeItem('currentUser');
         this.localStorageService.removeItem('token');
@@ -88,7 +99,9 @@ export class AuthenticationService {
         this.loaderService.hide();
 
         if (setReturnUrl)
-          this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url, msg: message } });
+          this.router.navigate(['/login'], {
+            queryParams: { returnUrl: this.router.url, msg: message },
+          });
         else
           this.router.navigate(['/login'], { queryParams: { msg: message } });
       };
@@ -103,7 +116,10 @@ export class AuthenticationService {
   }
 
   setCurrentUser(dadosUsuario: any) {
-    this.localStorageService.setItem('currentUser', JSON.stringify(dadosUsuario));
+    this.localStorageService.setItem(
+      'currentUser',
+      JSON.stringify(dadosUsuario)
+    );
     this.currentUserSubject.next(dadosUsuario);
   }
 

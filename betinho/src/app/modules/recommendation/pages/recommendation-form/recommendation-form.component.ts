@@ -87,10 +87,10 @@ export class RecommendationFormComponent implements OnInit {
       .filter()
       .subscribe((res: any) => (this.listSellers = res));
 
-    if (this.action !== RouteAction.Edit)
+    if (this.action === RouteAction.Edit)
       this.param
         ? this.service
-            .getIdRecommendation(67)
+            .getIdRecommendation(this.param)
             .subscribe((res) => this.formRecommendation.patchValue(res))
         : this.returnPage();
   }
@@ -172,7 +172,7 @@ export class RecommendationFormComponent implements OnInit {
     this.editId = '';
     this.editBonus(id);
   }
-  
+
   updateTotalBonus(id: string) {
     this.editBonus(id);
   }

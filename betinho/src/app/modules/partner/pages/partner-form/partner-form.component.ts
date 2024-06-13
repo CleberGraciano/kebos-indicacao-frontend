@@ -46,10 +46,9 @@ export class PartnerFormComponent implements OnInit {
 
   fileList: any[] = [];
   typesAcountBack: any[] = [];
-  listaEstados: any[] = [];
-  listaMunicipios: any[] = [];
+  listaEstados: { id: string; sigla: string }[] = [];
+  listaMunicipios: { nome: string }[] = [];
   termoUso: boolean = false;
-  textTermsOfUse: string = TermsOfUse;
   imageUser!: string;
 
   passwordVisible: boolean = false;
@@ -104,29 +103,10 @@ export class PartnerFormComponent implements OnInit {
       provider: ['local'],
     });
 
-    // this.formAddress = this.formBuilder.group({
-    //   cep: ['', Validators.required],
-    //   logradouro: ['', Validators.required],
-    //   numero: ['', Validators.required],
-    //   bairro: ['', Validators.required],
-    //   cidade: [undefined, Validators.required],
-    //   uf: [undefined, Validators.required],
-    // })
-
-    // this.formBank = this.formBuilder.group({
-    //   pix: ['', Validators.required],
-    //   banco: ['', Validators.required],
-    //   tipoContaEnum: [undefined, Validators.required],
-    //   agencia: ['', Validators.required],
-    //   conta: ['', Validators.required],
-    //   digito: ['', Validators.required],
-    // })
-
-    // this.formContact = this.formBuilder.group({
-    //   celular: ['', Validators.required],
-    //   foneFixo: ['', Validators.required],
-    //   foneComercial: ['', Validators.required]
-    // })
+    if (this.edit) {
+      this.formPartner.controls['password'].disable();
+      this.formPartner.controls['passwordConfirm'].disable();
+    }
 
     this.service
       .getTiposConta()
@@ -147,11 +127,7 @@ export class PartnerFormComponent implements OnInit {
           res.dataNascimento = this.editFormatDate(res.dataNascimento);
 
           this.formPartner.patchValue(res);
-          // this.formAddress.patchValue(res.address);
-          // this.formBank.patchValue(res.financeData);
-          // this.formContact.patchValue(res.contact);
           this.imageUser = res.imagem;
-          // this.termoUso = res.termoUso;
         });
       } else {
         this.returnPage();
@@ -159,18 +135,25 @@ export class PartnerFormComponent implements OnInit {
     }
   }
 
+  togglePasswordFields(): void {
+    if (this.formPartner.controls['password'].disabled) {
+      this.formPartner.controls['passwordConfirm'].enable();
+      this.formPartner.controls['password'].enable();
+    } else {
+      this.formPartner.controls['passwordConfirm'].disable();
+      this.formPartner.controls['password'].disable();
+    }
+  }
+
   savePartner(): void {
-    let messages: any[] = [];
+    const messages: any[] = [];
     this.formPartner.controls['imagem'].setValue(this.imageUser);
+    this.formPartner.controls['password'].addValidators([Validators.required]);
 
     const messagesFormPartner = this.formService.getValidationsMessages(
       this.formPartner,
       this.formElementPartner
     );
-    // const messagesFormAddress = this.formService.getValidationsMessages(this.formAddress, this.formElementAddress);
-    // const messagesFormBank = this.formService.getValidationsMessages(this.formBank, this.formElementBank);
-    // const messagesFormContact = this.formService.getValidationsMessages(this.formContact, this.formElementContact);
-    // messages = messages.concat(messagesFormPartner, messagesFormAddress, messagesFormBank, messagesFormContact);
 
     if (!this.termosUsoForm.value) {
       messages.push('Termos de Uso');
@@ -184,14 +167,8 @@ export class PartnerFormComponent implements OnInit {
       return;
     }
 
-    // if (this.formPartner.valid, this.formAddress.valid, this.formBank.valid, this.formContact.valid) {
     if (this.formPartner.valid) {
       const obj = { ...this.formPartner.getRawValue() };
-      // obj.address = { ...this.formAddress.getRawValue() };
-      // obj.financeData = { ...this.formBank.getRawValue() };
-      // obj.contact = { ...this.formContact.getRawValue() };
-      // obj.imagem = this.imageUser;
-      // obj.termoUso = this.termoUso;
 
       obj.cpf = this.removeCaracteres(obj.cpf);
       obj.cep = this.removeCaracteres(obj.cep);
@@ -242,7 +219,7 @@ export class PartnerFormComponent implements OnInit {
   openTermsOfUse(): void {
     this.modalService.create({
       nzTitle: 'Termos de Aceite de Uso de Software/Plataforma',
-      nzContent: this.textTermsOfUse,
+      nzContent: TermsOfUse,
       nzOkText: 'Aceito',
       nzCancelText: 'Não Aceito',
       nzWidth: 800,
