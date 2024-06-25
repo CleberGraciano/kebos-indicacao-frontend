@@ -9,9 +9,3 @@ services:
     ports:
       - 8000:80
     restart: always
-    networks:
-      - kebosappnetwork
-
-networks:
-  kebosappnetwork:
-    driver: bridge
