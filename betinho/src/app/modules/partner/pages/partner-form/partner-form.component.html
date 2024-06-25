@@ -236,6 +236,50 @@
 
               </div>
             </div>
+            <div class="row" *ngIf="edit">
+              <div class="col">
+
+                <fieldset class="fieldset-border mb-3">
+                  <legend class="fieldset-border mb-3">Autenticação</legend>
+
+                  <div class="row row-cols-2 mb-3">
+                    <div class="col">
+                      <div class="row">
+                        <label for="password" class="col-sm-4 col-form-label required">Senha</label>
+                        <div class="col-sm-8 d-flex flex-column">
+                          <nz-input-group [nzSuffix]="suffixTemplate">
+                            <input [type]="passwordVisible ? 'text' : 'password'" nz-input
+                              placeholder="Digite sua senha" formControlName="password" />
+                          </nz-input-group>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col mb-3">
+                      <div class="row">
+                        <label for="passwordConfirm" class="col-sm-4 col-form-label required"
+                          style="padding-left: 32px !important">Confirmar Senha</label>
+                        <div class="ps-sm-4 col-sm-8 d-flex flex-column">
+                          <nz-input-group [nzSuffix]="suffixTemplate">
+                            <input [type]="passwordVisible ? 'text' : 'password'"
+                              nz-input placeholder="Confirme a senha" formControlName="passwordConfirm"
+                              (change)="validatePassword()" />
+                          </nz-input-group>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="row">
+                        <label for="password" class="col-sm-4 col-form-label required">Alterar Senha</label>
+                        <div class="col-sm-8 d-flex flex-column">
+                          <label nz-checkbox [nzValue]="false" class="me-2" (change)="togglePasswordFields()"></label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+
+              </div>
+            </div>
           </div>
 
           <div class="col-12 d-flex justify-content-end mt-1">
