@@ -1,9 +1,9 @@
 FROM node:18.20-alpine3.19 as node
 WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm install --force
+# COPY package*.json ./
+# RUN npm install --force
 COPY . .
-RUN npm run build
+#RUN npm run build
 
 # Stage 2
 FROM nginx:alpine
