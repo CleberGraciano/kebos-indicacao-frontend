@@ -6,8 +6,8 @@ const OAUTH2_URL = `oauth2/authorization`;
 export const environment = {
   production: true,
   version: '1.0',
-  auth: 'http://www.indicakebosapi.com:8081/api/auth/',
-  api: 'http://www.indicakebosapi.com:8081/api/',
+  auth: 'https://www.indicakebosapi.com:8081/api/auth/',
+  api: 'https://www.indicakebosapi.com:8081/api/',
   refreshToken: '',
   GOOGLE_AUTH_URL: `${BASE_URL}/${OAUTH2_URL}/google/${REDIRECT_URL}`,
   FACEBOOK_AUTH_URL: `${BASE_URL}/${OAUTH2_URL}/facebook/${REDIRECT_URL}`,
