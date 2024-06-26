@@ -1,4 +1,4 @@
-const BASE_URL = 'https://www.indicakebosapi.com:8081';
+const BASE_URL = 'https://www.indicakebosapi.com';
 const URL_LOCAL = 'http://localhost:4200';
 const REDIRECT_URL = `?redirect_uri=${URL_LOCAL}/login`;
 const OAUTH2_URL = `oauth2/authorization`;
@@ -7,8 +7,8 @@ export const environment = {
   production: false,
   version: '1.0',
 
-  auth: 'https://www.indicakebosapi.com:8081/api/auth/',
-  api: 'https://www.indicakebosapi.com:8081/api/',
+  auth: 'https://www.indicakebosapi.com/api/auth/',
+  api: 'https://www.indicakebosapi.com/api/',
   refreshToken: '',
   GOOGLE_AUTH_URL: `${BASE_URL}/${OAUTH2_URL}/google/${REDIRECT_URL}`,
   FACEBOOK_AUTH_URL: `${BASE_URL}/${OAUTH2_URL}/facebook/${REDIRECT_URL}`,
