@@ -26,3 +26,19 @@
 tr > th {
   font-size: 12px !important;
 }
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrapper > div {
+    min-width: 25rem;
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+        gap: 25px;
+    }
+}

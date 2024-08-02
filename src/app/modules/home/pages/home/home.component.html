@@ -1,16 +1,17 @@
 <div class="row">
-    <div class="col">
-        <h5>Seja Bem Vindo(a):</h5>
-        <h5 class="name-user">{{ nameUser }}</h5>
-    </div>
+  <div class="col">
+    <h5>Seja Bem Vindo(a):</h5>
+    <h5 class="name-user">{{ nameUser }}</h5>
+  </div>
 </div>
 <br>
-<div class="row row-cols-2 gx-5">
+<div class="wrapper gx-5">
 
   <ng-container *ngxPermissionsOnly="permissaoModeradorEUser">
-    <div class="col">
+    <div>
       <div class="col-12">
-        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o Status" class="col-12" [(ngModel)]="statusSelect" (ngModelChange)="getListRecommendation()">
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecione o Status" class="col-12"
+          [(ngModel)]="statusSelect" (ngModelChange)="getListRecommendation()">
           <nz-option [nzLabel]="item.name" [nzValue]="item.value" *ngFor="let item of listStatusRecommendation">
           </nz-option>
         </nz-select>
@@ -41,47 +42,47 @@
     </div>
   </ng-container>
 
-  <div class="col">
+  <div>
     <div class="row row-cols-2 row-cols-sm-3 g-3">
-       <ng-container *ngxPermissionsOnly="permissaoAdmEModerador">
-          <div class="col">
-              <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/partner']">
-                  Parceiros
-              </div>
-          </div>
-       </ng-container>
-       <ng-container *ngxPermissionsOnly="permissaoAdmEModerador">
-          <div class="col">
-              <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/seller']">
-                  Vendedores
-              </div>
-          </div>
-       </ng-container>
-       <ng-container *ngxPermissionsOnly="permissaoTodos">
+      <ng-container *ngxPermissionsOnly="permissaoAdmEModerador">
         <div class="col">
-            <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/recommendation']">
-                Indicações
-            </div>
+          <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/partner']">
+            Parceiros
+          </div>
         </div>
-     </ng-container>
-       <ng-container *ngxPermissionsOnly="permissaoAdmEModerador">
-          <div class="col">
-              <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/item']">
-                  Itens
-              </div>
+      </ng-container>
+      <ng-container *ngxPermissionsOnly="permissaoAdmEModerador">
+        <div class="col">
+          <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/seller']">
+            Vendedores
           </div>
-       </ng-container>
-       <ng-container *ngxPermissionsOnly="permissaoAdm">
-          <div class="col">
-              <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/category']">
-                  Categorias
-              </div>
+        </div>
+      </ng-container>
+      <ng-container *ngxPermissionsOnly="permissaoTodos">
+        <div class="col">
+          <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/recommendation']">
+            Indicações
           </div>
-       </ng-container>
+        </div>
+      </ng-container>
+      <ng-container *ngxPermissionsOnly="permissaoAdmEModerador">
+        <div class="col">
+          <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/item']">
+            Itens
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngxPermissionsOnly="permissaoAdm">
+        <div class="col">
+          <div class="col rounded shadow-sm text-center card-custom" [routerLink]="['/category']">
+            Categorias
+          </div>
+        </div>
+      </ng-container>
       <div class="col">
-          <div class="col rounded shadow-sm text-center card-custom" (click)="logout()">
-              Sair
-          </div>
+        <div class="col rounded shadow-sm text-center card-custom" (click)="logout()">
+          Sair
+        </div>
       </div>
     </div>
   </div>
