@@ -1,1 +1,22 @@
 
+.flex-row {
+    display: flex;
+}
+
+.flex-grid {
+    display: grid;
+    grid-template-areas: "first second"
+    "third blank";
+}
+
+
+
+@media (max-width: 768px) {
+    .flex-row {
+        display: block;
+    }
+
+    .flex-grid {
+        display: block;
+    }
+}

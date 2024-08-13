@@ -19,7 +19,7 @@ export interface RecommendationElement {
   emailprivate: string;
   nomeContato: string;
   telefone: string;
-  items: ItemElement[];
+  itemRecommendations: RecommendedItems[];
   valortotal: number;
   observacao: string;
   status: string;
@@ -38,8 +38,15 @@ export interface User {
   provider: string;
 }
 
+export interface RecommendedItems {
+  id?: number;
+  quantidade: number;
+  totalBonus: number;
+  item: ItemElement
+}
+
 export interface ItemElement {
-  id: number;
+  id?: number;
   tipo: string;
   nome: string;
   quantidade: number;

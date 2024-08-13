@@ -39,7 +39,7 @@
                       <input nz-input formControlName="email" />
                     </div>
                   </div>
-                  <div class="row row-cols-2 mb-3">
+                  <div class="flex-row mb-3">
                     <div class="col">
                       <div class="row">
                         <label for="dataNascimento" class="col-sm-4 col-form-label required">Data Nascimento</label>
@@ -205,8 +205,8 @@
                 <fieldset class="fieldset-border mb-3">
                   <legend class="fieldset-border mb-3">Contato</legend>
 
-                  <div class="row row-cols-2">
-                    <div class="col">
+                  <div class="flex-grid">
+                    <div class="first">
                       <div class="row mb-3">
                         <label for="celular" class="col-sm-4 col-form-label">Celular</label>
                         <div class="col-sm-8 d-flex flex-column">
@@ -214,7 +214,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col">
+                    <div class="second">
                       <div class="row mb-3">
                         <label for="foneFixo" class="col-sm-4 col-form-label"
                           style="padding-left: 32px !important">Telefone Fixo</label>
@@ -223,7 +223,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col">
+                    <div class="third">
                       <div class="row mb-3">
                         <label for="foneComercial" class="col-sm-4 col-form-label">Telefone Celular</label>
                         <div class="col-sm-8 d-flex flex-column">
@@ -242,8 +242,9 @@
                 <fieldset class="fieldset-border mb-3">
                   <legend class="fieldset-border mb-3">Autenticação</legend>
 
-                  <div class="row row-cols-2 mb-3">
-                    <div class="col">
+                  <div class="flex-grid">
+
+                    <div class="first">
                       <div class="row">
                         <label for="password" class="col-sm-4 col-form-label required">Senha</label>
                         <div class="col-sm-8 d-flex flex-column">
@@ -254,20 +255,20 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col mb-3">
+                    <div class="second mb-3">
                       <div class="row">
                         <label for="passwordConfirm" class="col-sm-4 col-form-label required"
                           style="padding-left: 32px !important">Confirmar Senha</label>
                         <div class="ps-sm-4 col-sm-8 d-flex flex-column">
                           <nz-input-group [nzSuffix]="suffixTemplate">
-                            <input [type]="passwordVisible ? 'text' : 'password'"
-                              nz-input placeholder="Confirme a senha" formControlName="passwordConfirm"
+                            <input [type]="passwordVisible ? 'text' : 'password'" nz-input
+                              placeholder="Confirme a senha" formControlName="passwordConfirm"
                               (change)="validatePassword()" />
                           </nz-input-group>
                         </div>
                       </div>
                     </div>
-                    <div class="col">
+                    <div class="third">
                       <div class="row">
                         <label for="password" class="col-sm-4 col-form-label required">Alterar Senha</label>
                         <div class="col-sm-8 d-flex flex-column">

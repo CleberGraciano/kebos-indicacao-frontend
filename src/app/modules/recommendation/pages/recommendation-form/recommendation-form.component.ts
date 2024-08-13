@@ -9,7 +9,7 @@ import { FormService } from '@core/services/form.service';
 import { NotificationService } from '@core/services/notification.service';
 import { CategoryService } from '@modules/category/category.service';
 import { ItemService } from '@modules/item/item.service';
-import { ItemElement } from '@modules/recommendation/recommendation';
+import { ItemElement, RecommendedItems } from '@modules/recommendation/recommendation';
 import { RecommendationService } from '@modules/recommendation/recommendation.service';
 import { SellerService } from '@modules/seller/seller.service';
 
@@ -87,12 +87,17 @@ export class RecommendationFormComponent implements OnInit {
       .filter()
       .subscribe((res: any) => (this.listSellers = res));
 
-    if (this.action === RouteAction.Edit)
+    if (!this.create) {
       this.param
         ? this.service
             .getIdRecommendation(this.param)
             .subscribe((res) => this.formRecommendation.patchValue(res))
         : this.returnPage();
+    }
+
+    if (this.view) {
+      this.formRecommendation.disable();
+    }
   }
 
   saveRecommendation(): void {
@@ -114,7 +119,7 @@ export class RecommendationFormComponent implements OnInit {
         ...this.formObservacoes.getRawValue(),
       };
 
-      obj.items = this.replaceItems();
+      obj.itemRecommendations = this.replaceItems();
       obj.valortotal = this.total;
       obj.user = null; //usuarioLogado
 
@@ -220,19 +225,15 @@ export class RecommendationFormComponent implements OnInit {
     });
   }
 
-  replaceItems() {
-    let items: any[] = [];
+  replaceItems(): RecommendedItems[] {
+    let items: RecommendedItems[] = [];
     this.listOfData.forEach((x: any) => {
-      let itemReset;
-      itemReset = x.nome;
+      const { bonus, ...i } = x;
+      const { item = i.nome, id, quantidade, totalBonus } = i;
 
-      if (x.totalBonus) itemReset.totalBonus = x.totalBonus;
-
-      if (x.quantidade) itemReset.quantidade = x.quantidade;
-
-      items.push(itemReset);
+      items.push({ item, id, quantidade, totalBonus });
     });
-    items = items.filter((x: any) => x.totalBonus);
+    items = items.filter((x: RecommendedItems) => x.totalBonus);
     return items;
   }
 

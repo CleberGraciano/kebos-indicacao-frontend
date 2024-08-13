@@ -10,13 +10,12 @@ import { ItemService } from '@modules/item/item.service';
 @Component({
   selector: 'app-item-form',
   templateUrl: './item-form.component.html',
-  styleUrls: ['./item-form.component.scss']
+  styleUrls: ['./item-form.component.scss'],
 })
 export class ItemFormComponent implements OnInit {
-
   formItem!: FormGroup;
   @ViewChild('formElement') formElement!: ElementRef;
-  routePrevious = "item";
+  routePrevious = 'item';
 
   action!: RouteAction;
   param!: number;
@@ -34,11 +33,11 @@ export class ItemFormComponent implements OnInit {
     private notificationService: NotificationService,
     private service: ItemService,
     private serviceCategories: CategoryService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.route.data.subscribe((res) => this.action = res['acao']);
-    this.route.params.subscribe((res) => this.param = res['param']);
+    this.route.data.subscribe((res) => (this.action = res['acao']));
+    this.route.params.subscribe((res) => (this.param = res['param']));
 
     this.create = this.action == RouteAction.Insert;
     this.edit = this.action == RouteAction.Edit;
@@ -47,22 +46,31 @@ export class ItemFormComponent implements OnInit {
     this.formItem = this.formBuilder.group({
       tipo: ['', Validators.required],
       nome: ['', Validators.required],
-      quantidade: ['', Validators.required],
-      bonus: ['', Validators.required]
-    })
+      bonus: ['', Validators.required],
+    });
 
     // this.service.getTipos().subscribe((res: any) => this.tipos = res);
-    this.serviceCategories.filter().subscribe((res: any) => this.tipos = res);
+    this.serviceCategories.filter().subscribe((res: any) => (this.tipos = res));
 
     if (this.edit)
-      this.param ? this.service.getIdItem(this.param).subscribe(res => this.formItem.patchValue(res)) : this.returnPage();
+      this.param
+        ? this.service
+            .getIdItem(this.param)
+            .subscribe((res) => this.formItem.patchValue(res))
+        : this.returnPage();
   }
 
   saveItem(): void {
-    const messages = this.formService.getValidationsMessages(this.formItem, this.formElement);
+    const messages = this.formService.getValidationsMessages(
+      this.formItem,
+      this.formElement
+    );
 
     if (messages.length) {
-      this.notificationService.warn('Os seguintes campos abaixo devem ser preenchidos corretamente:', this.formService.createValidationList(messages));
+      this.notificationService.warn(
+        'Os seguintes campos abaixo devem ser preenchidos corretamente:',
+        this.formService.createValidationList(messages)
+      );
       return;
     }
 
@@ -72,19 +80,24 @@ export class ItemFormComponent implements OnInit {
       switch (this.action) {
         case RouteAction.Insert:
           this.service.insertItem(obj).subscribe((data) => {
-            this.notificationService.success('Cadastro realizado com sucesso!!!', '');
+            this.notificationService.success(
+              'Cadastro realizado com sucesso!!!',
+              ''
+            );
             this.returnPage();
-          })
+          });
           break;
         case RouteAction.Edit:
           this.service.editItem(this.param, obj).subscribe((data) => {
-            this.notificationService.success('Parceiro editado com sucesso!!!', '');
+            this.notificationService.success(
+              'Parceiro editado com sucesso!!!',
+              ''
+            );
             this.returnPage();
-          })
+          });
           break;
       }
     }
-
   }
 
   cancel(): void {
@@ -93,6 +106,8 @@ export class ItemFormComponent implements OnInit {
   }
 
   returnPage(): void {
-    this.router.navigate([`/${this.routePrevious}`], { queryParams: { param: true }})
+    this.router.navigate([`/${this.routePrevious}`], {
+      queryParams: { param: true },
+    });
   }
 }

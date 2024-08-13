@@ -97,3 +97,21 @@ nz-footer {
   top: 13px;
   position: relative;
 }
+
+.mobile {
+  display: none;
+  visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  .desktop {
+      display: none;
+      visibility: hidden;
+    }
+
+  .mobile {
+      display: none;
+      visibility: hidden;
+      background-color: #477a5e;
+    }
+}
