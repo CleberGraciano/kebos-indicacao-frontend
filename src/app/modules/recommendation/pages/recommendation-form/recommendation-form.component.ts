@@ -9,7 +9,10 @@ import { FormService } from '@core/services/form.service';
 import { NotificationService } from '@core/services/notification.service';
 import { CategoryService } from '@modules/category/category.service';
 import { ItemService } from '@modules/item/item.service';
-import { ItemElement, RecommendedItems } from '@modules/recommendation/recommendation';
+import {
+  ItemElement,
+  RecommendedItems,
+} from '@modules/recommendation/recommendation';
 import { RecommendationService } from '@modules/recommendation/recommendation.service';
 import { SellerService } from '@modules/seller/seller.service';
 
@@ -89,9 +92,12 @@ export class RecommendationFormComponent implements OnInit {
 
     if (!this.create) {
       this.param
-        ? this.service
-            .getIdRecommendation(this.param)
-            .subscribe((res) => this.formRecommendation.patchValue(res))
+        ? this.service.getIdRecommendation(this.param).subscribe((res) => {
+            this.formRecommendation.patchValue(res);
+            if (res.itemRecommendations?.length) {
+              this.addRow(res.itemRecommendations);
+            }
+          })
         : this.returnPage();
     }
 
@@ -182,18 +188,27 @@ export class RecommendationFormComponent implements OnInit {
     this.editBonus(id);
   }
 
-  addRow(): void {
-    this.listOfData = [
-      ...this.listOfData,
-      {
-        id: `${this.i}`,
-        nome: { nome: 'Pesquise o produto' },
-        tipo: { tipo: { name: 'Selecione o Tipo' } },
-        quantidade: 0,
-        bonus: 0,
-        totalBonus: 0,
-      },
-    ];
+  addRow(items?: RecommendedItems[]): void {
+    this.listOfData = items?.length
+      ? items.map((i) => ({
+          id: i.item?.id,
+          nome: { nome: i.item.nome, bonus: i.item.bonus },
+          tipo: { tipo: { name: i.item.category?.nome } },
+          quantidade: i.quantidade,
+          totalBonus: i.totalBonus,
+          item: i.item,
+        }))
+      : [
+          ...this.listOfData,
+          {
+            id: `${this.i}`,
+            nome: { nome: 'Pesquise o produto' },
+            tipo: { tipo: { name: 'Selecione o Tipo' } },
+            quantidade: 0,
+            bonus: 0,
+            totalBonus: 0,
+          },
+        ];
     this.i++;
   }
 
@@ -229,9 +244,9 @@ export class RecommendationFormComponent implements OnInit {
     let items: RecommendedItems[] = [];
     this.listOfData.forEach((x: any) => {
       const { bonus, ...i } = x;
-      const { item = i.nome, id, quantidade, totalBonus } = i;
+      const { item = i.nome, id, quantidade, totalBonus, categoria } = i;
 
-      items.push({ item, id, quantidade, totalBonus });
+      items.push({ item, id, quantidade, totalBonus, categoria });
     });
     items = items.filter((x: RecommendedItems) => x.totalBonus);
     return items;

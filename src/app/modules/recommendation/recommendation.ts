@@ -40,16 +40,24 @@ export interface User {
 
 export interface RecommendedItems {
   id?: number;
+  categoria: string;
   quantidade: number;
   totalBonus: number;
-  item: ItemElement
+  item: ItemElement;
 }
 
 export interface ItemElement {
+  category?: Category;
   id?: number;
   tipo: string;
   nome: string;
   quantidade: number;
   bonus: number;
   created: string;
+}
+
+interface Category {
+  id: number;
+  nome: string;
+  descricao?: string;
 }
