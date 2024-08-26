@@ -75,7 +75,6 @@ const routes: Routes = [
           breadcrumb: 'Visualizar',
           acao: RouteAction.View,
           permissions: {
-            only: [PermissoesEnum.Adm, PermissoesEnum.Moderador],
             redirectTo: '/',
           },
         },

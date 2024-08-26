@@ -96,6 +96,7 @@ export class RecommendationFormComponent implements OnInit {
             this.formRecommendation.patchValue(res);
             if (res.itemRecommendations?.length) {
               this.addRow(res.itemRecommendations);
+              this.updateTotalBonus(String(res.id));
             }
           })
         : this.returnPage();
