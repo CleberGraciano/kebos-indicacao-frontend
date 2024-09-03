@@ -13,10 +13,11 @@ export interface RecommendationFilter {
 }
 
 export interface RecommendationElement {
+  seller: Record<string, string>;
   id: number;
   nomePessoaEmpresa: string;
   cpfCnpj: string;
-  emailprivate: string;
+  email: string;
   nomeContato: string;
   telefone: string;
   itemRecommendations: RecommendedItems[];
