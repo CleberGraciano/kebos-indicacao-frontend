@@ -43,7 +43,7 @@ export class RecommendationFormComponent implements OnInit {
   tipos: any[] = [];
   items: any[] = [];
 
-  selectedValue = null;
+  selectedValue = {};
   //listItems: Array<{ value: string; name: string }> = [];
   listItems: any[] = [];
   listSellers: any = [];
@@ -75,7 +75,7 @@ export class RecommendationFormComponent implements OnInit {
     this.formRecommendation = this.formBuilder.group({
       nomePessoaEmpresa: ['', Validators.required],
       cpfCnpj: ['', Validators.required],
-      emailprivate: ['', Validators.required],
+      email: ['', Validators.required],
       nomeContato: ['', Validators.required],
       telefone: ['', Validators.required],
       seller: ['', Validators.required],
@@ -93,7 +93,9 @@ export class RecommendationFormComponent implements OnInit {
     if (!this.create) {
       this.param
         ? this.service.getIdRecommendation(this.param).subscribe((res) => {
+          this.selectedValue = res.seller;
             this.formRecommendation.patchValue(res);
+            this.formObservacoes.patchValue(res);
             if (res.itemRecommendations?.length) {
               this.addRow(res.itemRecommendations);
               this.updateTotalBonus(String(res.id));
@@ -105,6 +107,15 @@ export class RecommendationFormComponent implements OnInit {
     if (this.view) {
       this.formRecommendation.disable();
     }
+  }
+
+  compareSeller(
+    sellerOne?: Record<string, string>,
+    sellerTwo?: Record<string, string>
+  ) {
+    return sellerOne && sellerTwo
+      ? sellerOne['id'] === sellerTwo['id']
+      : sellerOne === sellerTwo;
   }
 
   saveRecommendation(): void {
