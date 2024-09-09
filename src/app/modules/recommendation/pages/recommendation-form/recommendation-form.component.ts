@@ -9,10 +9,8 @@ import { FormService } from '@core/services/form.service';
 import { NotificationService } from '@core/services/notification.service';
 import { CategoryService } from '@modules/category/category.service';
 import { ItemService } from '@modules/item/item.service';
-import {
-  ItemElement,
-  RecommendedItems,
-} from '@modules/recommendation/recommendation';
+import { PartnerService } from '@modules/partner/partner.service';
+import { RecommendedItems } from '@modules/recommendation/recommendation';
 import { RecommendationService } from '@modules/recommendation/recommendation.service';
 import { SellerService } from '@modules/seller/seller.service';
 
@@ -79,11 +77,19 @@ export class RecommendationFormComponent implements OnInit {
       nomeContato: ['', Validators.required],
       telefone: ['', Validators.required],
       seller: ['', Validators.required],
+      referral: [''],
     });
 
     this.formObservacoes = this.formBuilder.group({
       observacao: [''],
     });
+
+    this.formRecommendation.controls['referral'].disable();
+    if (this.create) {
+      this.formRecommendation.controls['referral'].patchValue(
+        this.usuarioLogado.displayName
+      );
+    }
 
     this.categoryService.filter().subscribe((res: any) => (this.tipos = res));
     this.sellerService
@@ -93,8 +99,9 @@ export class RecommendationFormComponent implements OnInit {
     if (!this.create) {
       this.param
         ? this.service.getIdRecommendation(this.param).subscribe((res) => {
-          this.selectedValue = res.seller;
-            this.formRecommendation.patchValue(res);
+            this.selectedValue = res.seller;
+            const formData = { ...res, referral: res.user.displayName };
+            this.formRecommendation.patchValue(formData);
             this.formObservacoes.patchValue(res);
             if (res.itemRecommendations?.length) {
               this.addRow(res.itemRecommendations);
